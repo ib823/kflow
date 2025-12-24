@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../shared/theme/app_theme.dart';
+import '../../../shared/providers/leave_provider.dart';
+import '../../../shared/models/leave.dart';
+import '../../../core/error/api_exception.dart';
 
 class LeaveApplyScreen extends ConsumerStatefulWidget {
   const LeaveApplyScreen({super.key});
@@ -13,20 +16,13 @@ class LeaveApplyScreen extends ConsumerStatefulWidget {
 
 class _LeaveApplyScreenState extends ConsumerState<LeaveApplyScreen> {
   final _formKey = GlobalKey<FormState>();
-  String? _selectedLeaveType;
+  int? _selectedLeaveTypeId;
   DateTime? _dateFrom;
   DateTime? _dateTo;
   String? _halfDayType;
   final _reasonController = TextEditingController();
   bool _isLoading = false;
-
-  // Mock leave types
-  final _leaveTypes = [
-    {'id': 1, 'code': 'AL', 'name': 'Annual Leave', 'available': 10.0},
-    {'id': 2, 'code': 'MC', 'name': 'Medical Leave', 'available': 12.0},
-    {'id': 3, 'code': 'EL', 'name': 'Emergency Leave', 'available': 2.0},
-    {'id': 4, 'code': 'UL', 'name': 'Unpaid Leave', 'available': 30.0},
-  ];
+  String? _errorMessage;
 
   @override
   void dispose() {
@@ -74,19 +70,58 @@ class _LeaveApplyScreenState extends ConsumerState<LeaveApplyScreen> {
   }
 
   Future<void> _handleSubmit() async {
+    // Clear previous error
+    setState(() => _errorMessage = null);
+
     if (!_formKey.currentState!.validate()) return;
+
     if (_dateFrom == null || _dateTo == null) {
+      setState(() => _errorMessage = 'Please select both start and end dates');
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select dates')),
+        SnackBar(
+          content: const Text('Please select dates'),
+          backgroundColor: AppColors.error,
+          action: SnackBarAction(
+            label: 'OK',
+            textColor: AppColors.textInverse,
+            onPressed: () {},
+          ),
+        ),
       );
       return;
+    }
+
+    // Validate leave balance
+    final leaveState = ref.read(leaveNotifierProvider).valueOrNull;
+    if (leaveState != null && _selectedLeaveTypeId != null) {
+      final available = leaveState.getAvailableBalance(_selectedLeaveTypeId!);
+      final requestedDays = _halfDayType != null ? 0.5 : _calculateDays().toDouble();
+
+      if (requestedDays > available) {
+        setState(() => _errorMessage = 'Insufficient leave balance. Available: $available days');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Insufficient leave balance. You have $available days available.'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+        return;
+      }
     }
 
     setState(() => _isLoading = true);
 
     try {
-      // TODO: Call API to submit leave request
-      await Future.delayed(const Duration(seconds: 1));
+      // Create leave request using provider
+      final request = CreateLeaveRequest(
+        leaveTypeId: _selectedLeaveTypeId!,
+        dateFrom: _formatDate(_dateFrom!),
+        dateTo: _formatDate(_dateTo!),
+        halfDayType: _halfDayType,
+        reason: _reasonController.text.isNotEmpty ? _reasonController.text : null,
+      );
+
+      await ref.read(leaveNotifierProvider.notifier).submitRequest(request);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -95,16 +130,62 @@ class _LeaveApplyScreenState extends ConsumerState<LeaveApplyScreen> {
             backgroundColor: AppColors.success,
           ),
         );
-        context.pop();
+        context.pop(true); // Return true to indicate success
       }
-    } catch (e) {
+    } on ApiException catch (e) {
+      // Handle API-specific errors with user-friendly messages
       if (mounted) {
+        String message;
+        switch (e.code) {
+          case 'INSUFFICIENT_BALANCE':
+            message = 'You don\'t have enough leave balance for this request.';
+            break;
+          case 'LEAVE_OVERLAP':
+            message = 'You already have a leave request for these dates.';
+            break;
+          case 'INSUFFICIENT_NOTICE':
+            message = 'This leave type requires more advance notice.';
+            break;
+          case 'MAX_DAYS_EXCEEDED':
+            message = 'This request exceeds the maximum days allowed.';
+            break;
+          case 'ATTACHMENT_REQUIRED':
+            message = 'This leave type requires an attachment.';
+            break;
+          default:
+            message = e.message;
+        }
+        setState(() => _errorMessage = message);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(e.toString()),
+            content: Text(message),
             backgroundColor: AppColors.error,
+            action: SnackBarAction(
+              label: 'Retry',
+              textColor: AppColors.textInverse,
+              onPressed: _handleSubmit,
+            ),
           ),
         );
+      }
+    } catch (e) {
+      // Handle unexpected errors
+      if (mounted) {
+        final message = 'An unexpected error occurred. Please try again.';
+        setState(() => _errorMessage = message);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(message),
+            backgroundColor: AppColors.error,
+            action: SnackBarAction(
+              label: 'Retry',
+              textColor: AppColors.textInverse,
+              onPressed: _handleSubmit,
+            ),
+          ),
+        );
+        // Log the actual error for debugging (in production, use a logging service)
+        debugPrint('Leave submission error: $e');
       }
     } finally {
       if (mounted) {
@@ -118,6 +199,9 @@ class _LeaveApplyScreenState extends ConsumerState<LeaveApplyScreen> {
     final days = _calculateDays();
     final isSingleDay = days == 1;
 
+    // Watch leave types from provider
+    final leaveTypesAsync = ref.watch(leaveTypesProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Apply Leave'),
@@ -127,48 +211,84 @@ class _LeaveApplyScreenState extends ConsumerState<LeaveApplyScreen> {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            // Leave Type
-            DropdownButtonFormField<String>(
-              value: _selectedLeaveType,
-              decoration: const InputDecoration(
-                labelText: 'Leave Type',
-                prefixIcon: Icon(Icons.category_outlined),
-              ),
-              items: _leaveTypes.map((type) {
-                return DropdownMenuItem<String>(
-                  value: type['code'] as String,
-                  child: Text(
-                    '${type['name']} (${(type['available'] as double).toStringAsFixed(0)} days available)',
+            // Error message display
+            if (_errorMessage != null)
+              Semantics(
+                liveRegion: true,
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: AppSpacing.lg),
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  decoration: BoxDecoration(
+                    color: AppColors.errorSurface,
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    border: Border.all(color: AppColors.error.withOpacity(0.3)),
                   ),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() => _selectedLeaveType = value);
-              },
-              validator: (value) {
-                if (value == null) return 'Please select leave type';
-                return null;
-              },
-            ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.error_outline, color: AppColors.error),
+                      const SizedBox(width: AppSpacing.sm),
+                      Expanded(
+                        child: Text(
+                          _errorMessage!,
+                          style: TextStyle(color: AppColors.error),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
 
-            const SizedBox(height: AppSpacing.lg),
-
-            // Date From
-            InkWell(
-              onTap: () => _selectDate(true),
-              child: InputDecorator(
+            // Leave Type - from provider
+            leaveTypesAsync.when(
+              loading: () => const LinearProgressIndicator(),
+              error: (e, _) => Text('Failed to load leave types: $e'),
+              data: (leaveTypes) => DropdownButtonFormField<int>(
+                value: _selectedLeaveTypeId,
                 decoration: const InputDecoration(
-                  labelText: 'From Date',
-                  prefixIcon: Icon(Icons.calendar_today_outlined),
+                  labelText: 'Leave Type',
+                  prefixIcon: Icon(Icons.category_outlined),
                 ),
-                child: Text(
-                  _dateFrom != null
-                      ? _formatDate(_dateFrom!)
-                      : 'Select date',
-                  style: TextStyle(
-                    color: _dateFrom != null
-                        ? null
-                        : AppColors.textSecondary,
+                items: leaveTypes.map((type) {
+                  final leaveState = ref.read(leaveNotifierProvider).valueOrNull;
+                  final available = leaveState?.getAvailableBalance(type.id) ?? 0;
+                  return DropdownMenuItem<int>(
+                    value: type.id,
+                    child: Text(
+                      '${type.name} (${available.toStringAsFixed(0)} days available)',
+                    ),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() => _selectedLeaveTypeId = value);
+                },
+                validator: (value) {
+                  if (value == null) return 'Please select leave type';
+                  return null;
+                },
+              ),
+            ),
+
+            const SizedBox(height: AppSpacing.lg),
+
+            // Date From - with accessibility
+            Semantics(
+              label: _dateFrom != null
+                  ? 'Start date: ${_formatDate(_dateFrom!)}'
+                  : 'Select start date',
+              button: true,
+              child: InkWell(
+                onTap: () => _selectDate(true),
+                borderRadius: BorderRadius.circular(AppRadius.sm),
+                child: InputDecorator(
+                  decoration: const InputDecoration(
+                    labelText: 'From Date',
+                    prefixIcon: Icon(Icons.calendar_today_outlined),
+                  ),
+                  child: Text(
+                    _dateFrom != null ? _formatDate(_dateFrom!) : 'Select date',
+                    style: TextStyle(
+                      color: _dateFrom != null ? null : AppColors.textSecondary,
+                    ),
                   ),
                 ),
               ),
@@ -176,23 +296,28 @@ class _LeaveApplyScreenState extends ConsumerState<LeaveApplyScreen> {
 
             const SizedBox(height: AppSpacing.lg),
 
-            // Date To
-            InkWell(
-              onTap: _dateFrom != null ? () => _selectDate(false) : null,
-              child: InputDecorator(
-                decoration: InputDecoration(
-                  labelText: 'To Date',
-                  prefixIcon: const Icon(Icons.calendar_today_outlined),
-                  enabled: _dateFrom != null,
-                ),
-                child: Text(
-                  _dateTo != null
-                      ? _formatDate(_dateTo!)
-                      : 'Select date',
-                  style: TextStyle(
-                    color: _dateTo != null
-                        ? null
-                        : AppColors.textSecondary,
+            // Date To - with accessibility
+            Semantics(
+              label: _dateTo != null
+                  ? 'End date: ${_formatDate(_dateTo!)}'
+                  : _dateFrom == null
+                      ? 'End date. Select start date first'
+                      : 'Select end date',
+              button: _dateFrom != null,
+              child: InkWell(
+                onTap: _dateFrom != null ? () => _selectDate(false) : null,
+                borderRadius: BorderRadius.circular(AppRadius.sm),
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    labelText: 'To Date',
+                    prefixIcon: const Icon(Icons.calendar_today_outlined),
+                    enabled: _dateFrom != null,
+                  ),
+                  child: Text(
+                    _dateTo != null ? _formatDate(_dateTo!) : 'Select date',
+                    style: TextStyle(
+                      color: _dateTo != null ? null : AppColors.textSecondary,
+                    ),
                   ),
                 ),
               ),

@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../shared/providers/auth_provider.dart';
+import '../../../shared/providers/leave_provider.dart';
+import '../../../shared/providers/notification_provider.dart';
 import '../../../shared/theme/app_theme.dart';
 import '../../../core/router/app_router.dart';
 import 'widgets/dashboard_card.dart';
@@ -18,11 +20,19 @@ class HomeScreen extends ConsumerWidget {
     final user = authState.valueOrNull?.user;
     final employee = user?.employee;
 
+    // Watch notification count for badge
+    final unreadCount = ref.watch(unreadNotificationCountProvider);
+
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
-            // Refresh data
+            // Refresh all data providers
+            await Future.wait([
+              ref.read(authStateNotifierProvider.notifier).build(),
+              ref.read(leaveNotifierProvider.notifier).refresh(),
+              ref.read(notificationNotifierProvider.notifier).refresh(),
+            ]);
           },
           child: CustomScrollView(
             slivers: [
@@ -36,24 +46,32 @@ class HomeScreen extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                   child: Row(
                     children: [
-                      // Profile avatar
-                      GestureDetector(
-                        onTap: () => context.push(AppRoutes.profile),
-                        child: CircleAvatar(
-                          radius: 24,
-                          backgroundColor: AppColors.primary,
-                          backgroundImage: employee?.photoUrl != null
-                              ? NetworkImage(employee!.photoUrl!)
-                              : null,
-                          child: employee?.photoUrl == null
-                              ? Text(
-                                  _getInitials(employee?.fullName ?? 'U'),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )
-                              : null,
+                      // Profile avatar - accessible
+                      Semantics(
+                        label: 'Profile picture. Tap to view profile',
+                        button: true,
+                        child: Tooltip(
+                          message: 'View Profile',
+                          child: InkWell(
+                            onTap: () => context.push(AppRoutes.profile),
+                            borderRadius: BorderRadius.circular(24),
+                            child: CircleAvatar(
+                              radius: 24,
+                              backgroundColor: AppColors.primary,
+                              backgroundImage: employee?.photoUrl != null
+                                  ? NetworkImage(employee!.photoUrl!)
+                                  : null,
+                              child: employee?.photoUrl == null
+                                  ? Text(
+                                      _getInitials(employee?.fullName ?? 'U'),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )
+                                  : null,
+                            ),
+                          ),
                         ),
                       ),
                       const SizedBox(width: AppSpacing.md),
@@ -80,13 +98,34 @@ class HomeScreen extends ConsumerWidget {
                           ],
                         ),
                       ),
-                      // Notifications
-                      IconButton(
-                        onPressed: () => context.push(AppRoutes.notifications),
-                        icon: Badge(
-                          isLabelVisible: true,
-                          label: const Text('3'),
-                          child: const Icon(Icons.notifications_outlined),
+                      // Notifications - accessible with dynamic count
+                      Semantics(
+                        label: unreadCount.when(
+                          data: (count) => count > 0
+                              ? '$count unread notifications'
+                              : 'No unread notifications',
+                          loading: () => 'Notifications',
+                          error: (_, __) => 'Notifications',
+                        ),
+                        button: true,
+                        child: Tooltip(
+                          message: 'View Notifications',
+                          child: IconButton(
+                            onPressed: () => context.push(AppRoutes.notifications),
+                            icon: Badge(
+                              isLabelVisible: unreadCount.maybeWhen(
+                                data: (count) => count > 0,
+                                orElse: () => false,
+                              ),
+                              label: Text(
+                                unreadCount.maybeWhen(
+                                  data: (count) => count > 99 ? '99+' : count.toString(),
+                                  orElse: () => '0',
+                                ),
+                              ),
+                              child: const Icon(Icons.notifications_outlined),
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -127,7 +166,9 @@ class HomeScreen extends ConsumerWidget {
                             icon: Icons.folder_outlined,
                             color: AppColors.info,
                             onTap: () {
-                              // TODO: Navigate to documents
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Documents feature coming soon')),
+                              );
                             },
                           ),
                         ),

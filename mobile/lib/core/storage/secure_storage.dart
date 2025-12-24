@@ -139,6 +139,19 @@ class SecureStorageService {
     ]);
   }
 
+  /// Check if PIN verification is still valid (not expired)
+  Future<bool> isPinVerificationValid() async {
+    final expiryStr = await read(SecureStorageKeys.pinVerificationExpiry);
+    if (expiryStr == null) return false;
+
+    try {
+      final expiry = DateTime.parse(expiryStr);
+      return expiry.isAfter(DateTime.now());
+    } catch (_) {
+      return false;
+    }
+  }
+
   // Full logout
   Future<void> clearAll() async {
     await deleteAll();

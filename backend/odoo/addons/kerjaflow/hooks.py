@@ -164,10 +164,6 @@ def uninstall_hook(cr, registry):
     _logger.info("KerjaFlow: Running uninstall hook...")
 
     # Drop custom indexes (Odoo handles table drops)
-    index_prefixes = ['kf_employee_', 'kf_user_', 'kf_leave_', 'kf_payslip_',
-                      'kf_notification_', 'kf_document_', 'kf_foreign_worker_',
-                      'kf_audit_log_', 'kf_public_holiday_']
-
     try:
         cr.execute("""
             SELECT indexname FROM pg_indexes

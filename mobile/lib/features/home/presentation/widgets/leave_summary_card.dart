@@ -9,63 +9,67 @@ class LeaveSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      color: AppColors.primary.withOpacity(0.05),
-      child: InkWell(
-        onTap: () => context.push(AppRoutes.leaveBalance),
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Leave Balance',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 16,
-                    color: AppColors.textSecondary,
-                  ),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              Row(
-                children: [
-                  Expanded(
-                    child: _LeaveBalanceItem(
-                      label: 'Annual',
-                      value: '10',
-                      total: '14',
-                      color: AppColors.primary,
+    return Semantics(
+      label: 'Leave Balance Summary. Annual 10 of 14 days, Medical 12 of 14 days, Emergency 2 of 3 days. Tap to view all balances.',
+      button: true,
+      child: Card(
+        elevation: 0,
+        color: AppColors.primary.withOpacity(0.05),
+        child: InkWell(
+          onTap: () => context.push(AppRoutes.leaveBalance),
+          borderRadius: BorderRadius.circular(16),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Leave Balance',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
-                  ),
-                  Expanded(
-                    child: _LeaveBalanceItem(
-                      label: 'Medical',
-                      value: '12',
-                      total: '14',
-                      color: AppColors.error,
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 16,
+                      color: AppColors.textSecondary,
                     ),
-                  ),
-                  Expanded(
-                    child: _LeaveBalanceItem(
-                      label: 'Emergency',
-                      value: '2',
-                      total: '3',
-                      color: AppColors.warning,
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.lg),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _LeaveBalanceItem(
+                        label: 'Annual',
+                        value: '10',
+                        total: '14',
+                        color: AppColors.primary,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    Expanded(
+                      child: _LeaveBalanceItem(
+                        label: 'Medical',
+                        value: '12',
+                        total: '14',
+                        color: AppColors.error,
+                      ),
+                    ),
+                    Expanded(
+                      child: _LeaveBalanceItem(
+                        label: 'Emergency',
+                        value: '2',
+                        total: '3',
+                        color: AppColors.warning,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

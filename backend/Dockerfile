@@ -31,5 +31,12 @@ USER odoo
 # Expose ports
 EXPOSE 8069 8072
 
-# Default command
-CMD ["odoo", "--addons-path=/mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons", "-d", "kerjaflow", "--db_host=db", "--db_user=odoo", "--db_password=odoo"]
+# Environment variables for database connection
+# CRITICAL: These must be set in production, never use defaults
+ENV DB_HOST=${DB_HOST:-db}
+ENV DB_USER=${DB_USER:-odoo}
+ENV DB_PASSWORD=${DB_PASSWORD}
+ENV DB_NAME=${DB_NAME:-kerjaflow}
+
+# Default command - uses environment variables
+CMD ["sh", "-c", "odoo --addons-path=/mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons -d ${DB_NAME} --db_host=${DB_HOST} --db_user=${DB_USER} --db_password=${DB_PASSWORD}"]

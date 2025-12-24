@@ -359,7 +359,7 @@ class TestPublicHoliday(KerjaFlowTestCase):
         """Test is_holiday method."""
         PublicHoliday = self.env['kf.public.holiday']
 
-        holiday = PublicHoliday.create({
+        PublicHoliday.create({
             'company_id': self.company.id,
             'name': 'Test Holiday',
             'date': date(2025, 7, 4),

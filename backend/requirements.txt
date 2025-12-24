@@ -42,3 +42,4 @@ limits>=3.7.0
 # HTTP client
 requests>=2.31.0
 httpx>=0.25.0
+urllib3>=2.6.0  # Pinned to fix CVE-2025-66418, CVE-2025-66471

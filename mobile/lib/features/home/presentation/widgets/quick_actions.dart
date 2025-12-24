@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../shared/theme/app_theme.dart';
+import '../../../../shared/widgets/accessible_tap.dart';
 import '../../../../core/router/app_router.dart';
 
 class QuickActionsWidget extends StatelessWidget {
@@ -74,8 +75,11 @@ class _QuickActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return AccessibleTap(
       onTap: onTap,
+      semanticLabel: label,
+      semanticHint: 'Tap to $label',
+      borderRadius: BorderRadius.circular(16),
       child: Column(
         children: [
           Container(

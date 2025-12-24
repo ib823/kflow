@@ -79,17 +79,22 @@ class AuthInterceptor extends Interceptor {
       );
 
       if (response.statusCode == 200) {
-        final newAccessToken = response.data['access_token'];
-        final expiresAt = response.data['expires_at'];
+        final data = response.data as Map<String, dynamic>;
+        final newAccessToken = data['access_token'] as String?;
+        final expiresAt = data['expires_at'] as String?;
 
-        await _storage.write(
-          key: StorageKeys.accessToken,
-          value: newAccessToken,
-        );
-        await _storage.write(
-          key: StorageKeys.tokenExpiry,
-          value: expiresAt,
-        );
+        if (newAccessToken != null) {
+          await _storage.write(
+            key: StorageKeys.accessToken,
+            value: newAccessToken,
+          );
+        }
+        if (expiresAt != null) {
+          await _storage.write(
+            key: StorageKeys.tokenExpiry,
+            value: expiresAt,
+          );
+        }
 
         return true;
       }

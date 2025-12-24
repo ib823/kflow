@@ -8,7 +8,7 @@ Unit tests for kf.user model including authentication and PIN management.
 
 from odoo.tests import tagged
 from odoo.exceptions import ValidationError
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 from .common import KerjaFlowTestCase
 
 

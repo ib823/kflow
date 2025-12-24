@@ -149,15 +149,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     labelText: 'Password',
                     hintText: 'Enter your password',
                     prefixIcon: const Icon(Icons.lock_outlined),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
+                    suffixIcon: Semantics(
+                      label: _obscurePassword ? 'Show password' : 'Hide password',
+                      child: IconButton(
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                        ),
+                        tooltip: _obscurePassword ? 'Show password' : 'Hide password',
+                        onPressed: () {
+                          setState(() => _obscurePassword = !_obscurePassword);
+                        },
                       ),
-                      onPressed: () {
-                        setState(() => _obscurePassword = !_obscurePassword);
-                      },
                     ),
                   ),
                   validator: (value) {

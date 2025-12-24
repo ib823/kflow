@@ -65,9 +65,9 @@ class ErrorInterceptor extends Interceptor {
 
     if (data is Map<String, dynamic>) {
       return ApiException(
-        code: data['code'] ?? 'ERROR',
-        message: data['message'] ?? _getDefaultMessage(statusCode),
-        details: data['details'],
+        code: (data['code'] as String?) ?? 'ERROR',
+        message: (data['message'] as String?) ?? _getDefaultMessage(statusCode),
+        details: data['details'] as Map<String, dynamic>?,
         fieldErrors: _parseFieldErrors(data['field_errors']),
         statusCode: statusCode,
       );
@@ -107,10 +107,11 @@ class ErrorInterceptor extends Interceptor {
     if (fieldErrors == null || fieldErrors is! List) return null;
 
     return fieldErrors
+        .cast<Map<String, dynamic>>()
         .map<FieldError>(
           (e) => FieldError(
-            field: e['field'] ?? '',
-            message: e['message'] ?? '',
+            field: (e['field'] as String?) ?? '',
+            message: (e['message'] as String?) ?? '',
           ),
         )
         .toList();

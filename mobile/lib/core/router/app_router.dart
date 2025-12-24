@@ -13,6 +13,7 @@ import '../../features/leave/presentation/leave_apply_screen.dart';
 import '../../features/payslip/presentation/payslip_list_screen.dart';
 import '../../features/payslip/presentation/payslip_detail_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
+import '../../features/profile/presentation/legal_screen.dart';
 import '../../features/notifications/presentation/notifications_screen.dart';
 import '../../shared/providers/auth_provider.dart';
 
@@ -32,6 +33,8 @@ class AppRoutes {
   static const payslipDetail = '/payslips/:id';
   static const profile = '/profile';
   static const notifications = '/notifications';
+  static const privacyPolicy = '/privacy-policy';
+  static const termsOfService = '/terms-of-service';
 }
 
 @riverpod
@@ -131,6 +134,14 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: AppRoutes.notifications,
         builder: (context, state) => const NotificationsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.privacyPolicy,
+        builder: (context, state) => const LegalScreen(docType: LegalDocType.privacyPolicy),
+      ),
+      GoRoute(
+        path: AppRoutes.termsOfService,
+        builder: (context, state) => const LegalScreen(docType: LegalDocType.termsOfService),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(

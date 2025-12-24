@@ -59,7 +59,7 @@ class AuthStateNotifier extends _$AuthStateNotifier {
   Future<User> _fetchCurrentUser() async {
     final dio = ref.read(dioClientProvider);
     final response = await dio.get('/profile');
-    return User.fromJson(response.data);
+    return User.fromJson(response.data as Map<String, dynamic>);
   }
 
   Future<void> login(String email, String password) async {
@@ -74,7 +74,7 @@ class AuthStateNotifier extends _$AuthStateNotifier {
         'password': password,
       });
 
-      final loginResponse = LoginResponse.fromJson(response.data);
+      final loginResponse = LoginResponse.fromJson(response.data as Map<String, dynamic>);
 
       await storage.saveTokens(
         accessToken: loginResponse.tokens.accessToken,
@@ -93,7 +93,8 @@ class AuthStateNotifier extends _$AuthStateNotifier {
         isLoggedIn: true,
       ));
     } on DioException catch (e) {
-      final message = e.response?.data?['message'] ?? 'Login failed';
+      final data = e.response?.data;
+      final message = (data is Map<String, dynamic> ? data['message'] as String? : null) ?? 'Login failed';
       state = AsyncValue.error(message, StackTrace.current);
     } catch (e) {
       state = AsyncValue.error(e.toString(), StackTrace.current);
@@ -123,7 +124,7 @@ class AuthStateNotifier extends _$AuthStateNotifier {
       }
 
       final dio = Dio(BaseOptions(
-        baseUrl: AppConfig.apiBaseUrl,
+        baseUrl: AppConfig.instance.apiBaseUrl,
         headers: {'Content-Type': 'application/json'},
       ));
 
@@ -131,7 +132,7 @@ class AuthStateNotifier extends _$AuthStateNotifier {
         'refresh_token': refreshToken,
       });
 
-      final tokens = AuthTokens.fromJson(response.data);
+      final tokens = AuthTokens.fromJson(response.data as Map<String, dynamic>);
 
       await storage.saveTokens(
         accessToken: tokens.accessToken,

@@ -7,7 +7,7 @@ Common test utilities and base test class for KerjaFlow tests.
 """
 
 from odoo.tests import TransactionCase, tagged
-from datetime import date, datetime, timedelta
+from datetime import date
 
 
 @tagged('kerjaflow', '-at_install', 'post_install')
@@ -170,7 +170,7 @@ class KerjaFlowTestCase(TransactionCase):
         })
 
     def _create_leave_request(self, employee, leave_type, date_from, date_to,
-                               status='PENDING', **kwargs):
+                              status='PENDING', **kwargs):
         """Helper to create leave request."""
         vals = {
             'employee_id': employee.id,

@@ -31,18 +31,19 @@ System Domain:
 - AuditLog (kf_audit_log)
 """
 
-from . import kf_company
-from . import kf_department
-from . import kf_job_position
-from . import kf_employee
-from . import kf_user
-from . import kf_foreign_worker_detail
-from . import kf_document
-from . import kf_leave_type
-from . import kf_leave_balance
-from . import kf_leave_request
-from . import kf_public_holiday
-from . import kf_payslip
-from . import kf_payslip_line
-from . import kf_notification
-from . import kf_audit_log
+# Odoo model discovery requires these imports
+from . import kf_company  # noqa: F401
+from . import kf_department  # noqa: F401
+from . import kf_job_position  # noqa: F401
+from . import kf_employee  # noqa: F401
+from . import kf_user  # noqa: F401
+from . import kf_foreign_worker_detail  # noqa: F401
+from . import kf_document  # noqa: F401
+from . import kf_leave_type  # noqa: F401
+from . import kf_leave_balance  # noqa: F401
+from . import kf_leave_request  # noqa: F401
+from . import kf_public_holiday  # noqa: F401
+from . import kf_payslip  # noqa: F401
+from . import kf_payslip_line  # noqa: F401
+from . import kf_notification  # noqa: F401
+from . import kf_audit_log  # noqa: F401

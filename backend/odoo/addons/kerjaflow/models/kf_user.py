@@ -7,7 +7,7 @@ Table: kf_user
 Handles JWT + PIN authentication
 """
 
-from odoo import models, fields, api
+from odoo import models, fields
 from odoo.exceptions import ValidationError
 import bcrypt
 import secrets

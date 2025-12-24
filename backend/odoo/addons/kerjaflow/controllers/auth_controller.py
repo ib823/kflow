@@ -519,11 +519,10 @@ class AuthController(KerjaFlowController):
 
     def _generate_access_token(self, user):
         """Generate JWT access token."""
-        # In production, use RS256 with proper keys
-        # For now, use HS256 for simplicity
-        secret = 'your-secret-key'  # TODO: Get from config
+        from ..config import config
 
-        expires_at = datetime.now() + timedelta(hours=24)
+        secret = config.get_jwt_secret()
+        expires_at = datetime.now() + timedelta(hours=config.get_access_token_expire_hours())
 
         payload = {
             'sub': str(user.id),
@@ -548,13 +547,13 @@ class AuthController(KerjaFlowController):
         token = auth_header[7:]  # Remove 'Bearer ' prefix
 
         try:
-            secret = 'your-secret-key'  # TODO: Get from config
+            from ..config import config
             payload = jwt.decode(
                 token,
-                secret,
-                algorithms=['HS256'],
-                audience='kerjaflow-mobile',
-                issuer='kerjaflow',
+                config.get_jwt_secret(),
+                algorithms=[config.get_jwt_algorithm()],
+                audience=config.get_jwt_audience(),
+                issuer=config.get_jwt_issuer(),
             )
             user_id = int(payload.get('sub'))
             return request.env['kf.user'].sudo().browse(user_id)

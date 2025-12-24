@@ -17,11 +17,12 @@ Endpoint Groups:
 Total: 32 endpoints
 """
 
-from . import main
-from . import auth_controller
-from . import profile_controller
-from . import payslip_controller
-from . import leave_controller
-from . import approval_controller
-from . import notification_controller
-from . import document_controller
+# Odoo controller discovery requires these imports
+from . import main  # noqa: F401
+from . import auth_controller  # noqa: F401
+from . import profile_controller  # noqa: F401
+from . import payslip_controller  # noqa: F401
+from . import leave_controller  # noqa: F401
+from . import approval_controller  # noqa: F401
+from . import notification_controller  # noqa: F401
+from . import document_controller  # noqa: F401

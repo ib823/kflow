@@ -9,7 +9,6 @@ Unit tests for payslip models:
 """
 
 from odoo.tests import tagged
-from odoo.exceptions import ValidationError
 from datetime import date
 from .common import KerjaFlowTestCase
 
@@ -201,10 +200,10 @@ class TestPayslipLine(KerjaFlowTestCase):
         # Verify line counts
         self.assertEqual(len(self.payslip.line_ids), 7)
         earnings_count = len(self.payslip.line_ids.filtered(
-            lambda l: l.line_type == 'EARNING'
+            lambda line: line.line_type == 'EARNING'
         ))
         deductions_count = len(self.payslip.line_ids.filtered(
-            lambda l: l.line_type == 'DEDUCTION'
+            lambda line: line.line_type == 'DEDUCTION'
         ))
         self.assertEqual(earnings_count, 3)
         self.assertEqual(deductions_count, 4)

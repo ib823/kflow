@@ -264,12 +264,8 @@ class KfLeaveRequest(models.Model):
         6. Attachment required
         7. Max days per request
         """
-        errors = []
-
-        # Get records
-        employee = self.env['kf.employee'].browse(employee_id)
+        # Get leave type record
         leave_type = self.env['kf.leave.type'].browse(leave_type_id)
-        company = employee.company_id
 
         # 1. Date validity
         if date_to < date_from:
@@ -380,8 +376,12 @@ class KfLeaveRequest(models.Model):
             if current.weekday() < 5:  # Not weekend
                 if current not in holidays:
                     working_days += 1
-            current = current.replace(day=current.day + 1) if current.day < 28 else \
-                      date(current.year, current.month + 1, 1) if current.month < 12 else \
-                      date(current.year + 1, 1, 1)
+            # Move to next day
+            if current.day < 28:
+                current = current.replace(day=current.day + 1)
+            elif current.month < 12:
+                current = date(current.year, current.month + 1, 1)
+            else:
+                current = date(current.year + 1, 1, 1)
 
         return working_days

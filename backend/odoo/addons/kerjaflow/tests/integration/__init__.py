@@ -6,7 +6,8 @@ KerjaFlow Integration Tests
 Integration tests for API endpoints and business logic workflows.
 """
 
-from . import test_auth_api
-from . import test_leave_api
-from . import test_payslip_api
-from . import test_approval_workflow
+# Odoo test discovery requires these imports
+from . import test_auth_api  # noqa: F401
+from . import test_leave_api  # noqa: F401
+from . import test_payslip_api  # noqa: F401
+from . import test_approval_workflow  # noqa: F401

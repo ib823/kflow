@@ -5,9 +5,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/config/app_config.dart';
 import 'core/localization/app_localizations.dart';
+import 'core/router/app_router.dart';
 import 'shared/theme/app_theme.dart';
 import 'core/network/dio_client.dart';
-import 'features/auth/presentation/providers/auth_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,7 +46,6 @@ class KerjaFlowApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authStateProvider);
     final locale = ref.watch(localeProvider);
 
     return MaterialApp.router(
@@ -67,7 +66,7 @@ class KerjaFlowApp extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      routerConfig: ref.watch(routerProvider),
+      routerConfig: ref.watch(appRouterProvider),
     );
   }
 }
@@ -75,10 +74,4 @@ class KerjaFlowApp extends ConsumerWidget {
 // Locale provider
 final localeProvider = StateProvider<Locale>((ref) {
   return const Locale('en', '');
-});
-
-// Router provider - will be implemented with go_router
-final routerProvider = Provider((ref) {
-  // TODO: Implement go_router configuration
-  throw UnimplementedError('Router not yet implemented');
 });

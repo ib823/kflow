@@ -24,16 +24,20 @@ class PayslipListScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Payslips'),
         actions: [
-          PopupMenuButton<int>(
-            icon: const Icon(Icons.filter_list),
-            onSelected: (year) {
-              // TODO: Filter by year
-            },
-            itemBuilder: (context) => [
-              const PopupMenuItem(value: 2025, child: Text('2025')),
-              const PopupMenuItem(value: 2024, child: Text('2024')),
-              const PopupMenuItem(value: 2023, child: Text('2023')),
-            ],
+          Semantics(
+            label: 'Filter payslips by year',
+            child: PopupMenuButton<int>(
+              icon: const Icon(Icons.filter_list),
+              tooltip: 'Filter by Year',
+              onSelected: (year) {
+                // TODO: Filter by year
+              },
+              itemBuilder: (context) => [
+                const PopupMenuItem(value: 2025, child: Text('2025')),
+                const PopupMenuItem(value: 2024, child: Text('2024')),
+                const PopupMenuItem(value: 2023, child: Text('2023')),
+              ],
+            ),
           ),
         ],
       ),
@@ -92,82 +96,86 @@ class _PayslipCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: AppSpacing.md),
-      elevation: 0,
-      color: Colors.grey.shade50,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          child: Row(
-            children: [
-              Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  color: AppColors.success.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.receipt_long,
-                  color: AppColors.success,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      _formatPeriod(payPeriod),
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    const SizedBox(height: AppSpacing.xs),
-                    Text(
-                      'Paid on $payDate',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
-                    ),
-                  ],
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    _formatCurrency(netSalary),
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.success,
-                        ),
+    return Semantics(
+      label: 'Payslip for ${_formatPeriod(payPeriod)}, Net salary ${_formatCurrency(netSalary)}. Tap to view details. PIN required.',
+      button: true,
+      child: Card(
+        margin: const EdgeInsets.only(bottom: AppSpacing.md),
+        elevation: 0,
+        color: Colors.grey.shade50,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(16),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Row(
+              children: [
+                Container(
+                  width: 56,
+                  height: 56,
+                  decoration: BoxDecoration(
+                    color: AppColors.success.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  const SizedBox(height: AppSpacing.xs),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
+                  child: const Icon(
+                    Icons.receipt_long,
+                    color: AppColors.success,
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.lock_outline,
-                        size: 12,
-                        color: AppColors.textSecondary,
-                      ),
-                      const SizedBox(width: 4),
                       Text(
-                        'PIN required',
+                        _formatPeriod(payPeriod),
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      const SizedBox(height: AppSpacing.xs),
+                      Text(
+                        'Paid on $payDate',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: AppColors.textSecondary,
-                              fontSize: 10,
                             ),
                       ),
                     ],
                   ),
-                ],
-              ),
-            ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      _formatCurrency(netSalary),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.success,
+                          ),
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.lock_outline,
+                          size: 12,
+                          color: AppColors.textSecondary,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          'PIN required',
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: AppColors.textSecondary,
+                                fontSize: 10,
+                              ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

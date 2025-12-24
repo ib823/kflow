@@ -21,8 +21,11 @@ class ProfileScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
+            tooltip: 'Edit Profile',
             onPressed: () {
-              // TODO: Navigate to edit profile
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Profile editing coming soon')),
+              );
             },
           ),
         ],
@@ -127,7 +130,9 @@ class ProfileScreen extends ConsumerWidget {
                 label: 'Change Password',
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  // TODO: Navigate to change password
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Please contact HR to change your password')),
+                  );
                 },
               ),
               _ProfileItem(
@@ -135,7 +140,7 @@ class ProfileScreen extends ConsumerWidget {
                 label: 'Change PIN',
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  // TODO: Navigate to change PIN
+                  context.push(AppRoutes.pinSetup);
                 },
               ),
               _ProfileItem(
@@ -144,7 +149,9 @@ class ProfileScreen extends ConsumerWidget {
                 trailing: Switch(
                   value: false,
                   onChanged: (value) {
-                    // TODO: Toggle biometric
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Biometric login coming soon')),
+                    );
                   },
                 ),
               ),
@@ -154,7 +161,9 @@ class ProfileScreen extends ConsumerWidget {
                 value: 'English',
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  // TODO: Language selection
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Language selection coming soon')),
+                  );
                 },
               ),
               _ProfileItem(
@@ -162,7 +171,7 @@ class ProfileScreen extends ConsumerWidget {
                 label: 'Notifications',
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  // TODO: Notification settings
+                  context.push(AppRoutes.notifications);
                 },
               ),
             ],
@@ -179,7 +188,9 @@ class ProfileScreen extends ConsumerWidget {
                 label: 'Help & FAQ',
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  // TODO: Navigate to help
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('For help, please contact HR at support@kerjaflow.my')),
+                  );
                 },
               ),
               _ProfileItem(
@@ -187,7 +198,15 @@ class ProfileScreen extends ConsumerWidget {
                 label: 'Privacy Policy',
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  // TODO: Navigate to privacy policy
+                  context.push(AppRoutes.privacyPolicy);
+                },
+              ),
+              _ProfileItem(
+                icon: Icons.description_outlined,
+                label: 'Terms of Service',
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () {
+                  context.push(AppRoutes.termsOfService);
                 },
               ),
               _ProfileItem(
@@ -196,7 +215,21 @@ class ProfileScreen extends ConsumerWidget {
                 value: 'Version 1.0.0',
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  // TODO: Navigate to about
+                  showAboutDialog(
+                    context: context,
+                    applicationName: 'KerjaFlow',
+                    applicationVersion: '1.0.0',
+                    applicationIcon: Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(Icons.work_rounded, color: Colors.white),
+                    ),
+                    applicationLegalese: '© 2024 KerjaFlow Sdn Bhd\nEnterprise Workforce Management',
+                  );
                 },
               ),
             ],

@@ -169,52 +169,59 @@ class _PinVerifyScreenState extends ConsumerState<PinVerifyScreen> {
               const SizedBox(height: AppSpacing.xxxl),
 
               // PIN input
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(6, (index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 6),
-                    child: SizedBox(
-                      width: 48,
-                      height: 56,
-                      child: TextField(
-                        controller: _pinControllers[index],
-                        focusNode: _focusNodes[index],
-                        keyboardType: TextInputType.number,
-                        textAlign: TextAlign.center,
-                        maxLength: 1,
-                        obscureText: true,
-                        enabled: !_isLoading,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        decoration: InputDecoration(
-                          counterText: '',
-                          filled: true,
-                          fillColor: _pinControllers[index].text.isNotEmpty
-                              ? AppColors.primary.withOpacity(0.1)
-                              : Colors.grey.shade100,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(
-                              color: AppColors.primary,
-                              width: 2,
+              Semantics(
+                label: 'PIN entry. Enter 6 digits.',
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(6, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 6),
+                      child: SizedBox(
+                        width: 48,
+                        height: 56,
+                        child: Semantics(
+                          label: 'PIN digit ${index + 1} of 6',
+                          textField: true,
+                          child: TextField(
+                            controller: _pinControllers[index],
+                            focusNode: _focusNodes[index],
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                            maxLength: 1,
+                            obscureText: true,
+                            enabled: !_isLoading,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
                             ),
+                            decoration: InputDecoration(
+                              counterText: '',
+                              filled: true,
+                              fillColor: _pinControllers[index].text.isNotEmpty
+                                  ? AppColors.primary.withOpacity(0.1)
+                                  : Colors.grey.shade100,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide.none,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(
+                                  color: AppColors.primary,
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                            onChanged: (value) => _onPinChanged(index, value),
                           ),
                         ),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        onChanged: (value) => _onPinChanged(index, value),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+                ),
               ),
 
               const SizedBox(height: AppSpacing.xl),

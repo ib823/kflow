@@ -23,9 +23,13 @@ class LeaveBalanceScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Leave Balance'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.history),
-            onPressed: () => context.push(AppRoutes.leaveHistory),
+          Semantics(
+            label: 'View leave history',
+            child: IconButton(
+              icon: const Icon(Icons.history),
+              tooltip: 'Leave History',
+              onPressed: () => context.push(AppRoutes.leaveHistory),
+            ),
           ),
         ],
       ),
@@ -76,104 +80,107 @@ class _LeaveBalanceCard extends StatelessWidget {
     final progress = balance.available / balance.entitled;
     final taken = balance.entitled - balance.available;
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: AppSpacing.md),
-      elevation: 0,
-      color: Colors.grey.shade50,
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: balance.color.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Center(
-                    child: Text(
-                      balance.code,
-                      style: TextStyle(
-                        color: balance.color,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+    return Semantics(
+      label: '${balance.name}, ${balance.available.toStringAsFixed(0)} days available of ${balance.entitled.toStringAsFixed(0)} entitled, ${taken.toStringAsFixed(0)} days taken',
+      child: Card(
+        margin: const EdgeInsets.only(bottom: AppSpacing.md),
+        elevation: 0,
+        color: Colors.grey.shade50,
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: balance.color.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child: Text(
+                        balance.code,
+                        style: TextStyle(
+                          color: balance.color,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: AppSpacing.md),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  const SizedBox(width: AppSpacing.md),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          balance.name,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                        Text(
+                          balance.nameMs,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: AppColors.textSecondary,
+                              ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        balance.name,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        '${balance.available.toStringAsFixed(balance.available.truncateToDouble() == balance.available ? 0 : 1)}',
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                               fontWeight: FontWeight.bold,
+                              color: balance.color,
                             ),
                       ),
                       Text(
-                        balance.nameMs,
+                        'days left',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: AppColors.textSecondary,
                             ),
                       ),
                     ],
                   ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      '${balance.available.toStringAsFixed(balance.available.truncateToDouble() == balance.available ? 0 : 1)}',
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: balance.color,
-                          ),
-                    ),
-                    Text(
-                      'days left',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: LinearProgressIndicator(
-                value: progress,
-                backgroundColor: Colors.grey.shade200,
-                valueColor: AlwaysStoppedAnimation(balance.color),
-                minHeight: 8,
+                ],
               ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Taken: ${taken.toStringAsFixed(taken.truncateToDouble() == taken ? 0 : 1)} days',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
+              const SizedBox(height: AppSpacing.lg),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: LinearProgressIndicator(
+                  value: progress,
+                  backgroundColor: Colors.grey.shade200,
+                  valueColor: AlwaysStoppedAnimation(balance.color),
+                  minHeight: 8,
                 ),
-                Text(
-                  'Entitled: ${balance.entitled.toStringAsFixed(balance.entitled.truncateToDouble() == balance.entitled ? 0 : 1)} days',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
-                ),
-              ],
-            ),
-          ],
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Taken: ${taken.toStringAsFixed(taken.truncateToDouble() == taken ? 0 : 1)} days',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                  ),
+                  Text(
+                    'Entitled: ${balance.entitled.toStringAsFixed(balance.entitled.truncateToDouble() == balance.entitled ? 0 : 1)} days',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

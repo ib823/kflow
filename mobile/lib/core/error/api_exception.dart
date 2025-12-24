@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 /// API exception with structured error information
 class ApiException implements Exception {
   final String code;
@@ -15,6 +17,74 @@ class ApiException implements Exception {
     this.statusCode,
     this.isNetworkError = false,
   });
+
+  /// Create an ApiException from a DioException
+  factory ApiException.fromDioException(DioException e) {
+    // Handle network errors
+    if (e.type == DioExceptionType.connectionError ||
+        e.type == DioExceptionType.connectionTimeout ||
+        e.type == DioExceptionType.sendTimeout ||
+        e.type == DioExceptionType.receiveTimeout) {
+      return ApiException(
+        code: e.type == DioExceptionType.connectionError
+            ? ErrorCodes.networkError
+            : ErrorCodes.timeout,
+        message: e.type == DioExceptionType.connectionError
+            ? 'Unable to connect to server. Please check your internet connection.'
+            : 'Request timed out. Please try again.',
+        isNetworkError: true,
+      );
+    }
+
+    // Handle server responses
+    final response = e.response;
+    if (response != null) {
+      final data = response.data;
+
+      // Try to parse structured error from API
+      if (data is Map<String, dynamic>) {
+        final errorData = data['error'] as Map<String, dynamic>?;
+        if (errorData != null) {
+          List<FieldError>? fieldErrors;
+          final fields = errorData['fields'] as Map<String, dynamic>?;
+          if (fields != null) {
+            fieldErrors = fields.entries
+                .map((e) => FieldError(field: e.key, message: e.value.toString()))
+                .toList();
+          }
+
+          return ApiException(
+            code: errorData['code']?.toString() ?? 'UNKNOWN_ERROR',
+            message: errorData['message']?.toString() ?? 'An error occurred',
+            details: errorData['details'] as Map<String, dynamic>?,
+            fieldErrors: fieldErrors,
+            statusCode: response.statusCode,
+          );
+        }
+
+        // Fallback for non-standard error format
+        return ApiException(
+          code: data['code']?.toString() ?? 'UNKNOWN_ERROR',
+          message: data['message']?.toString() ?? 'An error occurred',
+          statusCode: response.statusCode,
+        );
+      }
+
+      // Handle non-JSON responses
+      return ApiException(
+        code: 'SERVER_ERROR',
+        message: 'Server returned an error',
+        statusCode: response.statusCode,
+      );
+    }
+
+    // Handle other errors
+    return ApiException(
+      code: ErrorCodes.networkError,
+      message: e.message ?? 'An unexpected error occurred',
+      isNetworkError: true,
+    );
+  }
 
   /// Check if error is authentication related
   bool get isAuthError =>

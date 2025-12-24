@@ -1,10 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../config/app_config.dart';
 import 'interceptors/auth_interceptor.dart';
 import 'interceptors/error_interceptor.dart';
 import 'interceptors/logging_interceptor.dart';
+
+/// Provider for the Dio HTTP client
+final dioClientProvider = Provider<Dio>((ref) {
+  return DioClient.instance;
+});
 
 /// Singleton Dio HTTP client for API communication
 class DioClient {

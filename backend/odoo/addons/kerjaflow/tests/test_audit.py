@@ -7,7 +7,7 @@ Unit tests for kf.audit.log model.
 """
 
 from odoo.tests import tagged
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 from .common import KerjaFlowTestCase
 
 
@@ -139,19 +139,19 @@ class TestAuditLog(KerjaFlowTestCase):
         AuditLog = self.env['kf.audit.log']
 
         # Create logs with slight delays
-        log1 = AuditLog.create({
+        AuditLog.create({
             'action': 'LOGIN',
             'user_id': self.user.id,
             'company_id': self.company.id,
         })
 
-        log2 = AuditLog.create({
+        AuditLog.create({
             'action': 'PROFILE_UPDATE',
             'user_id': self.user.id,
             'company_id': self.company.id,
         })
 
-        log3 = AuditLog.create({
+        AuditLog.create({
             'action': 'LOGOUT',
             'user_id': self.user.id,
             'company_id': self.company.id,

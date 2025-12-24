@@ -7,7 +7,6 @@ Unit tests for kf.document model.
 """
 
 from odoo.tests import tagged
-from odoo.exceptions import ValidationError
 from datetime import date, timedelta
 from .common import KerjaFlowTestCase
 

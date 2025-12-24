@@ -196,14 +196,17 @@ class ApprovalController(KerjaFlowController):
 
     def _get_user_from_token(self):
         import jwt
+        from ..config import config
         auth_header = request.httprequest.headers.get('Authorization')
         if not auth_header or not auth_header.startswith('Bearer '):
             return None
         token = auth_header[7:]
         try:
-            secret = 'your-secret-key'
-            payload = jwt.decode(token, secret, algorithms=['HS256'],
-                               audience='kerjaflow-mobile', issuer='kerjaflow')
+            payload = jwt.decode(
+                token, config.get_jwt_secret(),
+                algorithms=[config.get_jwt_algorithm()],
+                audience=config.get_jwt_audience(),
+                issuer=config.get_jwt_issuer())
             user_id = int(payload.get('sub'))
             return request.env['kf.user'].sudo().browse(user_id)
         except Exception:
