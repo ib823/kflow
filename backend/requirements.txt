@@ -1,0 +1,44 @@
+# KerjaFlow Backend Dependencies
+# Production dependencies for Odoo custom module
+
+# JWT Authentication
+PyJWT==2.8.0
+cryptography>=41.0.0
+
+# Password hashing
+bcrypt==4.1.2
+
+# Redis for session/token management
+redis==5.0.1
+
+# API utilities
+python-dateutil>=2.8.2
+pytz>=2023.3
+
+# File handling
+Pillow>=10.0.0
+python-magic>=0.4.27
+
+# PDF generation
+reportlab>=4.0.0
+PyPDF2>=3.0.0
+
+# Data validation
+pydantic>=2.5.0
+
+# Excel/CSV import
+openpyxl>=3.1.2
+pandas>=2.0.0
+
+# Push notifications
+firebase-admin>=6.2.0
+
+# AWS S3 for file storage
+boto3>=1.33.0
+
+# Rate limiting
+limits>=3.7.0
+
+# HTTP client
+requests>=2.31.0
+httpx>=0.25.0

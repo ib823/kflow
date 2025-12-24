@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--
+        Malaysian Public Holidays 2025
+        ===============================
+        Federal holidays are observed nationwide.
+        State-specific holidays vary by state.
+
+        Note: Dates may shift based on lunar calendar for Islamic holidays.
+        These are estimated dates and should be updated annually.
+        -->
+
+        <!-- Federal Public Holidays 2025 -->
+
+        <record id="ph_2025_new_year" model="kf.public.holiday">
+            <field name="name">New Year's Day</field>
+            <field name="name_ms">Tahun Baru</field>
+            <field name="date">2025-01-01</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_thaipusam" model="kf.public.holiday">
+            <field name="name">Thaipusam</field>
+            <field name="name_ms">Thaipusam</field>
+            <field name="date">2025-02-11</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_federal_territory" model="kf.public.holiday">
+            <field name="name">Federal Territory Day</field>
+            <field name="name_ms">Hari Wilayah Persekutuan</field>
+            <field name="date">2025-02-01</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">WP</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_cny_1" model="kf.public.holiday">
+            <field name="name">Chinese New Year (Day 1)</field>
+            <field name="name_ms">Tahun Baru Cina (Hari 1)</field>
+            <field name="date">2025-01-29</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_cny_2" model="kf.public.holiday">
+            <field name="name">Chinese New Year (Day 2)</field>
+            <field name="name_ms">Tahun Baru Cina (Hari 2)</field>
+            <field name="date">2025-01-30</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_nuzul_quran" model="kf.public.holiday">
+            <field name="name">Nuzul Al-Quran</field>
+            <field name="name_ms">Nuzul Al-Quran</field>
+            <field name="date">2025-03-17</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_hari_raya_1" model="kf.public.holiday">
+            <field name="name">Hari Raya Aidilfitri (Day 1)</field>
+            <field name="name_ms">Hari Raya Aidilfitri (Hari 1)</field>
+            <field name="date">2025-03-30</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_hari_raya_2" model="kf.public.holiday">
+            <field name="name">Hari Raya Aidilfitri (Day 2)</field>
+            <field name="name_ms">Hari Raya Aidilfitri (Hari 2)</field>
+            <field name="date">2025-03-31</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_labour_day" model="kf.public.holiday">
+            <field name="name">Labour Day</field>
+            <field name="name_ms">Hari Pekerja</field>
+            <field name="date">2025-05-01</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_wesak" model="kf.public.holiday">
+            <field name="name">Wesak Day</field>
+            <field name="name_ms">Hari Wesak</field>
+            <field name="date">2025-05-12</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_agong" model="kf.public.holiday">
+            <field name="name">Yang di-Pertuan Agong's Birthday</field>
+            <field name="name_ms">Hari Keputeraan Yang di-Pertuan Agong</field>
+            <field name="date">2025-06-02</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_hari_raya_haji" model="kf.public.holiday">
+            <field name="name">Hari Raya Haji</field>
+            <field name="name_ms">Hari Raya Aidiladha</field>
+            <field name="date">2025-06-06</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_awal_muharram" model="kf.public.holiday">
+            <field name="name">Awal Muharram</field>
+            <field name="name_ms">Awal Muharram</field>
+            <field name="date">2025-06-26</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_merdeka" model="kf.public.holiday">
+            <field name="name">National Day</field>
+            <field name="name_ms">Hari Kebangsaan</field>
+            <field name="date">2025-08-31</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_maulidur_rasul" model="kf.public.holiday">
+            <field name="name">Prophet Muhammad's Birthday</field>
+            <field name="name_ms">Maulidur Rasul</field>
+            <field name="date">2025-09-04</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_malaysia_day" model="kf.public.holiday">
+            <field name="name">Malaysia Day</field>
+            <field name="name_ms">Hari Malaysia</field>
+            <field name="date">2025-09-16</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_deepavali" model="kf.public.holiday">
+            <field name="name">Deepavali</field>
+            <field name="name_ms">Deepavali</field>
+            <field name="date">2025-10-20</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_christmas" model="kf.public.holiday">
+            <field name="name">Christmas Day</field>
+            <field name="name_ms">Hari Krismas</field>
+            <field name="date">2025-12-25</field>
+            <field name="holiday_type">FEDERAL</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <!-- State-Specific Holidays -->
+
+        <!-- Selangor -->
+        <record id="ph_2025_sultan_selangor" model="kf.public.holiday">
+            <field name="name">Sultan of Selangor's Birthday</field>
+            <field name="name_ms">Hari Keputeraan Sultan Selangor</field>
+            <field name="date">2025-12-11</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">SGR</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <!-- Johor -->
+        <record id="ph_2025_sultan_johor" model="kf.public.holiday">
+            <field name="name">Sultan of Johor's Birthday</field>
+            <field name="name_ms">Hari Keputeraan Sultan Johor</field>
+            <field name="date">2025-03-23</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">JHR</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_johor_hol" model="kf.public.holiday">
+            <field name="name">Johor Hol</field>
+            <field name="name_ms">Hari Hol Johor</field>
+            <field name="date">2025-02-11</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">JHR</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <!-- Penang -->
+        <record id="ph_2025_penang_governor" model="kf.public.holiday">
+            <field name="name">Penang Governor's Birthday</field>
+            <field name="name_ms">Hari Jadi Yang di-Pertua Negeri Pulau Pinang</field>
+            <field name="date">2025-07-12</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">PNG</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_george_town" model="kf.public.holiday">
+            <field name="name">George Town Heritage Day</field>
+            <field name="name_ms">Hari Perisytiharan Tapak Warisan Dunia Georgetown</field>
+            <field name="date">2025-07-07</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">PNG</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <!-- Sabah -->
+        <record id="ph_2025_sabah_governor" model="kf.public.holiday">
+            <field name="name">Sabah Governor's Birthday</field>
+            <field name="name_ms">Hari Jadi Yang di-Pertua Negeri Sabah</field>
+            <field name="date">2025-10-04</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">SBH</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_harvest_festival" model="kf.public.holiday">
+            <field name="name">Harvest Festival (Pesta Kaamatan)</field>
+            <field name="name_ms">Pesta Kaamatan</field>
+            <field name="date">2025-05-30</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">SBH</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_harvest_festival_2" model="kf.public.holiday">
+            <field name="name">Harvest Festival (Pesta Kaamatan) Day 2</field>
+            <field name="name_ms">Pesta Kaamatan (Hari 2)</field>
+            <field name="date">2025-05-31</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">SBH</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <!-- Sarawak -->
+        <record id="ph_2025_sarawak_governor" model="kf.public.holiday">
+            <field name="name">Sarawak Governor's Birthday</field>
+            <field name="name_ms">Hari Jadi Yang di-Pertua Negeri Sarawak</field>
+            <field name="date">2025-10-11</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">SRW</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_gawai_1" model="kf.public.holiday">
+            <field name="name">Gawai Dayak (Day 1)</field>
+            <field name="name_ms">Hari Gawai (Hari 1)</field>
+            <field name="date">2025-06-01</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">SRW</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_gawai_2" model="kf.public.holiday">
+            <field name="name">Gawai Dayak (Day 2)</field>
+            <field name="name_ms">Hari Gawai (Hari 2)</field>
+            <field name="date">2025-06-02</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">SRW</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_sarawak_independence" model="kf.public.holiday">
+            <field name="name">Sarawak Independence Day</field>
+            <field name="name_ms">Hari Kemerdekaan Sarawak</field>
+            <field name="date">2025-07-22</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">SRW</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <!-- Perak -->
+        <record id="ph_2025_sultan_perak" model="kf.public.holiday">
+            <field name="name">Sultan of Perak's Birthday</field>
+            <field name="name_ms">Hari Keputeraan Sultan Perak</field>
+            <field name="date">2025-11-07</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">PRK</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <!-- Kedah -->
+        <record id="ph_2025_sultan_kedah" model="kf.public.holiday">
+            <field name="name">Sultan of Kedah's Birthday</field>
+            <field name="name_ms">Hari Keputeraan Sultan Kedah</field>
+            <field name="date">2025-06-15</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">KDH</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <!-- Kelantan -->
+        <record id="ph_2025_sultan_kelantan" model="kf.public.holiday">
+            <field name="name">Sultan of Kelantan's Birthday</field>
+            <field name="name_ms">Hari Keputeraan Sultan Kelantan</field>
+            <field name="date">2025-11-11</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">KTN</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <!-- Terengganu -->
+        <record id="ph_2025_sultan_terengganu" model="kf.public.holiday">
+            <field name="name">Sultan of Terengganu's Birthday</field>
+            <field name="name_ms">Hari Keputeraan Sultan Terengganu</field>
+            <field name="date">2025-04-26</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">TRG</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <!-- Pahang -->
+        <record id="ph_2025_sultan_pahang" model="kf.public.holiday">
+            <field name="name">Sultan of Pahang's Birthday</field>
+            <field name="name_ms">Hari Keputeraan Sultan Pahang</field>
+            <field name="date">2025-07-30</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">PHG</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <!-- Negeri Sembilan -->
+        <record id="ph_2025_ns_ruler" model="kf.public.holiday">
+            <field name="name">Yang di-Pertuan Besar of Negeri Sembilan's Birthday</field>
+            <field name="name_ms">Hari Keputeraan Yang di-Pertuan Besar Negeri Sembilan</field>
+            <field name="date">2025-01-14</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">NSN</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <!-- Malacca -->
+        <record id="ph_2025_malacca_governor" model="kf.public.holiday">
+            <field name="name">Malacca Governor's Birthday</field>
+            <field name="name_ms">Hari Jadi Yang di-Pertua Negeri Melaka</field>
+            <field name="date">2025-10-10</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">MLK</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="ph_2025_malacca_declaration" model="kf.public.holiday">
+            <field name="name">Declaration of Malacca as Historical City</field>
+            <field name="name_ms">Perisytiharan Melaka sebagai Bandaraya Bersejarah</field>
+            <field name="date">2025-04-15</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">MLK</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <!-- Perlis -->
+        <record id="ph_2025_raja_perlis" model="kf.public.holiday">
+            <field name="name">Raja of Perlis' Birthday</field>
+            <field name="name_ms">Hari Keputeraan Raja Perlis</field>
+            <field name="date">2025-05-17</field>
+            <field name="holiday_type">STATE</field>
+            <field name="state">PLS</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

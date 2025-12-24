@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- KerjaFlow Security Groups (RBAC) -->
+        <record id="module_category_kerjaflow" model="ir.module.category">
+            <field name="name">KerjaFlow</field>
+            <field name="description">KerjaFlow Workforce Management</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Employee Role (Base) -->
+        <record id="group_employee" model="res.groups">
+            <field name="name">Employee</field>
+            <field name="category_id" ref="module_category_kerjaflow"/>
+            <field name="comment">Can view own data, apply leave</field>
+        </record>
+
+        <!-- Supervisor Role -->
+        <record id="group_supervisor" model="res.groups">
+            <field name="name">Supervisor</field>
+            <field name="category_id" ref="module_category_kerjaflow"/>
+            <field name="implied_ids" eval="[(4, ref('group_employee'))]"/>
+            <field name="comment">Can approve direct reports' leave</field>
+        </record>
+
+        <!-- HR Executive Role -->
+        <record id="group_hr_exec" model="res.groups">
+            <field name="name">HR Executive</field>
+            <field name="category_id" ref="module_category_kerjaflow"/>
+            <field name="implied_ids" eval="[(4, ref('group_supervisor'))]"/>
+            <field name="comment">Create employees, process leave</field>
+        </record>
+
+        <!-- HR Manager Role -->
+        <record id="group_hr_manager" model="res.groups">
+            <field name="name">HR Manager</field>
+            <field name="category_id" ref="module_category_kerjaflow"/>
+            <field name="implied_ids" eval="[(4, ref('group_hr_exec'))]"/>
+            <field name="comment">All HR data, publish payslips</field>
+        </record>
+
+        <!-- Admin Role -->
+        <record id="group_admin" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="module_category_kerjaflow"/>
+            <field name="implied_ids" eval="[(4, ref('group_hr_manager'))]"/>
+            <field name="comment">Full access, system configuration</field>
+        </record>
+
+        <!-- Record Rules -->
+
+        <!-- Employee: Can only see own record -->
+        <record id="rule_employee_own" model="ir.rule">
+            <field name="name">Employee: Own Record Only</field>
+            <field name="model_id" ref="model_kf_employee"/>
+            <field name="domain_force">[('id', '=', user.employee_id.id)]</field>
+            <field name="groups" eval="[(4, ref('group_employee'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Supervisor: Can see direct reports -->
+        <record id="rule_employee_supervisor" model="ir.rule">
+            <field name="name">Supervisor: Own + Direct Reports</field>
+            <field name="model_id" ref="model_kf_employee"/>
+            <field name="domain_force">['|', ('id', '=', user.employee_id.id), ('manager_id', '=', user.employee_id.id)]</field>
+            <field name="groups" eval="[(4, ref('group_supervisor'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- HR: Can see all in company -->
+        <record id="rule_employee_hr" model="ir.rule">
+            <field name="name">HR: All Company Employees</field>
+            <field name="model_id" ref="model_kf_employee"/>
+            <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
+            <field name="groups" eval="[(4, ref('group_hr_exec'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Leave Request: Own requests -->
+        <record id="rule_leave_request_own" model="ir.rule">
+            <field name="name">Leave Request: Own Only</field>
+            <field name="model_id" ref="model_kf_leave_request"/>
+            <field name="domain_force">[('employee_id', '=', user.employee_id.id)]</field>
+            <field name="groups" eval="[(4, ref('group_employee'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Leave Request: Supervisor can see and approve direct reports -->
+        <record id="rule_leave_request_supervisor" model="ir.rule">
+            <field name="name">Leave Request: Own + Direct Reports</field>
+            <field name="model_id" ref="model_kf_leave_request"/>
+            <field name="domain_force">['|', ('employee_id', '=', user.employee_id.id), ('employee_id.manager_id', '=', user.employee_id.id)]</field>
+            <field name="groups" eval="[(4, ref('group_supervisor'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Payslip: Own only (employee) -->
+        <record id="rule_payslip_own" model="ir.rule">
+            <field name="name">Payslip: Own Only</field>
+            <field name="model_id" ref="model_kf_payslip"/>
+            <field name="domain_force">[('employee_id', '=', user.employee_id.id), ('status', '=', 'PUBLISHED')]</field>
+            <field name="groups" eval="[(4, ref('group_employee'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Leave Balance: Own only -->
+        <record id="rule_leave_balance_own" model="ir.rule">
+            <field name="name">Leave Balance: Own Only</field>
+            <field name="model_id" ref="model_kf_leave_balance"/>
+            <field name="domain_force">[('employee_id', '=', user.employee_id.id)]</field>
+            <field name="groups" eval="[(4, ref('group_employee'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Notification: Own only -->
+        <record id="rule_notification_own" model="ir.rule">
+            <field name="name">Notification: Own Only</field>
+            <field name="model_id" ref="model_kf_notification"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_employee'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Document: Own only (employee) -->
+        <record id="rule_document_own" model="ir.rule">
+            <field name="name">Document: Own Only</field>
+            <field name="model_id" ref="model_kf_document"/>
+            <field name="domain_force">[('employee_id', '=', user.employee_id.id)]</field>
+            <field name="groups" eval="[(4, ref('group_employee'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

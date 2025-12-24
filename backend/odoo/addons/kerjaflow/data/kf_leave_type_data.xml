@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Malaysian Standard Leave Types -->
+
+        <!-- Annual Leave (Cuti Tahunan) -->
+        <record id="leave_type_annual" model="kf.leave.type">
+            <field name="code">AL</field>
+            <field name="name">Annual Leave</field>
+            <field name="name_ms">Cuti Tahunan</field>
+            <field name="description">Paid annual leave entitlement based on years of service</field>
+            <field name="color">#4CAF50</field>
+            <field name="icon">beach_access</field>
+            <field name="default_entitlement">14</field>
+            <field name="max_carry_forward">5</field>
+            <field name="carry_forward_months">3</field>
+            <field name="allow_half_day" eval="True"/>
+            <field name="allow_negative" eval="False"/>
+            <field name="requires_attachment" eval="False"/>
+            <field name="requires_approval" eval="True"/>
+            <field name="min_days_notice">3</field>
+            <field name="max_days_per_request">14</field>
+            <field name="is_visible" eval="True"/>
+            <field name="is_active" eval="True"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Medical Leave (Cuti Sakit) -->
+        <record id="leave_type_medical" model="kf.leave.type">
+            <field name="code">MC</field>
+            <field name="name">Medical Leave</field>
+            <field name="name_ms">Cuti Sakit</field>
+            <field name="description">Paid sick leave with medical certificate required</field>
+            <field name="color">#F44336</field>
+            <field name="icon">local_hospital</field>
+            <field name="default_entitlement">14</field>
+            <field name="max_carry_forward">0</field>
+            <field name="carry_forward_months">0</field>
+            <field name="allow_half_day" eval="True"/>
+            <field name="allow_negative" eval="False"/>
+            <field name="requires_attachment" eval="True"/>
+            <field name="requires_approval" eval="True"/>
+            <field name="min_days_notice">0</field>
+            <field name="max_days_per_request">60</field>
+            <field name="is_visible" eval="True"/>
+            <field name="is_active" eval="True"/>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- Hospitalization Leave (Cuti Kemasukan Hospital) -->
+        <record id="leave_type_hospital" model="kf.leave.type">
+            <field name="code">HL</field>
+            <field name="name">Hospitalization Leave</field>
+            <field name="name_ms">Cuti Kemasukan Hospital</field>
+            <field name="description">Extended medical leave for hospitalization</field>
+            <field name="color">#E91E63</field>
+            <field name="icon">hotel</field>
+            <field name="default_entitlement">60</field>
+            <field name="max_carry_forward">0</field>
+            <field name="carry_forward_months">0</field>
+            <field name="allow_half_day" eval="False"/>
+            <field name="allow_negative" eval="False"/>
+            <field name="requires_attachment" eval="True"/>
+            <field name="requires_approval" eval="True"/>
+            <field name="min_days_notice">0</field>
+            <field name="max_days_per_request">60</field>
+            <field name="is_visible" eval="True"/>
+            <field name="is_active" eval="True"/>
+            <field name="sequence">25</field>
+        </record>
+
+        <!-- Emergency Leave (Cuti Kecemasan) -->
+        <record id="leave_type_emergency" model="kf.leave.type">
+            <field name="code">EL</field>
+            <field name="name">Emergency Leave</field>
+            <field name="name_ms">Cuti Kecemasan</field>
+            <field name="description">Unplanned leave for emergencies</field>
+            <field name="color">#FF9800</field>
+            <field name="icon">warning</field>
+            <field name="default_entitlement">3</field>
+            <field name="max_carry_forward">0</field>
+            <field name="carry_forward_months">0</field>
+            <field name="allow_half_day" eval="False"/>
+            <field name="allow_negative" eval="False"/>
+            <field name="requires_attachment" eval="False"/>
+            <field name="requires_approval" eval="True"/>
+            <field name="min_days_notice">0</field>
+            <field name="max_days_per_request">3</field>
+            <field name="is_visible" eval="True"/>
+            <field name="is_active" eval="True"/>
+            <field name="sequence">30</field>
+        </record>
+
+        <!-- Maternity Leave (Cuti Bersalin) -->
+        <record id="leave_type_maternity" model="kf.leave.type">
+            <field name="code">ML</field>
+            <field name="name">Maternity Leave</field>
+            <field name="name_ms">Cuti Bersalin</field>
+            <field name="description">Paid maternity leave (98 days per Employment Act 1955)</field>
+            <field name="color">#E91E63</field>
+            <field name="icon">child_friendly</field>
+            <field name="default_entitlement">98</field>
+            <field name="max_carry_forward">0</field>
+            <field name="carry_forward_months">0</field>
+            <field name="allow_half_day" eval="False"/>
+            <field name="allow_negative" eval="False"/>
+            <field name="requires_attachment" eval="True"/>
+            <field name="requires_approval" eval="True"/>
+            <field name="min_days_notice">30</field>
+            <field name="max_days_per_request">98</field>
+            <field name="is_visible" eval="True"/>
+            <field name="is_active" eval="True"/>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- Paternity Leave (Cuti Kelahiran Anak - Bapa) -->
+        <record id="leave_type_paternity" model="kf.leave.type">
+            <field name="code">PL</field>
+            <field name="name">Paternity Leave</field>
+            <field name="name_ms">Cuti Kelahiran Anak (Bapa)</field>
+            <field name="description">Paid paternity leave (7 days per Employment Act amendment)</field>
+            <field name="color">#2196F3</field>
+            <field name="icon">face</field>
+            <field name="default_entitlement">7</field>
+            <field name="max_carry_forward">0</field>
+            <field name="carry_forward_months">0</field>
+            <field name="allow_half_day" eval="False"/>
+            <field name="allow_negative" eval="False"/>
+            <field name="requires_attachment" eval="True"/>
+            <field name="requires_approval" eval="True"/>
+            <field name="min_days_notice">7</field>
+            <field name="max_days_per_request">7</field>
+            <field name="is_visible" eval="True"/>
+            <field name="is_active" eval="True"/>
+            <field name="sequence">45</field>
+        </record>
+
+        <!-- Compassionate Leave (Cuti Ehsan) -->
+        <record id="leave_type_compassionate" model="kf.leave.type">
+            <field name="code">CL</field>
+            <field name="name">Compassionate Leave</field>
+            <field name="name_ms">Cuti Ehsan</field>
+            <field name="description">Leave for bereavement or family emergencies</field>
+            <field name="color">#9E9E9E</field>
+            <field name="icon">favorite</field>
+            <field name="default_entitlement">3</field>
+            <field name="max_carry_forward">0</field>
+            <field name="carry_forward_months">0</field>
+            <field name="allow_half_day" eval="False"/>
+            <field name="allow_negative" eval="False"/>
+            <field name="requires_attachment" eval="False"/>
+            <field name="requires_approval" eval="True"/>
+            <field name="min_days_notice">0</field>
+            <field name="max_days_per_request">3</field>
+            <field name="is_visible" eval="True"/>
+            <field name="is_active" eval="True"/>
+            <field name="sequence">50</field>
+        </record>
+
+        <!-- Marriage Leave (Cuti Perkahwinan) -->
+        <record id="leave_type_marriage" model="kf.leave.type">
+            <field name="code">MRL</field>
+            <field name="name">Marriage Leave</field>
+            <field name="name_ms">Cuti Perkahwinan</field>
+            <field name="description">Leave for employee's own marriage (once only)</field>
+            <field name="color">#E91E63</field>
+            <field name="icon">favorite_border</field>
+            <field name="default_entitlement">3</field>
+            <field name="max_carry_forward">0</field>
+            <field name="carry_forward_months">0</field>
+            <field name="allow_half_day" eval="False"/>
+            <field name="allow_negative" eval="False"/>
+            <field name="requires_attachment" eval="True"/>
+            <field name="requires_approval" eval="True"/>
+            <field name="min_days_notice">14</field>
+            <field name="max_days_per_request">3</field>
+            <field name="is_visible" eval="True"/>
+            <field name="is_active" eval="True"/>
+            <field name="sequence">55</field>
+        </record>
+
+        <!-- Replacement Leave (Cuti Gantian) -->
+        <record id="leave_type_replacement" model="kf.leave.type">
+            <field name="code">RL</field>
+            <field name="name">Replacement Leave</field>
+            <field name="name_ms">Cuti Gantian</field>
+            <field name="description">Replacement leave for working on public holidays/rest days</field>
+            <field name="color">#00BCD4</field>
+            <field name="icon">swap_horiz</field>
+            <field name="default_entitlement">0</field>
+            <field name="max_carry_forward">0</field>
+            <field name="carry_forward_months">3</field>
+            <field name="allow_half_day" eval="True"/>
+            <field name="allow_negative" eval="False"/>
+            <field name="requires_attachment" eval="False"/>
+            <field name="requires_approval" eval="True"/>
+            <field name="min_days_notice">1</field>
+            <field name="max_days_per_request">5</field>
+            <field name="is_visible" eval="True"/>
+            <field name="is_active" eval="True"/>
+            <field name="sequence">60</field>
+        </record>
+
+        <!-- Unpaid Leave (Cuti Tanpa Gaji) -->
+        <record id="leave_type_unpaid" model="kf.leave.type">
+            <field name="code">UL</field>
+            <field name="name">Unpaid Leave</field>
+            <field name="name_ms">Cuti Tanpa Gaji</field>
+            <field name="description">Leave without pay</field>
+            <field name="color">#795548</field>
+            <field name="icon">money_off</field>
+            <field name="default_entitlement">30</field>
+            <field name="max_carry_forward">0</field>
+            <field name="carry_forward_months">0</field>
+            <field name="allow_half_day" eval="True"/>
+            <field name="allow_negative" eval="True"/>
+            <field name="requires_attachment" eval="False"/>
+            <field name="requires_approval" eval="True"/>
+            <field name="min_days_notice">7</field>
+            <field name="max_days_per_request">30</field>
+            <field name="is_visible" eval="True"/>
+            <field name="is_active" eval="True"/>
+            <field name="sequence">70</field>
+        </record>
+
+        <!-- Study Leave (Cuti Belajar) -->
+        <record id="leave_type_study" model="kf.leave.type">
+            <field name="code">SL</field>
+            <field name="name">Study Leave</field>
+            <field name="name_ms">Cuti Belajar</field>
+            <field name="description">Leave for examinations and professional development</field>
+            <field name="color">#673AB7</field>
+            <field name="icon">school</field>
+            <field name="default_entitlement">5</field>
+            <field name="max_carry_forward">0</field>
+            <field name="carry_forward_months">0</field>
+            <field name="allow_half_day" eval="True"/>
+            <field name="allow_negative" eval="False"/>
+            <field name="requires_attachment" eval="True"/>
+            <field name="requires_approval" eval="True"/>
+            <field name="min_days_notice">7</field>
+            <field name="max_days_per_request">5</field>
+            <field name="is_visible" eval="True"/>
+            <field name="is_active" eval="True"/>
+            <field name="sequence">75</field>
+        </record>
+
+        <!-- Hajj Leave (Cuti Haji) -->
+        <record id="leave_type_hajj" model="kf.leave.type">
+            <field name="code">HJ</field>
+            <field name="name">Hajj Leave</field>
+            <field name="name_ms">Cuti Menunaikan Haji</field>
+            <field name="description">Paid leave for pilgrimage to Mecca (once in tenure)</field>
+            <field name="color">#009688</field>
+            <field name="icon">flight</field>
+            <field name="default_entitlement">40</field>
+            <field name="max_carry_forward">0</field>
+            <field name="carry_forward_months">0</field>
+            <field name="allow_half_day" eval="False"/>
+            <field name="allow_negative" eval="False"/>
+            <field name="requires_attachment" eval="True"/>
+            <field name="requires_approval" eval="True"/>
+            <field name="min_days_notice">30</field>
+            <field name="max_days_per_request">40</field>
+            <field name="is_visible" eval="True"/>
+            <field name="is_active" eval="True"/>
+            <field name="sequence">80</field>
+        </record>
+
+    </data>
+</odoo>

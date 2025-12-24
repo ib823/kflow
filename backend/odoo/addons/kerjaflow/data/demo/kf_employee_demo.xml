@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Demo Employees -->
+
+        <!-- CEO / Admin -->
+        <record id="demo_emp_admin" model="kf.employee">
+            <field name="company_id" ref="demo_company"/>
+            <field name="employee_no">TC001</field>
+            <field name="first_name">Ahmad</field>
+            <field name="last_name">Ibrahim</field>
+            <field name="ic_no">750515-14-5678</field>
+            <field name="date_of_birth">1975-05-15</field>
+            <field name="gender">M</field>
+            <field name="nationality">MY</field>
+            <field name="race">MALAY</field>
+            <field name="religion">ISLAM</field>
+            <field name="marital_status">MARRIED</field>
+            <field name="email">ahmad.ibrahim@techcorp.my</field>
+            <field name="phone">+60123456789</field>
+            <field name="address_line1">No. 123, Jalan Tun Razak</field>
+            <field name="city">Kuala Lumpur</field>
+            <field name="state">WP</field>
+            <field name="postcode">50400</field>
+            <field name="department_id" ref="demo_dept_management"/>
+            <field name="job_position_id" ref="demo_job_ceo"/>
+            <field name="employment_type">PERMANENT</field>
+            <field name="hire_date">2020-01-01</field>
+            <field name="status">ACTIVE</field>
+            <field name="basic_salary">60000</field>
+            <field name="epf_no">12345678</field>
+            <field name="socso_no">S12345678</field>
+            <field name="tax_no">SG12345678</field>
+            <field name="bank_name">Maybank</field>
+            <field name="bank_account_no">1234567890</field>
+        </record>
+
+        <!-- HR Manager -->
+        <record id="demo_emp_hr_manager" model="kf.employee">
+            <field name="company_id" ref="demo_company"/>
+            <field name="employee_no">TC002</field>
+            <field name="first_name">Siti</field>
+            <field name="last_name">Aminah</field>
+            <field name="ic_no">850722-10-1234</field>
+            <field name="date_of_birth">1985-07-22</field>
+            <field name="gender">F</field>
+            <field name="nationality">MY</field>
+            <field name="race">MALAY</field>
+            <field name="religion">ISLAM</field>
+            <field name="marital_status">MARRIED</field>
+            <field name="email">siti.aminah@techcorp.my</field>
+            <field name="phone">+60123456790</field>
+            <field name="address_line1">No. 45, Jalan Ampang</field>
+            <field name="city">Kuala Lumpur</field>
+            <field name="state">WP</field>
+            <field name="postcode">50450</field>
+            <field name="department_id" ref="demo_dept_hr"/>
+            <field name="job_position_id" ref="demo_job_hr_manager"/>
+            <field name="employment_type">PERMANENT</field>
+            <field name="hire_date">2021-03-15</field>
+            <field name="status">ACTIVE</field>
+            <field name="basic_salary">15000</field>
+            <field name="epf_no">23456789</field>
+            <field name="socso_no">S23456789</field>
+            <field name="tax_no">SG23456789</field>
+            <field name="bank_name">CIMB</field>
+            <field name="bank_account_no">2345678901</field>
+            <field name="manager_id" ref="demo_emp_admin"/>
+        </record>
+
+        <!-- HR Executive -->
+        <record id="demo_emp_hr_exec" model="kf.employee">
+            <field name="company_id" ref="demo_company"/>
+            <field name="employee_no">TC003</field>
+            <field name="first_name">Lee</field>
+            <field name="last_name">Wei Ming</field>
+            <field name="ic_no">901215-07-5678</field>
+            <field name="date_of_birth">1990-12-15</field>
+            <field name="gender">M</field>
+            <field name="nationality">MY</field>
+            <field name="race">CHINESE</field>
+            <field name="religion">BUDDHIST</field>
+            <field name="marital_status">SINGLE</field>
+            <field name="email">lee.weiming@techcorp.my</field>
+            <field name="phone">+60123456791</field>
+            <field name="address_line1">Block A-12-3, Menara Vista</field>
+            <field name="city">Petaling Jaya</field>
+            <field name="state">SGR</field>
+            <field name="postcode">46100</field>
+            <field name="department_id" ref="demo_dept_hr"/>
+            <field name="job_position_id" ref="demo_job_hr_exec"/>
+            <field name="employment_type">PERMANENT</field>
+            <field name="hire_date">2022-06-01</field>
+            <field name="status">ACTIVE</field>
+            <field name="basic_salary">5500</field>
+            <field name="epf_no">34567890</field>
+            <field name="socso_no">S34567890</field>
+            <field name="tax_no">SG34567890</field>
+            <field name="bank_name">Public Bank</field>
+            <field name="bank_account_no">3456789012</field>
+            <field name="manager_id" ref="demo_emp_hr_manager"/>
+        </record>
+
+        <!-- Engineering Manager (Supervisor) -->
+        <record id="demo_emp_eng_manager" model="kf.employee">
+            <field name="company_id" ref="demo_company"/>
+            <field name="employee_no">TC004</field>
+            <field name="first_name">Raj</field>
+            <field name="last_name">Kumar</field>
+            <field name="ic_no">820310-08-9012</field>
+            <field name="date_of_birth">1982-03-10</field>
+            <field name="gender">M</field>
+            <field name="nationality">MY</field>
+            <field name="race">INDIAN</field>
+            <field name="religion">HINDU</field>
+            <field name="marital_status">MARRIED</field>
+            <field name="email">raj.kumar@techcorp.my</field>
+            <field name="phone">+60123456792</field>
+            <field name="address_line1">No. 88, Jalan SS15/4</field>
+            <field name="city">Subang Jaya</field>
+            <field name="state">SGR</field>
+            <field name="postcode">47500</field>
+            <field name="department_id" ref="demo_dept_engineering"/>
+            <field name="job_position_id" ref="demo_job_eng_manager"/>
+            <field name="employment_type">PERMANENT</field>
+            <field name="hire_date">2021-01-10</field>
+            <field name="status">ACTIVE</field>
+            <field name="basic_salary">18000</field>
+            <field name="epf_no">45678901</field>
+            <field name="socso_no">S45678901</field>
+            <field name="tax_no">SG45678901</field>
+            <field name="bank_name">Maybank</field>
+            <field name="bank_account_no">4567890123</field>
+            <field name="manager_id" ref="demo_emp_admin"/>
+        </record>
+
+        <!-- Senior Developer -->
+        <record id="demo_emp_senior_dev" model="kf.employee">
+            <field name="company_id" ref="demo_company"/>
+            <field name="employee_no">TC005</field>
+            <field name="first_name">Nurul</field>
+            <field name="last_name">Huda</field>
+            <field name="ic_no">880525-01-3456</field>
+            <field name="date_of_birth">1988-05-25</field>
+            <field name="gender">F</field>
+            <field name="nationality">MY</field>
+            <field name="race">MALAY</field>
+            <field name="religion">ISLAM</field>
+            <field name="marital_status">MARRIED</field>
+            <field name="email">nurul.huda@techcorp.my</field>
+            <field name="phone">+60123456793</field>
+            <field name="address_line1">No. 12, Jalan Damansara</field>
+            <field name="city">Kuala Lumpur</field>
+            <field name="state">WP</field>
+            <field name="postcode">60000</field>
+            <field name="department_id" ref="demo_dept_backend"/>
+            <field name="job_position_id" ref="demo_job_senior_dev"/>
+            <field name="employment_type">PERMANENT</field>
+            <field name="hire_date">2022-02-14</field>
+            <field name="status">ACTIVE</field>
+            <field name="basic_salary">12000</field>
+            <field name="epf_no">56789012</field>
+            <field name="socso_no">S56789012</field>
+            <field name="tax_no">SG56789012</field>
+            <field name="bank_name">RHB</field>
+            <field name="bank_account_no">5678901234</field>
+            <field name="manager_id" ref="demo_emp_eng_manager"/>
+        </record>
+
+        <!-- Software Engineer -->
+        <record id="demo_emp_dev" model="kf.employee">
+            <field name="company_id" ref="demo_company"/>
+            <field name="employee_no">TC006</field>
+            <field name="first_name">Tan</field>
+            <field name="last_name">Chee Keong</field>
+            <field name="ic_no">930815-14-7890</field>
+            <field name="date_of_birth">1993-08-15</field>
+            <field name="gender">M</field>
+            <field name="nationality">MY</field>
+            <field name="race">CHINESE</field>
+            <field name="religion">CHRISTIAN</field>
+            <field name="marital_status">SINGLE</field>
+            <field name="email">tan.ck@techcorp.my</field>
+            <field name="phone">+60123456794</field>
+            <field name="address_line1">Unit 5-3, Vista Residensi</field>
+            <field name="city">Shah Alam</field>
+            <field name="state">SGR</field>
+            <field name="postcode">40000</field>
+            <field name="department_id" ref="demo_dept_frontend"/>
+            <field name="job_position_id" ref="demo_job_dev"/>
+            <field name="employment_type">PERMANENT</field>
+            <field name="hire_date">2023-04-01</field>
+            <field name="status">ACTIVE</field>
+            <field name="basic_salary">6500</field>
+            <field name="epf_no">67890123</field>
+            <field name="socso_no">S67890123</field>
+            <field name="tax_no">SG67890123</field>
+            <field name="bank_name">Hong Leong</field>
+            <field name="bank_account_no">6789012345</field>
+            <field name="manager_id" ref="demo_emp_eng_manager"/>
+        </record>
+
+        <!-- Junior Developer -->
+        <record id="demo_emp_junior_dev" model="kf.employee">
+            <field name="company_id" ref="demo_company"/>
+            <field name="employee_no">TC007</field>
+            <field name="first_name">Muhammad</field>
+            <field name="last_name">Amir</field>
+            <field name="ic_no">000102-14-0123</field>
+            <field name="date_of_birth">2000-01-02</field>
+            <field name="gender">M</field>
+            <field name="nationality">MY</field>
+            <field name="race">MALAY</field>
+            <field name="religion">ISLAM</field>
+            <field name="marital_status">SINGLE</field>
+            <field name="email">muhammad.amir@techcorp.my</field>
+            <field name="phone">+60123456795</field>
+            <field name="address_line1">No. 33, Taman Melawati</field>
+            <field name="city">Kuala Lumpur</field>
+            <field name="state">WP</field>
+            <field name="postcode">53100</field>
+            <field name="department_id" ref="demo_dept_backend"/>
+            <field name="job_position_id" ref="demo_job_junior_dev"/>
+            <field name="employment_type">PROBATION</field>
+            <field name="hire_date">2024-07-01</field>
+            <field name="probation_end_date">2025-01-01</field>
+            <field name="status">ACTIVE</field>
+            <field name="basic_salary">3500</field>
+            <field name="epf_no">78901234</field>
+            <field name="socso_no">S78901234</field>
+            <field name="tax_no">SG78901234</field>
+            <field name="bank_name">Maybank</field>
+            <field name="bank_account_no">7890123456</field>
+            <field name="manager_id" ref="demo_emp_senior_dev"/>
+        </record>
+
+        <!-- Demo Users -->
+        <record id="demo_user_admin" model="kf.user">
+            <field name="employee_id" ref="demo_emp_admin"/>
+            <field name="company_id" ref="demo_company"/>
+            <field name="email">ahmad.ibrahim@techcorp.my</field>
+            <field name="role">ADMIN</field>
+            <field name="status">ACTIVE</field>
+            <field name="is_email_verified" eval="True"/>
+            <field name="is_phone_verified" eval="True"/>
+        </record>
+
+        <record id="demo_user_hr_manager" model="kf.user">
+            <field name="employee_id" ref="demo_emp_hr_manager"/>
+            <field name="company_id" ref="demo_company"/>
+            <field name="email">siti.aminah@techcorp.my</field>
+            <field name="role">HR_MANAGER</field>
+            <field name="status">ACTIVE</field>
+            <field name="is_email_verified" eval="True"/>
+            <field name="is_phone_verified" eval="True"/>
+        </record>
+
+        <record id="demo_user_hr_exec" model="kf.user">
+            <field name="employee_id" ref="demo_emp_hr_exec"/>
+            <field name="company_id" ref="demo_company"/>
+            <field name="email">lee.weiming@techcorp.my</field>
+            <field name="role">HR_EXEC</field>
+            <field name="status">ACTIVE</field>
+            <field name="is_email_verified" eval="True"/>
+        </record>
+
+        <record id="demo_user_supervisor" model="kf.user">
+            <field name="employee_id" ref="demo_emp_eng_manager"/>
+            <field name="company_id" ref="demo_company"/>
+            <field name="email">raj.kumar@techcorp.my</field>
+            <field name="role">SUPERVISOR</field>
+            <field name="status">ACTIVE</field>
+            <field name="is_email_verified" eval="True"/>
+        </record>
+
+        <record id="demo_user_employee1" model="kf.user">
+            <field name="employee_id" ref="demo_emp_senior_dev"/>
+            <field name="company_id" ref="demo_company"/>
+            <field name="email">nurul.huda@techcorp.my</field>
+            <field name="role">EMPLOYEE</field>
+            <field name="status">ACTIVE</field>
+            <field name="is_email_verified" eval="True"/>
+        </record>
+
+        <record id="demo_user_employee2" model="kf.user">
+            <field name="employee_id" ref="demo_emp_dev"/>
+            <field name="company_id" ref="demo_company"/>
+            <field name="email">tan.ck@techcorp.my</field>
+            <field name="role">EMPLOYEE</field>
+            <field name="status">ACTIVE</field>
+            <field name="is_email_verified" eval="True"/>
+        </record>
+
+        <record id="demo_user_employee3" model="kf.user">
+            <field name="employee_id" ref="demo_emp_junior_dev"/>
+            <field name="company_id" ref="demo_company"/>
+            <field name="email">muhammad.amir@techcorp.my</field>
+            <field name="role">EMPLOYEE</field>
+            <field name="status">ACTIVE</field>
+        </record>
+
+    </data>
+</odoo>

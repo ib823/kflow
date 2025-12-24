@@ -1,0 +1,68 @@
+# Codecov Configuration
+# https://docs.codecov.io/docs/codecov-yaml
+
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+
+  status:
+    project:
+      default:
+        target: 70%
+        threshold: 5%
+        if_not_found: success
+      backend:
+        target: 75%
+        paths:
+          - "backend/"
+        flags:
+          - backend
+      mobile:
+        target: 70%
+        paths:
+          - "mobile/"
+        flags:
+          - mobile
+
+    patch:
+      default:
+        target: 60%
+        threshold: 10%
+        if_not_found: success
+
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
+
+comment:
+  layout: "reach,diff,flags,files"
+  behavior: default
+  require_changes: false
+  require_base: no
+  require_head: yes
+  branches:
+    - main
+    - develop
+
+flags:
+  backend:
+    paths:
+      - backend/
+    carryforward: true
+  mobile:
+    paths:
+      - mobile/
+    carryforward: true
+
+ignore:
+  - "**/*.g.dart"
+  - "**/*.freezed.dart"
+  - "**/generated/**"
+  - "**/test/**"
+  - "**/tests/**"
+  - "**/__pycache__/**"

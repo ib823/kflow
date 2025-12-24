@@ -1,0 +1,101 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+# KerjaFlow Access Control List
+# Format: id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+# Company - Full access for admin, read for all authenticated
+access_kf_company_admin,kf.company admin,model_kf_company,kerjaflow.group_admin,1,1,1,1
+access_kf_company_hr_manager,kf.company hr_manager,model_kf_company,kerjaflow.group_hr_manager,1,1,0,0
+access_kf_company_hr_exec,kf.company hr_exec,model_kf_company,kerjaflow.group_hr_exec,1,0,0,0
+access_kf_company_supervisor,kf.company supervisor,model_kf_company,kerjaflow.group_supervisor,1,0,0,0
+access_kf_company_employee,kf.company employee,model_kf_company,kerjaflow.group_employee,1,0,0,0
+
+# Department
+access_kf_department_admin,kf.department admin,model_kf_department,kerjaflow.group_admin,1,1,1,1
+access_kf_department_hr_manager,kf.department hr_manager,model_kf_department,kerjaflow.group_hr_manager,1,1,1,0
+access_kf_department_hr_exec,kf.department hr_exec,model_kf_department,kerjaflow.group_hr_exec,1,0,0,0
+access_kf_department_supervisor,kf.department supervisor,model_kf_department,kerjaflow.group_supervisor,1,0,0,0
+access_kf_department_employee,kf.department employee,model_kf_department,kerjaflow.group_employee,1,0,0,0
+
+# Job Position
+access_kf_job_position_admin,kf.job.position admin,model_kf_job_position,kerjaflow.group_admin,1,1,1,1
+access_kf_job_position_hr_manager,kf.job.position hr_manager,model_kf_job_position,kerjaflow.group_hr_manager,1,1,1,0
+access_kf_job_position_hr_exec,kf.job.position hr_exec,model_kf_job_position,kerjaflow.group_hr_exec,1,0,0,0
+access_kf_job_position_supervisor,kf.job.position supervisor,model_kf_job_position,kerjaflow.group_supervisor,1,0,0,0
+access_kf_job_position_employee,kf.job.position employee,model_kf_job_position,kerjaflow.group_employee,1,0,0,0
+
+# Employee
+access_kf_employee_admin,kf.employee admin,model_kf_employee,kerjaflow.group_admin,1,1,1,1
+access_kf_employee_hr_manager,kf.employee hr_manager,model_kf_employee,kerjaflow.group_hr_manager,1,1,1,0
+access_kf_employee_hr_exec,kf.employee hr_exec,model_kf_employee,kerjaflow.group_hr_exec,1,1,1,0
+access_kf_employee_supervisor,kf.employee supervisor,model_kf_employee,kerjaflow.group_supervisor,1,0,0,0
+access_kf_employee_employee,kf.employee employee,model_kf_employee,kerjaflow.group_employee,1,0,0,0
+
+# User
+access_kf_user_admin,kf.user admin,model_kf_user,kerjaflow.group_admin,1,1,1,1
+access_kf_user_hr_manager,kf.user hr_manager,model_kf_user,kerjaflow.group_hr_manager,1,1,1,0
+access_kf_user_hr_exec,kf.user hr_exec,model_kf_user,kerjaflow.group_hr_exec,1,0,0,0
+access_kf_user_supervisor,kf.user supervisor,model_kf_user,kerjaflow.group_supervisor,1,0,0,0
+access_kf_user_employee,kf.user employee,model_kf_user,kerjaflow.group_employee,1,0,0,0
+
+# Foreign Worker Detail
+access_kf_foreign_worker_detail_admin,kf.foreign.worker.detail admin,model_kf_foreign_worker_detail,kerjaflow.group_admin,1,1,1,1
+access_kf_foreign_worker_detail_hr_manager,kf.foreign.worker.detail hr_manager,model_kf_foreign_worker_detail,kerjaflow.group_hr_manager,1,1,1,0
+access_kf_foreign_worker_detail_hr_exec,kf.foreign.worker.detail hr_exec,model_kf_foreign_worker_detail,kerjaflow.group_hr_exec,1,1,1,0
+
+# Document
+access_kf_document_admin,kf.document admin,model_kf_document,kerjaflow.group_admin,1,1,1,1
+access_kf_document_hr_manager,kf.document hr_manager,model_kf_document,kerjaflow.group_hr_manager,1,1,1,1
+access_kf_document_hr_exec,kf.document hr_exec,model_kf_document,kerjaflow.group_hr_exec,1,1,1,0
+access_kf_document_supervisor,kf.document supervisor,model_kf_document,kerjaflow.group_supervisor,1,0,0,0
+access_kf_document_employee,kf.document employee,model_kf_document,kerjaflow.group_employee,1,1,1,0
+
+# Leave Type
+access_kf_leave_type_admin,kf.leave.type admin,model_kf_leave_type,kerjaflow.group_admin,1,1,1,1
+access_kf_leave_type_hr_manager,kf.leave.type hr_manager,model_kf_leave_type,kerjaflow.group_hr_manager,1,1,1,0
+access_kf_leave_type_hr_exec,kf.leave.type hr_exec,model_kf_leave_type,kerjaflow.group_hr_exec,1,0,0,0
+access_kf_leave_type_supervisor,kf.leave.type supervisor,model_kf_leave_type,kerjaflow.group_supervisor,1,0,0,0
+access_kf_leave_type_employee,kf.leave.type employee,model_kf_leave_type,kerjaflow.group_employee,1,0,0,0
+
+# Leave Balance
+access_kf_leave_balance_admin,kf.leave.balance admin,model_kf_leave_balance,kerjaflow.group_admin,1,1,1,1
+access_kf_leave_balance_hr_manager,kf.leave.balance hr_manager,model_kf_leave_balance,kerjaflow.group_hr_manager,1,1,1,0
+access_kf_leave_balance_hr_exec,kf.leave.balance hr_exec,model_kf_leave_balance,kerjaflow.group_hr_exec,1,1,1,0
+access_kf_leave_balance_supervisor,kf.leave.balance supervisor,model_kf_leave_balance,kerjaflow.group_supervisor,1,0,0,0
+access_kf_leave_balance_employee,kf.leave.balance employee,model_kf_leave_balance,kerjaflow.group_employee,1,0,0,0
+
+# Leave Request
+access_kf_leave_request_admin,kf.leave.request admin,model_kf_leave_request,kerjaflow.group_admin,1,1,1,1
+access_kf_leave_request_hr_manager,kf.leave.request hr_manager,model_kf_leave_request,kerjaflow.group_hr_manager,1,1,1,0
+access_kf_leave_request_hr_exec,kf.leave.request hr_exec,model_kf_leave_request,kerjaflow.group_hr_exec,1,1,0,0
+access_kf_leave_request_supervisor,kf.leave.request supervisor,model_kf_leave_request,kerjaflow.group_supervisor,1,1,0,0
+access_kf_leave_request_employee,kf.leave.request employee,model_kf_leave_request,kerjaflow.group_employee,1,1,1,0
+
+# Public Holiday
+access_kf_public_holiday_admin,kf.public.holiday admin,model_kf_public_holiday,kerjaflow.group_admin,1,1,1,1
+access_kf_public_holiday_hr_manager,kf.public.holiday hr_manager,model_kf_public_holiday,kerjaflow.group_hr_manager,1,1,1,0
+access_kf_public_holiday_hr_exec,kf.public.holiday hr_exec,model_kf_public_holiday,kerjaflow.group_hr_exec,1,0,0,0
+access_kf_public_holiday_supervisor,kf.public.holiday supervisor,model_kf_public_holiday,kerjaflow.group_supervisor,1,0,0,0
+access_kf_public_holiday_employee,kf.public.holiday employee,model_kf_public_holiday,kerjaflow.group_employee,1,0,0,0
+
+# Payslip
+access_kf_payslip_admin,kf.payslip admin,model_kf_payslip,kerjaflow.group_admin,1,1,1,1
+access_kf_payslip_hr_manager,kf.payslip hr_manager,model_kf_payslip,kerjaflow.group_hr_manager,1,1,1,0
+access_kf_payslip_hr_exec,kf.payslip hr_exec,model_kf_payslip,kerjaflow.group_hr_exec,1,1,1,0
+access_kf_payslip_employee,kf.payslip employee,model_kf_payslip,kerjaflow.group_employee,1,0,0,0
+
+# Payslip Line
+access_kf_payslip_line_admin,kf.payslip.line admin,model_kf_payslip_line,kerjaflow.group_admin,1,1,1,1
+access_kf_payslip_line_hr_manager,kf.payslip.line hr_manager,model_kf_payslip_line,kerjaflow.group_hr_manager,1,1,1,0
+access_kf_payslip_line_hr_exec,kf.payslip.line hr_exec,model_kf_payslip_line,kerjaflow.group_hr_exec,1,1,1,0
+access_kf_payslip_line_employee,kf.payslip.line employee,model_kf_payslip_line,kerjaflow.group_employee,1,0,0,0
+
+# Notification
+access_kf_notification_admin,kf.notification admin,model_kf_notification,kerjaflow.group_admin,1,1,1,1
+access_kf_notification_hr_manager,kf.notification hr_manager,model_kf_notification,kerjaflow.group_hr_manager,1,1,1,0
+access_kf_notification_hr_exec,kf.notification hr_exec,model_kf_notification,kerjaflow.group_hr_exec,1,1,1,0
+access_kf_notification_supervisor,kf.notification supervisor,model_kf_notification,kerjaflow.group_supervisor,1,1,1,0
+access_kf_notification_employee,kf.notification employee,model_kf_notification,kerjaflow.group_employee,1,1,0,0
+
+# Audit Log
+access_kf_audit_log_admin,kf.audit.log admin,model_kf_audit_log,kerjaflow.group_admin,1,0,1,0
+access_kf_audit_log_hr_manager,kf.audit.log hr_manager,model_kf_audit_log,kerjaflow.group_hr_manager,1,0,0,0

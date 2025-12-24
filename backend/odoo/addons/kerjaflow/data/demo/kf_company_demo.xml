@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Demo Company -->
+        <record id="demo_company" model="kf.company">
+            <field name="name">TechCorp Malaysia Sdn Bhd</field>
+            <field name="registration_no">1234567-X</field>
+            <field name="tax_no">C1234567890</field>
+            <field name="epf_no">12345678</field>
+            <field name="socso_no">S12345678</field>
+            <field name="eis_no">E12345678</field>
+            <field name="address_line1">Level 10, Menara TechCorp</field>
+            <field name="address_line2">Jalan Sultan Ismail</field>
+            <field name="city">Kuala Lumpur</field>
+            <field name="state">WP</field>
+            <field name="postcode">50250</field>
+            <field name="country">MY</field>
+            <field name="phone">+60312345678</field>
+            <field name="email">hr@techcorp.my</field>
+            <field name="website">https://techcorp.my</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <!-- Demo Departments -->
+        <record id="demo_dept_management" model="kf.department">
+            <field name="company_id" ref="demo_company"/>
+            <field name="name">Management</field>
+            <field name="code">MGT</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="demo_dept_hr" model="kf.department">
+            <field name="company_id" ref="demo_company"/>
+            <field name="name">Human Resources</field>
+            <field name="code">HR</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="demo_dept_engineering" model="kf.department">
+            <field name="company_id" ref="demo_company"/>
+            <field name="name">Engineering</field>
+            <field name="code">ENG</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="demo_dept_frontend" model="kf.department">
+            <field name="company_id" ref="demo_company"/>
+            <field name="name">Frontend Development</field>
+            <field name="code">FE</field>
+            <field name="parent_id" ref="demo_dept_engineering"/>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="demo_dept_backend" model="kf.department">
+            <field name="company_id" ref="demo_company"/>
+            <field name="name">Backend Development</field>
+            <field name="code">BE</field>
+            <field name="parent_id" ref="demo_dept_engineering"/>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="demo_dept_finance" model="kf.department">
+            <field name="company_id" ref="demo_company"/>
+            <field name="name">Finance</field>
+            <field name="code">FIN</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="demo_dept_operations" model="kf.department">
+            <field name="company_id" ref="demo_company"/>
+            <field name="name">Operations</field>
+            <field name="code">OPS</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <!-- Demo Job Positions -->
+        <record id="demo_job_ceo" model="kf.job.position">
+            <field name="company_id" ref="demo_company"/>
+            <field name="name">Chief Executive Officer</field>
+            <field name="code">CEO</field>
+            <field name="department_id" ref="demo_dept_management"/>
+            <field name="grade">E1</field>
+            <field name="min_salary">50000</field>
+            <field name="max_salary">100000</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="demo_job_hr_manager" model="kf.job.position">
+            <field name="company_id" ref="demo_company"/>
+            <field name="name">HR Manager</field>
+            <field name="code">HRM</field>
+            <field name="department_id" ref="demo_dept_hr"/>
+            <field name="grade">M1</field>
+            <field name="min_salary">12000</field>
+            <field name="max_salary">18000</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="demo_job_hr_exec" model="kf.job.position">
+            <field name="company_id" ref="demo_company"/>
+            <field name="name">HR Executive</field>
+            <field name="code">HRE</field>
+            <field name="department_id" ref="demo_dept_hr"/>
+            <field name="grade">E3</field>
+            <field name="min_salary">4000</field>
+            <field name="max_salary">7000</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="demo_job_eng_manager" model="kf.job.position">
+            <field name="company_id" ref="demo_company"/>
+            <field name="name">Engineering Manager</field>
+            <field name="code">EM</field>
+            <field name="department_id" ref="demo_dept_engineering"/>
+            <field name="grade">M1</field>
+            <field name="min_salary">15000</field>
+            <field name="max_salary">25000</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="demo_job_senior_dev" model="kf.job.position">
+            <field name="company_id" ref="demo_company"/>
+            <field name="name">Senior Software Engineer</field>
+            <field name="code">SSE</field>
+            <field name="department_id" ref="demo_dept_engineering"/>
+            <field name="grade">E2</field>
+            <field name="min_salary">8000</field>
+            <field name="max_salary">15000</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="demo_job_dev" model="kf.job.position">
+            <field name="company_id" ref="demo_company"/>
+            <field name="name">Software Engineer</field>
+            <field name="code">SE</field>
+            <field name="department_id" ref="demo_dept_engineering"/>
+            <field name="grade">E3</field>
+            <field name="min_salary">4500</field>
+            <field name="max_salary">8000</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+        <record id="demo_job_junior_dev" model="kf.job.position">
+            <field name="company_id" ref="demo_company"/>
+            <field name="name">Junior Software Engineer</field>
+            <field name="code">JSE</field>
+            <field name="department_id" ref="demo_dept_engineering"/>
+            <field name="grade">E4</field>
+            <field name="min_salary">3000</field>
+            <field name="max_salary">4500</field>
+            <field name="is_active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>
