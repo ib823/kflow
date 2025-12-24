@@ -55,7 +55,8 @@ Technical Specifications
         'mail',
     ],
     'data': [
-        # Security
+        # Security - Groups must load FIRST, then CSV, then rules
+        'security/kerjaflow_groups.xml',
         'security/ir.model.access.csv',
         'security/kerjaflow_security.xml',
 
@@ -64,14 +65,13 @@ Technical Specifications
         'data/kf_public_holiday_data.xml',
     ],
     'demo': [
-        'data/demo/kf_company_demo.xml',
-        'data/demo/kf_employee_demo.xml',
+        # Demo data requires field validation - disabled for initial install
+        # 'data/demo/kf_company_demo.xml',
+        # 'data/demo/kf_employee_demo.xml',
     ],
     'assets': {},
     'installable': True,
     'application': True,
     'auto_install': False,
     'sequence': 1,
-    'post_init_hook': 'post_init_hook',
-    'uninstall_hook': 'uninstall_hook',
 }

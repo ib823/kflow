@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- KerjaFlow Security Groups (RBAC) -->
+        <record id="module_category_kerjaflow" model="ir.module.category">
+            <field name="name">KerjaFlow</field>
+            <field name="description">KerjaFlow Workforce Management</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Employee Role (Base) -->
+        <record id="group_employee" model="res.groups">
+            <field name="name">Employee</field>
+            <field name="category_id" ref="module_category_kerjaflow"/>
+            <field name="comment">Can view own data, apply leave</field>
+        </record>
+
+        <!-- Supervisor Role -->
+        <record id="group_supervisor" model="res.groups">
+            <field name="name">Supervisor</field>
+            <field name="category_id" ref="module_category_kerjaflow"/>
+            <field name="implied_ids" eval="[(4, ref('group_employee'))]"/>
+            <field name="comment">Can approve direct reports' leave</field>
+        </record>
+
+        <!-- HR Executive Role -->
+        <record id="group_hr_exec" model="res.groups">
+            <field name="name">HR Executive</field>
+            <field name="category_id" ref="module_category_kerjaflow"/>
+            <field name="implied_ids" eval="[(4, ref('group_supervisor'))]"/>
+            <field name="comment">Create employees, process leave</field>
+        </record>
+
+        <!-- HR Manager Role -->
+        <record id="group_hr_manager" model="res.groups">
+            <field name="name">HR Manager</field>
+            <field name="category_id" ref="module_category_kerjaflow"/>
+            <field name="implied_ids" eval="[(4, ref('group_hr_exec'))]"/>
+            <field name="comment">All HR data, publish payslips</field>
+        </record>
+
+        <!-- Admin Role -->
+        <record id="group_admin" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="module_category_kerjaflow"/>
+            <field name="implied_ids" eval="[(4, ref('group_hr_manager'))]"/>
+            <field name="comment">Full access, system configuration</field>
+        </record>
+
+    </data>
+</odoo>

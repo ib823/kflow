@@ -2,8 +2,9 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
-    id "com.google.gms.google-services"
-    id "com.huawei.agconnect"
+    // REMOVED: Firebase and Huawei plugins - zero cost enforcement
+    // id "com.google.gms.google-services"
+    // id "com.huawei.agconnect"
 }
 
 def localProperties = new Properties()
@@ -111,15 +112,8 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    // Firebase (for Google flavor)
-    googleImplementation platform('com.google.firebase:firebase-bom:32.7.0')
-    googleImplementation 'com.google.firebase:firebase-messaging'
-    googleImplementation 'com.google.firebase:firebase-analytics'
-
-    // Huawei Mobile Services (for Huawei flavor)
-    huaweiImplementation 'com.huawei.agconnect:agconnect-core:1.9.1.301'
-    huaweiImplementation 'com.huawei.hms:push:6.11.0.300'
-    huaweiImplementation 'com.huawei.hms:hianalytics:6.10.0.303'
+    // REMOVED: Firebase and Huawei - zero cost enforcement
+    // All push notifications use local notifications only
 
     // Biometric authentication
     implementation 'androidx.biometric:biometric:1.1.0'

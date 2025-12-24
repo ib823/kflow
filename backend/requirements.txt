@@ -30,11 +30,11 @@ pydantic>=2.5.0
 openpyxl>=3.1.2
 pandas>=2.0.0
 
-# Push notifications
-firebase-admin>=6.2.0
+# Push notifications - REMOVED (zero cost enforcement)
+# Using local device notifications only, no cloud push services
 
-# AWS S3 for file storage
-boto3>=1.33.0
+# File storage - REMOVED AWS S3 (zero cost enforcement)
+# Using Odoo's built-in file storage (database or local filesystem)
 
 # Rate limiting
 limits>=3.7.0
