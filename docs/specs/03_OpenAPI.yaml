@@ -1,0 +1,1678 @@
+openapi: 3.0.3
+info:
+  title: KerjaFlow Mobile API
+  description: |
+    REST API for KerjaFlow mobile application.
+    
+    ## Authentication
+    - Primary: JWT Bearer token (obtained via /auth/login)
+    - Secondary: 6-digit PIN (for sensitive operations after initial auth)
+    - Token lifetime: 24 hours (access), 7 days (refresh)
+    
+    ## Rate Limits
+    - Authentication endpoints: 10 requests/minute
+    - General API: 60 requests/minute
+    - File uploads: 10 requests/minute
+    
+    ## Pagination
+    - Default page size: 20
+    - Maximum page size: 100
+    - Cursor-based for large datasets (notifications, audit logs)
+    - Offset-based for bounded datasets (payslips, leave requests)
+  version: 1.0.0
+  contact:
+    name: KerjaFlow API Support
+    email: api@kerjaflow.my
+
+servers:
+  - url: https://api.kerjaflow.my/v1
+    description: Production
+  - url: https://staging-api.kerjaflow.my/v1
+    description: Staging
+  - url: http://localhost:8069/api/v1
+    description: Local Development
+
+tags:
+  - name: Authentication
+    description: Login, logout, token management
+  - name: Profile
+    description: Employee profile management
+  - name: Payslips
+    description: Payslip viewing and download
+  - name: Leave
+    description: Leave balance and requests
+  - name: Approvals
+    description: Leave approval workflow (supervisors/HR)
+  - name: Notifications
+    description: Push notifications and alerts
+  - name: Documents
+    description: Document upload and management
+
+security:
+  - BearerAuth: []
+
+paths:
+  # ==================== AUTHENTICATION ====================
+  /auth/login:
+    post:
+      tags: [Authentication]
+      summary: Login with credentials
+      description: |
+        Authenticate with username/password. Returns JWT tokens.
+        After 5 failed attempts, account is locked for 15 minutes.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            example:
+              username: "ahmad@acme.my"
+              password: "SecurePass123!"
+              device_id: "android_abc123"
+              fcm_token: "fcm_token_here"
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '423':
+          description: Account locked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: "ACCOUNT_LOCKED"
+                message: "Account locked. Try again in 15 minutes."
+                details:
+                  locked_until: "2025-12-20T15:30:00Z"
+
+  /auth/refresh:
+    post:
+      tags: [Authentication]
+      summary: Refresh access token
+      description: Exchange refresh token for new access token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refresh_token]
+              properties:
+                refresh_token:
+                  type: string
+      responses:
+        '200':
+          description: Token refreshed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/logout:
+    post:
+      tags: [Authentication]
+      summary: Logout and invalidate tokens
+      description: Invalidates current session and clears FCM token
+      responses:
+        '204':
+          description: Logged out successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/pin/setup:
+    post:
+      tags: [Authentication]
+      summary: Set up 6-digit PIN
+      description: |
+        Create or update PIN for quick login.
+        Requires current password for verification.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [current_password, pin]
+              properties:
+                current_password:
+                  type: string
+                  format: password
+                pin:
+                  type: string
+                  pattern: '^\d{6}$'
+                  description: 6-digit PIN
+      responses:
+        '200':
+          description: PIN set successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "PIN set successfully"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/pin/verify:
+    post:
+      tags: [Authentication]
+      summary: Verify PIN for sensitive operations
+      description: |
+        Verify PIN before sensitive operations (view payslip, etc).
+        Returns short-lived verification token (5 minutes).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [pin]
+              properties:
+                pin:
+                  type: string
+                  pattern: '^\d{6}$'
+      responses:
+        '200':
+          description: PIN verified
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  verification_token:
+                    type: string
+                    description: Short-lived token for sensitive operations
+                  expires_at:
+                    type: string
+                    format: date-time
+        '401':
+          description: Invalid PIN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: "INVALID_PIN"
+                message: "Invalid PIN. 4 attempts remaining."
+
+  /auth/password/change:
+    post:
+      tags: [Authentication]
+      summary: Change password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [current_password, new_password]
+              properties:
+                current_password:
+                  type: string
+                  format: password
+                new_password:
+                  type: string
+                  format: password
+                  minLength: 8
+                  description: Min 8 chars, 1 uppercase, 1 number
+      responses:
+        '200':
+          description: Password changed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ==================== PROFILE ====================
+  /profile:
+    get:
+      tags: [Profile]
+      summary: Get current user profile
+      description: Returns employee profile with company and department info
+      responses:
+        '200':
+          description: Profile data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    patch:
+      tags: [Profile]
+      summary: Update profile (limited fields)
+      description: |
+        Employees can update: phone, email, address, emergency contact, photo.
+        Cannot update: statutory info, banking, employment details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileUpdateRequest'
+      responses:
+        '200':
+          description: Profile updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /profile/photo:
+    post:
+      tags: [Profile]
+      summary: Upload profile photo
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [photo]
+              properties:
+                photo:
+                  type: string
+                  format: binary
+                  description: JPEG/PNG, max 5MB
+      responses:
+        '200':
+          description: Photo uploaded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  photo_url:
+                    type: string
+                    format: uri
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '413':
+          description: File too large
+
+  # ==================== DASHBOARD ====================
+  /dashboard:
+    get:
+      tags: [Profile]
+      summary: Get dashboard summary
+      description: Aggregated data for mobile home screen
+      responses:
+        '200':
+          description: Dashboard data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardResponse'
+
+  # ==================== PAYSLIPS ====================
+  /payslips:
+    get:
+      tags: [Payslips]
+      summary: List payslips
+      description: Returns paginated list of published payslips (most recent first)
+      parameters:
+        - name: year
+          in: query
+          schema:
+            type: integer
+          description: Filter by year (default: current year)
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 12
+            maximum: 24
+      responses:
+        '200':
+          description: Payslip list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayslipListResponse'
+
+  /payslips/{payslip_id}:
+    get:
+      tags: [Payslips]
+      summary: Get payslip details
+      description: |
+        Returns full payslip with all line items.
+        Requires PIN verification (X-Verification-Token header).
+      parameters:
+        - name: payslip_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: X-Verification-Token
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Token from /auth/pin/verify
+      responses:
+        '200':
+          description: Payslip details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayslipDetailResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: PIN verification required
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /payslips/{payslip_id}/pdf:
+    get:
+      tags: [Payslips]
+      summary: Download payslip PDF
+      description: |
+        Returns PDF file for download/share.
+        Requires PIN verification.
+      parameters:
+        - name: payslip_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: X-Verification-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: PDF file
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '403':
+          description: PIN verification required
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ==================== LEAVE ====================
+  /leave/balances:
+    get:
+      tags: [Leave]
+      summary: Get leave balances
+      description: Returns all leave type balances for current year
+      parameters:
+        - name: year
+          in: query
+          schema:
+            type: integer
+          description: Leave year (default: current)
+      responses:
+        '200':
+          description: Leave balances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveBalanceListResponse'
+
+  /leave/requests:
+    get:
+      tags: [Leave]
+      summary: List my leave requests
+      description: Returns paginated list of own leave requests
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [PENDING, APPROVED, REJECTED, CANCELLED]
+          description: Filter by status
+        - name: year
+          in: query
+          schema:
+            type: integer
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 20
+            maximum: 50
+      responses:
+        '200':
+          description: Leave request list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveRequestListResponse'
+
+    post:
+      tags: [Leave]
+      summary: Submit leave request
+      description: Create new leave application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeaveRequestCreate'
+      responses:
+        '201':
+          description: Leave request created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveRequestResponse'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                insufficient_balance:
+                  value:
+                    code: "INSUFFICIENT_BALANCE"
+                    message: "Insufficient leave balance. Available: 2 days, Requested: 5 days"
+                overlap:
+                  value:
+                    code: "LEAVE_OVERLAP"
+                    message: "You already have approved leave during this period"
+                notice:
+                  value:
+                    code: "INSUFFICIENT_NOTICE"
+                    message: "This leave type requires 7 days advance notice"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /leave/requests/{request_id}:
+    get:
+      tags: [Leave]
+      summary: Get leave request details
+      parameters:
+        - name: request_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Leave request details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /leave/requests/{request_id}/cancel:
+    post:
+      tags: [Leave]
+      summary: Cancel leave request
+      description: |
+        Cancel own leave request.
+        Can only cancel PENDING or APPROVED (future) leaves.
+      parameters:
+        - name: request_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reason]
+              properties:
+                reason:
+                  type: string
+                  maxLength: 500
+      responses:
+        '200':
+          description: Leave cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveRequestResponse'
+        '400':
+          description: Cannot cancel (already started, rejected, etc)
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /leave/types:
+    get:
+      tags: [Leave]
+      summary: Get available leave types
+      description: Returns leave types configured for the company
+      responses:
+        '200':
+          description: Leave types
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LeaveType'
+
+  /leave/calendar:
+    get:
+      tags: [Leave]
+      summary: Get leave calendar
+      description: Returns approved leaves and public holidays for calendar view
+      parameters:
+        - name: month
+          in: query
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 12
+        - name: year
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: include_team
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Include department members (supervisors only)
+      responses:
+        '200':
+          description: Calendar events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveCalendarResponse'
+
+  # ==================== APPROVALS ====================
+  /approvals/pending:
+    get:
+      tags: [Approvals]
+      summary: Get pending approvals
+      description: |
+        Returns leave requests pending approval.
+        Only for supervisors and HR roles.
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: Pending approvals
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApprovalListResponse'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /approvals/{request_id}/approve:
+    post:
+      tags: [Approvals]
+      summary: Approve leave request
+      parameters:
+        - name: request_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+                  maxLength: 500
+      responses:
+        '200':
+          description: Leave approved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveRequestResponse'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /approvals/{request_id}/reject:
+    post:
+      tags: [Approvals]
+      summary: Reject leave request
+      parameters:
+        - name: request_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reason]
+              properties:
+                reason:
+                  type: string
+                  maxLength: 500
+      responses:
+        '200':
+          description: Leave rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveRequestResponse'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ==================== NOTIFICATIONS ====================
+  /notifications:
+    get:
+      tags: [Notifications]
+      summary: Get notifications
+      description: Returns notifications with cursor-based pagination
+      parameters:
+        - name: unread_only
+          in: query
+          schema:
+            type: boolean
+            default: false
+        - name: cursor
+          in: query
+          schema:
+            type: string
+          description: Cursor for pagination
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+            maximum: 50
+      responses:
+        '200':
+          description: Notifications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationListResponse'
+
+  /notifications/unread-count:
+    get:
+      tags: [Notifications]
+      summary: Get unread notification count
+      description: Quick count for badge display
+      responses:
+        '200':
+          description: Unread count
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+
+  /notifications/{notification_id}/read:
+    post:
+      tags: [Notifications]
+      summary: Mark notification as read
+      parameters:
+        - name: notification_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Marked as read
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /notifications/read-all:
+    post:
+      tags: [Notifications]
+      summary: Mark all notifications as read
+      responses:
+        '200':
+          description: All marked as read
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  updated_count:
+                    type: integer
+
+  # ==================== DOCUMENTS ====================
+  /documents:
+    get:
+      tags: [Documents]
+      summary: List my documents
+      parameters:
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [IC, PASSPORT, PERMIT, MC, CERT, OTHER]
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: Document list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentListResponse'
+
+    post:
+      tags: [Documents]
+      summary: Upload document
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file, doc_type, doc_name]
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: JPEG/PNG/PDF, max 10MB
+                doc_type:
+                  type: string
+                  enum: [IC, PASSPORT, PERMIT, MC, CERT, OTHER]
+                doc_name:
+                  type: string
+                  maxLength: 200
+                expiry_date:
+                  type: string
+                  format: date
+                notes:
+                  type: string
+                  maxLength: 500
+      responses:
+        '201':
+          description: Document uploaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '413':
+          description: File too large
+
+  /documents/{document_id}:
+    get:
+      tags: [Documents]
+      summary: Get document details
+      parameters:
+        - name: document_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Document details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /documents/{document_id}/download:
+    get:
+      tags: [Documents]
+      summary: Download document file
+      parameters:
+        - name: document_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: File download
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ==================== PUBLIC HOLIDAYS ====================
+  /public-holidays:
+    get:
+      tags: [Leave]
+      summary: Get public holidays
+      parameters:
+        - name: year
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Public holidays
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PublicHoliday'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    BadRequest:
+      description: Bad request - validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - invalid or expired token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: "UNAUTHORIZED"
+            message: "Invalid or expired token"
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: "FORBIDDEN"
+            message: "You don't have permission to perform this action"
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: "NOT_FOUND"
+            message: "Resource not found"
+
+  schemas:
+    # ========== ERROR ==========
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code
+        message:
+          type: string
+          description: Human-readable message
+        details:
+          type: object
+          description: Additional error details
+        field_errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              message:
+                type: string
+
+    # ========== PAGINATION ==========
+    PaginationMeta:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        per_page:
+          type: integer
+        total_pages:
+          type: integer
+        total_count:
+          type: integer
+
+    CursorPaginationMeta:
+      type: object
+      properties:
+        next_cursor:
+          type: string
+          nullable: true
+        has_more:
+          type: boolean
+
+    # ========== AUTH ==========
+    LoginRequest:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+          description: Email or employee number
+        password:
+          type: string
+          format: password
+        device_id:
+          type: string
+          description: Unique device identifier
+        fcm_token:
+          type: string
+          description: Firebase Cloud Messaging token
+
+    LoginResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        expires_at:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/UserBasic'
+        has_pin:
+          type: boolean
+          description: Whether user has set up PIN
+
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_at:
+          type: string
+          format: date-time
+
+    UserBasic:
+      type: object
+      properties:
+        id:
+          type: integer
+        employee_id:
+          type: integer
+        username:
+          type: string
+        role:
+          type: string
+          enum: [ADMIN, HR_MANAGER, HR_EXEC, SUPERVISOR, EMPLOYEE]
+
+    # ========== PROFILE ==========
+    ProfileResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        employee_no:
+          type: string
+        full_name:
+          type: string
+        preferred_name:
+          type: string
+        email:
+          type: string
+        mobile_phone:
+          type: string
+        photo_url:
+          type: string
+          format: uri
+        date_of_birth:
+          type: string
+          format: date
+        gender:
+          type: string
+        nationality:
+          type: string
+        address:
+          type: object
+          properties:
+            line1:
+              type: string
+            line2:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            postcode:
+              type: string
+        emergency_contact:
+          type: object
+          properties:
+            name:
+              type: string
+            phone:
+              type: string
+            relation:
+              type: string
+        employment:
+          type: object
+          properties:
+            job_title:
+              type: string
+            department:
+              type: string
+            join_date:
+              type: string
+              format: date
+            employment_type:
+              type: string
+            manager_name:
+              type: string
+        company:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            logo_url:
+              type: string
+        preferred_lang:
+          type: string
+
+    ProfileUpdateRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        mobile_phone:
+          type: string
+          pattern: '^\+?[0-9]{10,15}$'
+        address_line1:
+          type: string
+          maxLength: 200
+        address_line2:
+          type: string
+          maxLength: 200
+        city:
+          type: string
+          maxLength: 100
+        state:
+          type: string
+          maxLength: 50
+        postcode:
+          type: string
+          maxLength: 10
+        emergency_name:
+          type: string
+          maxLength: 200
+        emergency_phone:
+          type: string
+        emergency_relation:
+          type: string
+          maxLength: 50
+        preferred_lang:
+          type: string
+          enum: [en, ms, id]
+
+    # ========== DASHBOARD ==========
+    DashboardResponse:
+      type: object
+      properties:
+        employee:
+          type: object
+          properties:
+            name:
+              type: string
+            photo_url:
+              type: string
+            job_title:
+              type: string
+        leave_summary:
+          type: object
+          properties:
+            annual_balance:
+              type: number
+            pending_requests:
+              type: integer
+        payslip:
+          type: object
+          nullable: true
+          properties:
+            latest_period:
+              type: string
+            net_salary:
+              type: number
+            has_new:
+              type: boolean
+        notifications:
+          type: object
+          properties:
+            unread_count:
+              type: integer
+        pending_approvals:
+          type: integer
+          description: Only for supervisors/HR
+
+    # ========== PAYSLIP ==========
+    PayslipSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        pay_period:
+          type: string
+          description: YYYY-MM format
+        pay_date:
+          type: string
+          format: date
+        gross_salary:
+          type: number
+        net_salary:
+          type: number
+        status:
+          type: string
+          enum: [DRAFT, PUBLISHED, ARCHIVED]
+        viewed_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    PayslipListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PayslipSummary'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+
+    PayslipDetailResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        pay_period:
+          type: string
+        pay_date:
+          type: string
+          format: date
+        employee:
+          type: object
+          properties:
+            name:
+              type: string
+            employee_no:
+              type: string
+            department:
+              type: string
+            job_title:
+              type: string
+        earnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/PayslipLine'
+        deductions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PayslipLine'
+        statutory:
+          type: object
+          properties:
+            epf_employee:
+              type: number
+            epf_employer:
+              type: number
+            socso_employee:
+              type: number
+            socso_employer:
+              type: number
+            eis_employee:
+              type: number
+            eis_employer:
+              type: number
+            pcb:
+              type: number
+            zakat:
+              type: number
+        summary:
+          type: object
+          properties:
+            gross_salary:
+              type: number
+            total_deductions:
+              type: number
+            net_salary:
+              type: number
+        pdf_url:
+          type: string
+          format: uri
+
+    PayslipLine:
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+        quantity:
+          type: number
+          nullable: true
+        rate:
+          type: number
+          nullable: true
+        amount:
+          type: number
+
+    # ========== LEAVE ==========
+    LeaveType:
+      type: object
+      properties:
+        id:
+          type: integer
+        code:
+          type: string
+        name:
+          type: string
+        is_paid:
+          type: boolean
+        requires_attachment:
+          type: boolean
+        allow_half_day:
+          type: boolean
+        min_days_notice:
+          type: integer
+        max_days_per_request:
+          type: number
+          nullable: true
+        color:
+          type: string
+
+    LeaveBalance:
+      type: object
+      properties:
+        leave_type:
+          $ref: '#/components/schemas/LeaveType'
+        year:
+          type: integer
+        entitled:
+          type: number
+        carried:
+          type: number
+        adjustment:
+          type: number
+        taken:
+          type: number
+        pending:
+          type: number
+        balance:
+          type: number
+
+    LeaveBalanceListResponse:
+      type: object
+      properties:
+        year:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaveBalance'
+
+    LeaveRequestCreate:
+      type: object
+      required: [leave_type_id, date_from, date_to]
+      properties:
+        leave_type_id:
+          type: integer
+        date_from:
+          type: string
+          format: date
+        date_to:
+          type: string
+          format: date
+        half_day_type:
+          type: string
+          enum: [AM, PM]
+          description: Required if single day half-day leave
+        reason:
+          type: string
+          maxLength: 500
+        attachment_id:
+          type: integer
+          description: Document ID for MC, etc.
+
+    LeaveRequestResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        leave_type:
+          $ref: '#/components/schemas/LeaveType'
+        date_from:
+          type: string
+          format: date
+        date_to:
+          type: string
+          format: date
+        half_day_type:
+          type: string
+          nullable: true
+        total_days:
+          type: number
+        reason:
+          type: string
+        status:
+          type: string
+          enum: [PENDING, APPROVED, REJECTED, CANCELLED]
+        submitted_at:
+          type: string
+          format: date-time
+        approver:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        approved_at:
+          type: string
+          format: date-time
+          nullable: true
+        approved_by:
+          type: string
+          nullable: true
+        rejection_reason:
+          type: string
+          nullable: true
+        cancelled_at:
+          type: string
+          format: date-time
+          nullable: true
+        cancel_reason:
+          type: string
+          nullable: true
+        attachment:
+          $ref: '#/components/schemas/DocumentSummary'
+
+    LeaveRequestListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaveRequestResponse'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+
+    LeaveCalendarResponse:
+      type: object
+      properties:
+        month:
+          type: integer
+        year:
+          type: integer
+        my_leaves:
+          type: array
+          items:
+            type: object
+            properties:
+              date_from:
+                type: string
+                format: date
+              date_to:
+                type: string
+                format: date
+              leave_type:
+                type: string
+              status:
+                type: string
+              color:
+                type: string
+        team_leaves:
+          type: array
+          description: Only if include_team=true and user is supervisor
+          items:
+            type: object
+            properties:
+              employee_name:
+                type: string
+              date_from:
+                type: string
+                format: date
+              date_to:
+                type: string
+                format: date
+              leave_type:
+                type: string
+        public_holidays:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicHoliday'
+
+    PublicHoliday:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        name:
+          type: string
+        name_ms:
+          type: string
+        state:
+          type: string
+          nullable: true
+
+    # ========== APPROVALS ==========
+    ApprovalListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              employee:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  photo_url:
+                    type: string
+                  department:
+                    type: string
+              leave_type:
+                $ref: '#/components/schemas/LeaveType'
+              date_from:
+                type: string
+                format: date
+              date_to:
+                type: string
+                format: date
+              total_days:
+                type: number
+              reason:
+                type: string
+              submitted_at:
+                type: string
+                format: date-time
+              has_attachment:
+                type: boolean
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+
+    # ========== NOTIFICATIONS ==========
+    Notification:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          enum: [PAYSLIP, LEAVE, PERMIT, SYSTEM]
+        title:
+          type: string
+        body:
+          type: string
+        is_read:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        data:
+          type: object
+          description: Deep link data
+          properties:
+            action:
+              type: string
+            resource_id:
+              type: integer
+
+    NotificationListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Notification'
+        meta:
+          $ref: '#/components/schemas/CursorPaginationMeta'
+
+    # ========== DOCUMENTS ==========
+    DocumentSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        doc_type:
+          type: string
+        doc_name:
+          type: string
+        expiry_date:
+          type: string
+          format: date
+          nullable: true
+
+    DocumentResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        doc_type:
+          type: string
+          enum: [IC, PASSPORT, PERMIT, MC, CERT, OTHER]
+        doc_name:
+          type: string
+        file_url:
+          type: string
+          format: uri
+        file_size:
+          type: integer
+        mime_type:
+          type: string
+        issue_date:
+          type: string
+          format: date
+          nullable: true
+        expiry_date:
+          type: string
+          format: date
+          nullable: true
+        notes:
+          type: string
+        verified:
+          type: boolean
+        verified_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+
+    DocumentListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentResponse'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'

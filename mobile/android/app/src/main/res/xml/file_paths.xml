@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Internal app files directory -->
+    <files-path
+        name="internal_files"
+        path="." />
+
+    <!-- Cache directory -->
+    <cache-path
+        name="cache"
+        path="." />
+
+    <!-- External files directory (app-specific) -->
+    <external-files-path
+        name="external_files"
+        path="." />
+
+    <!-- External cache directory -->
+    <external-cache-path
+        name="external_cache"
+        path="." />
+
+    <!-- Camera captures -->
+    <external-files-path
+        name="camera"
+        path="Pictures" />
+
+    <!-- Document downloads -->
+    <external-files-path
+        name="documents"
+        path="Documents" />
+
+    <!-- Payslip PDFs -->
+    <external-files-path
+        name="payslips"
+        path="Payslips" />
+
+    <!-- Leave attachments -->
+    <external-files-path
+        name="attachments"
+        path="Attachments" />
+
+    <!-- Temp files for sharing -->
+    <cache-path
+        name="shared_files"
+        path="shared/" />
+</paths>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KerjaFlow</string>
+    <string name="app_name_debug">KerjaFlow Dev</string>
+
+    <!-- Notification Channels -->
+    <string name="notification_channel_default_id">kerjaflow_notifications</string>
+    <string name="notification_channel_default_name">General Notifications</string>
+    <string name="notification_channel_default_description">General app notifications</string>
+
+    <string name="notification_channel_leave_id">kerjaflow_leave</string>
+    <string name="notification_channel_leave_name">Leave Notifications</string>
+    <string name="notification_channel_leave_description">Leave request updates</string>
+
+    <string name="notification_channel_payslip_id">kerjaflow_payslip</string>
+    <string name="notification_channel_payslip_name">Payslip Notifications</string>
+    <string name="notification_channel_payslip_description">Payslip availability alerts</string>
+
+    <!-- Biometric Prompts -->
+    <string name="biometric_prompt_title">Authenticate</string>
+    <string name="biometric_prompt_subtitle">Use your fingerprint or face to authenticate</string>
+    <string name="biometric_prompt_description">Verify your identity to access KerjaFlow</string>
+    <string name="biometric_prompt_negative_button">Use PIN</string>
+
+    <!-- Permissions -->
+    <string name="camera_permission_rationale">Camera access is needed to scan documents</string>
+    <string name="storage_permission_rationale">Storage access is needed to save documents</string>
+
+    <!-- Error Messages -->
+    <string name="error_network">Network connection error. Please check your internet connection.</string>
+    <string name="error_server">Server error. Please try again later.</string>
+    <string name="error_auth">Authentication failed. Please login again.</string>
+</resources>
