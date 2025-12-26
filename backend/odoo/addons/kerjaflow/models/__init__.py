@@ -32,6 +32,7 @@ System Domain:
 """
 
 # Odoo model discovery requires these imports
+from . import kf_country_config  # noqa: F401 - Must be first (other models depend on it)
 from . import kf_company  # noqa: F401
 from . import kf_department  # noqa: F401
 from . import kf_job_position  # noqa: F401
@@ -47,3 +48,5 @@ from . import kf_payslip  # noqa: F401
 from . import kf_payslip_line  # noqa: F401
 from . import kf_notification  # noqa: F401
 from . import kf_audit_log  # noqa: F401
+from . import kf_statutory_rate  # noqa: F401
+from . import compliance  # noqa: F401

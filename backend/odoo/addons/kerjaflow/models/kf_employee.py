@@ -3,14 +3,24 @@
 Employee Model - Core Employee Master Data
 ===========================================
 
-Table: kf_employee
-50+ fields including Malaysian statutory requirements
+Table: kf_employee (REGIONAL - stored per country VPS)
+50+ fields supporting all 9 ASEAN countries
+
+CRITICAL per CLAUDE.md:
+- ALWAYS include country_code in employee-related queries
+- Data routing is based on country_code field
+- ID and VN have MANDATORY local data storage requirements
 """
 
-from odoo import models, fields, api
-from odoo.exceptions import ValidationError
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError, UserError
 from datetime import date
+from decimal import Decimal
 from dateutil.relativedelta import relativedelta
+import re
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class KfEmployee(models.Model):
@@ -30,6 +40,32 @@ class KfEmployee(models.Model):
         string='Badge ID',
         index=True,
         help='Badge/access card ID',
+    )
+
+    # Country Configuration (CRITICAL for data routing per CLAUDE.md)
+    country_id = fields.Many2one(
+        comodel_name='kf.country.config',
+        string='Country',
+        required=True,
+        index=True,
+        tracking=True,
+        help='Employee country - determines data storage location',
+    )
+    country_code = fields.Char(
+        string='Country Code',
+        related='country_id.country_code',
+        store=True,
+        index=True,
+        help='ISO country code for data routing (MY, SG, ID, TH, VN, PH, LA, KH, BN)',
+    )
+
+    # Currency for monetary fields
+    currency_id = fields.Many2one(
+        comodel_name='res.currency',
+        string='Currency',
+        related='country_id.currency_id',
+        store=True,
+        help='Currency based on employee country',
     )
 
     # Personal Information
@@ -177,6 +213,14 @@ class KfEmployee(models.Model):
     epf_rate_employer = fields.Float(
         string='Employer EPF Rate (%)',
         help='Age-based calculation',
+    )
+
+    # Salary Information
+    basic_salary = fields.Monetary(
+        string='Basic Salary',
+        currency_field='currency_id',
+        tracking=True,
+        help='Monthly basic salary in local currency',
     )
 
     # Banking Information
@@ -351,9 +395,60 @@ class KfEmployee(models.Model):
             seen = {employee.id}
             while manager:
                 if manager.id in seen:
-                    raise ValidationError('Circular manager hierarchy is not allowed.')
+                    raise ValidationError(_('Circular manager hierarchy is not allowed.'))
                 seen.add(manager.id)
                 manager = manager.manager_id
+
+    # IC Format patterns per country (per CLAUDE.md)
+    IC_FORMAT_PATTERNS = {
+        'MY': (r'^\d{6}-\d{2}-\d{4}$', 'XXXXXX-XX-XXXX (e.g., 900101-01-1234)'),
+        'SG': (r'^[STFGM]\d{7}[A-Z]$', 'XNNNNNNNX (e.g., S1234567D)'),
+        'ID': (r'^\d{16}$', '16 digits (NIK)'),
+        'TH': (r'^\d{13}$', '13 digits'),
+        'VN': (r'^\d{9}|\d{12}$', '9 or 12 digits (CCCD)'),
+        'PH': (r'^\d{4}-\d{7}-\d{1}$', 'NNNN-NNNNNNN-N (PhilSys)'),
+        'BN': (r'^\d{2}-\d{6}$', 'NN-NNNNNN'),
+        # LA and KH have variable formats, validated loosely
+        'LA': (r'^.{6,20}$', '6-20 characters'),
+        'KH': (r'^.{6,20}$', '6-20 characters'),
+    }
+
+    @api.constrains('country_code', 'ic_no')
+    def _check_ic_format(self):
+        """Validate IC number format based on country"""
+        for record in self:
+            if not record.ic_no or not record.country_code:
+                continue
+
+            pattern_info = self.IC_FORMAT_PATTERNS.get(record.country_code)
+            if pattern_info:
+                pattern, example = pattern_info
+                if not re.match(pattern, record.ic_no):
+                    raise ValidationError(_(
+                        'Invalid %(country)s IC format. Expected: %(example)s',
+                        country=record.country_code,
+                        example=example
+                    ))
+
+    # Sensitive fields that require audit logging (per CLAUDE.md)
+    SENSITIVE_FIELDS = [
+        'ic_no', 'passport_no', 'bank_account_no',
+        'basic_salary', 'epf_no', 'socso_no', 'tax_no'
+    ]
+
+    def write(self, vals):
+        """Override write to add audit logging for sensitive fields"""
+        sensitive_changed = [f for f in vals if f in self.SENSITIVE_FIELDS]
+        if sensitive_changed:
+            for record in self:
+                _logger.info(
+                    'Sensitive field(s) updated for employee %s (ID: %s) by user %s: %s',
+                    record.full_name,
+                    record.id,
+                    self.env.uid,
+                    ', '.join(sensitive_changed)
+                )
+        return super().write(vals)
 
     def get_direct_reports(self):
         """Get all direct reports for this employee."""
@@ -361,3 +456,82 @@ class KfEmployee(models.Model):
             ('manager_id', '=', self.id),
             ('status', '=', 'ACTIVE'),
         ])
+
+    def get_statutory_rate(self, contribution_type, effective_date):
+        """
+        Get applicable statutory rate for this employee based on effective_date.
+
+        CRITICAL per CLAUDE.md: ALWAYS use payslip_date for rate lookup, NEVER today's date.
+
+        Args:
+            contribution_type: Type of contribution (e.g., 'EPF', 'SOCSO', 'NSSF_PENSION')
+            effective_date: The payslip date (determines which rate applies)
+
+        Returns:
+            recordset of kf.statutory.rate or empty recordset
+
+        Example:
+            # Cambodia pension rate auto-selects 4% for Oct 2027+
+            rate = employee.get_statutory_rate('NSSF_PENSION', date(2027, 10, 15))
+        """
+        self.ensure_one()
+        StatutoryRate = self.env['kf.statutory.rate']
+        return StatutoryRate.search([
+            ('country_code', '=', self.country_code),
+            ('contribution_type', '=', contribution_type),
+            ('effective_from', '<=', effective_date),
+            '|', ('effective_to', '=', False),
+                 ('effective_to', '>=', effective_date),
+        ], order='effective_from desc', limit=1)
+
+    def calculate_statutory_deductions(self, payslip_date):
+        """
+        Calculate all statutory deductions for given payslip date.
+
+        Args:
+            payslip_date: Date of the payslip (CRITICAL: not today's date!)
+
+        Returns:
+            Dict with employee and employer contributions
+        """
+        self.ensure_one()
+        if not self.basic_salary:
+            return {'employee': Decimal('0'), 'employer': Decimal('0'), 'details': []}
+
+        # Get all applicable rates for this country
+        StatutoryRate = self.env['kf.statutory.rate']
+        rates = StatutoryRate.search([
+            ('country_code', '=', self.country_code),
+            ('effective_from', '<=', payslip_date),
+            '|', ('effective_to', '=', False),
+                 ('effective_to', '>=', payslip_date),
+        ])
+
+        employee_total = Decimal('0')
+        employer_total = Decimal('0')
+        details = []
+
+        for rate in rates:
+            applicable_salary = Decimal(str(self.basic_salary))
+            if rate.salary_cap and applicable_salary > Decimal(str(rate.salary_cap)):
+                applicable_salary = Decimal(str(rate.salary_cap))
+
+            employee_amount = applicable_salary * (Decimal(str(rate.employee_rate)) / 100)
+            employer_amount = applicable_salary * (Decimal(str(rate.employer_rate)) / 100)
+
+            employee_total += employee_amount
+            employer_total += employer_amount
+
+            details.append({
+                'type': rate.contribution_type,
+                'employee_rate': rate.employee_rate,
+                'employer_rate': rate.employer_rate,
+                'employee_amount': float(employee_amount),
+                'employer_amount': float(employer_amount),
+            })
+
+        return {
+            'employee': float(employee_total),
+            'employer': float(employer_total),
+            'details': details,
+        }
