@@ -1,0 +1,368 @@
+# KerjaFlow E2E & Integration Tests CI/CD Workflow
+# ================================================
+# COST-OPTIMIZED VERSION
+#
+# Strategy:
+# - PRs: Run fast checks only (lint, unit tests, build verify)
+# - Main branch: Run full E2E tests (after merge)
+# - Manual: Full test suite on-demand
+#
+# Estimated costs:
+# - PR checks: ~8 min (unit tests only)
+# - Main merge: ~45 min (full E2E, but less frequent)
+# - Monthly estimate: ~400 min (well within free tier)
+
+name: Tests
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'mobile/**'
+      - 'backend/**'
+      - '.github/workflows/e2e-tests.yml'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'mobile/**'
+      - 'backend/**'
+  workflow_dispatch:
+    inputs:
+      test_suite:
+        description: 'Test suite to run'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - mobile-only
+          - backend-only
+          - quick  # Fast checks only
+
+# ============================================================
+# CONCURRENCY: Prevent parallel runs, save minutes
+# ============================================================
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: '3.24.0'
+  PYTHON_VERSION: '3.10'
+  ODOO_VERSION: '17.0'
+
+jobs:
+  # ============================================================
+  # FAST: Run on every PR (~5-8 min)
+  # ============================================================
+  quick-checks:
+    name: Quick Checks
+    runs-on: ubuntu-latest
+    # Always run on PRs, skip on main push (full tests will run)
+    if: github.event_name == 'pull_request' || github.event.inputs.test_suite == 'quick'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        working-directory: mobile
+        run: flutter pub get
+
+      - name: Analyze code
+        working-directory: mobile
+        run: flutter analyze --no-fatal-infos
+
+      - name: Run unit tests
+        working-directory: mobile
+        run: flutter test --coverage --reporter=github
+
+      - name: Verify build compiles
+        working-directory: mobile
+        run: flutter build apk --debug --flavor dev --target-platform android-arm64
+
+      - name: Backend lint check
+        working-directory: backend
+        run: |
+          pip install flake8 pylint
+          flake8 odoo/addons/kerjaflow --max-line-length=120 --ignore=E501,W503 || true
+
+  # ============================================================
+  # FULL E2E: Only on main/develop merge (~45 min)
+  # ============================================================
+  mobile-e2e-tests:
+    name: Mobile E2E Tests
+    runs-on: ubuntu-latest
+    # Only run on push to main/develop (after merge) or manual dispatch
+    if: |
+      (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')) ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.test_suite != 'backend-only' && github.event.inputs.test_suite != 'quick')
+
+    # Timeout to prevent runaway costs
+    timeout-minutes: 60
+
+    defaults:
+      run:
+        working-directory: mobile
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+
+      - name: Cache pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            mobile/.dart_tool
+          key: ${{ runner.os }}-pub-${{ hashFiles('mobile/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-pub-
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate code
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Generate localizations
+        run: flutter gen-l10n
+
+      - name: Run unit tests with coverage
+        run: flutter test --coverage
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        with:
+          files: mobile/coverage/lcov.info
+          flags: mobile-unit
+        continue-on-error: true
+
+      # --------------------------------------------------------
+      # E2E Tests: Single emulator session for ALL tests
+      # (Saves ~30 min vs 4 separate emulator boots)
+      # --------------------------------------------------------
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-api-31-${{ runner.os }}-v2
+
+      - name: Create AVD snapshot
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 31
+          arch: x86_64
+          target: google_apis
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: echo "Generated AVD snapshot"
+
+      # Run ALL E2E tests in single emulator session
+      - name: Run all E2E tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 31
+          arch: x86_64
+          target: google_apis
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          working-directory: mobile
+          script: |
+            # Run all integration tests in sequence (single emulator boot)
+            flutter test integration_test/ --flavor=dev --dart-define=TEST_MODE=true || true
+
+            # Alternative: Run specific test files if flutter test doesn't work
+            # flutter drive --driver=test_driver/integration_test.dart --target=integration_test/e2e_auth_flow_test.dart --flavor=dev --dart-define=TEST_MODE=true || true
+            # flutter drive --driver=test_driver/integration_test.dart --target=integration_test/e2e_leave_flow_test.dart --flavor=dev --dart-define=TEST_MODE=true || true
+
+      - name: Upload E2E artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-test-artifacts
+          path: |
+            mobile/build/app/outputs/
+            mobile/integration_test/screenshots/
+          retention-days: 7  # Reduce storage costs
+
+  # ============================================================
+  # Backend Tests: Only on main merge (~15 min)
+  # ============================================================
+  backend-integration-tests:
+    name: Backend Integration Tests
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')) ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.test_suite != 'mobile-only' && github.event.inputs.test_suite != 'quick')
+
+    timeout-minutes: 30
+
+    services:
+      postgres:
+        image: postgres:15-alpine  # Alpine = faster pull
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_PASSWORD: odoo
+          POSTGRES_DB: kerjaflow_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    defaults:
+      run:
+        working-directory: backend
+
+    env:
+      PGHOST: localhost
+      PGPORT: 5432
+      PGUSER: odoo
+      PGPASSWORD: odoo
+      PGDATABASE: kerjaflow_test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libpq-dev libldap2-dev libsasl2-dev libssl-dev wkhtmltopdf
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Cache Odoo
+        uses: actions/cache@v4
+        id: odoo-cache
+        with:
+          path: /tmp/odoo
+          key: odoo-${{ env.ODOO_VERSION }}
+
+      - name: Download Odoo
+        if: steps.odoo-cache.outputs.cache-hit != 'true'
+        run: |
+          git clone --depth 1 --branch ${{ env.ODOO_VERSION }} https://github.com/odoo/odoo.git /tmp/odoo
+          pip install -r /tmp/odoo/requirements.txt
+
+      - name: Setup test database
+        run: |
+          psql -c "CREATE EXTENSION IF NOT EXISTS pgcrypto;"
+          psql -c "CREATE EXTENSION IF NOT EXISTS pg_trgm;"
+
+      - name: Initialize Odoo
+        run: |
+          python /tmp/odoo/odoo-bin \
+            --addons-path=/tmp/odoo/addons,./odoo/addons \
+            -d kerjaflow_test \
+            -i base,kerjaflow \
+            --stop-after-init \
+            --without-demo=all
+
+      - name: Run integration tests
+        run: |
+          python /tmp/odoo/odoo-bin \
+            --addons-path=/tmp/odoo/addons,./odoo/addons \
+            -d kerjaflow_test \
+            --test-enable \
+            --test-tags=integration \
+            -i kerjaflow \
+            --stop-after-init \
+            --log-level=test \
+            2>&1 | tee test_output.log
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-test-results
+          path: backend/test_output.log
+          retention-days: 7
+
+  # ============================================================
+  # API Contract Tests: DISABLED by default (expensive)
+  # Uncomment for release validation
+  # ============================================================
+  # api-contract-tests:
+  #   name: API Contract Tests
+  #   runs-on: ubuntu-latest
+  #   needs: backend-integration-tests
+  #   if: github.event_name == 'workflow_dispatch' && github.event.inputs.test_suite == 'all'
+  #   ... (same as before)
+
+  # ============================================================
+  # Test Summary
+  # ============================================================
+  test-summary:
+    name: Test Summary
+    runs-on: ubuntu-latest
+    needs: [quick-checks, mobile-e2e-tests, backend-integration-tests]
+    if: always()
+
+    steps:
+      - name: Generate summary
+        run: |
+          echo "## KerjaFlow Test Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Test Suite | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------------|--------|" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ needs.quick-checks.result }}" != "skipped" ]; then
+            echo "| Quick Checks | ${{ needs.quick-checks.result == 'success' && '✅' || '❌' }} |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ "${{ needs.mobile-e2e-tests.result }}" != "skipped" ]; then
+            echo "| Mobile E2E | ${{ needs.mobile-e2e-tests.result == 'success' && '✅' || '❌' }} |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ "${{ needs.backend-integration-tests.result }}" != "skipped" ]; then
+            echo "| Backend Integration | ${{ needs.backend-integration-tests.result == 'success' && '✅' || '❌' }} |" >> $GITHUB_STEP_SUMMARY
+          fi

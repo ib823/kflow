@@ -1,0 +1,16 @@
+# KerjaFlow Android Signing Configuration
+# ========================================
+# Copy this file to key.properties and fill in your values
+# NEVER commit key.properties to version control!
+
+# Release keystore configuration
+storePassword=YOUR_STORE_PASSWORD_HERE
+keyPassword=YOUR_KEY_PASSWORD_HERE
+keyAlias=kerjaflow
+storeFile=keystore/release.keystore
+
+# Optional: Upload keystore for Google Play App Signing
+# uploadStorePassword=YOUR_UPLOAD_STORE_PASSWORD_HERE
+# uploadKeyPassword=YOUR_UPLOAD_KEY_PASSWORD_HERE
+# uploadKeyAlias=upload
+# uploadStoreFile=keystore/upload.keystore

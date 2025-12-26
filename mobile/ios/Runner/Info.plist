@@ -57,17 +57,49 @@
 		<string>remote-notification</string>
 	</array>
 
-	<!-- Face ID Usage -->
+	<!-- ============================================================ -->
+	<!-- PRIVACY DESCRIPTIONS (Required for App Store)                -->
+	<!-- ============================================================ -->
+
+	<!-- Face ID Usage - Required for biometric authentication -->
 	<key>NSFaceIDUsageDescription</key>
-	<string>KerjaFlow uses Face ID for secure authentication and quick access to your account.</string>
+	<string>KerjaFlow uses Face ID to securely authenticate your identity and provide quick access to sensitive information like payslips and leave balances.</string>
 
-	<!-- Camera Usage (for document scanning) -->
+	<!-- Camera Usage - Document scanning, profile photos -->
 	<key>NSCameraUsageDescription</key>
-	<string>KerjaFlow needs camera access to scan and upload documents.</string>
+	<string>KerjaFlow needs camera access to scan documents (such as work permits and ICs), capture profile photos, and upload employment-related documents.</string>
 
-	<!-- Photo Library Usage -->
+	<!-- Photo Library Read - Selecting existing photos -->
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>KerjaFlow needs photo library access to upload profile pictures and documents.</string>
+	<string>KerjaFlow needs access to your photo library to select and upload profile pictures, document scans, and other employment-related images.</string>
+
+	<!-- Photo Library Add - Saving payslips and documents -->
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>KerjaFlow needs permission to save downloaded payslips, documents, and receipts to your photo library.</string>
+
+	<!-- Notifications - Push notifications for leave/payslip updates -->
+	<key>NSUserNotificationUsageDescription</key>
+	<string>KerjaFlow sends notifications for leave request approvals, payslip availability, document expiry reminders, and other important HR updates.</string>
+
+	<!-- Contacts - Optional for emergency contacts -->
+	<key>NSContactsUsageDescription</key>
+	<string>KerjaFlow can access your contacts to quickly add emergency contact information to your employee profile.</string>
+
+	<!-- Location (if used for clock-in) -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>KerjaFlow uses your location to verify clock-in/clock-out at designated work locations, ensuring accurate attendance records.</string>
+
+	<!-- Calendars - Sync leave to calendar -->
+	<key>NSCalendarsUsageDescription</key>
+	<string>KerjaFlow can sync your approved leave dates to your calendar so you never forget your time off.</string>
+
+	<!-- Local Network - For debugging only (will be removed in production) -->
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>KerjaFlow may need local network access for debugging and development purposes.</string>
+
+	<!-- Tracking - Required for iOS 14.5+ (we don't track, but declaration is needed) -->
+	<key>NSUserTrackingUsageDescription</key>
+	<string>KerjaFlow does not track you across apps. This permission is requested only to comply with App Store requirements.</string>
 
 	<!-- Keychain Sharing -->
 	<key>keychain-access-groups</key>
@@ -114,11 +146,22 @@
 		<string>applinks:*.kerjaflow.my</string>
 	</array>
 
-	<!-- Localization -->
+	<!-- ============================================================ -->
+	<!-- LOCALIZATION - 11 languages for 9 ASEAN countries           -->
+	<!-- ============================================================ -->
 	<key>CFBundleLocalizations</key>
 	<array>
-		<string>en</string>
-		<string>ms</string>
+		<string>en</string>       <!-- English (default) -->
+		<string>ms</string>       <!-- Bahasa Malaysia (MY, BN) -->
+		<string>id</string>       <!-- Bahasa Indonesia (ID) -->
+		<string>zh-Hans</string>  <!-- Chinese Simplified (SG, MY) -->
+		<string>ta</string>       <!-- Tamil (MY, SG) -->
+		<string>th</string>       <!-- Thai (TH) -->
+		<string>vi</string>       <!-- Vietnamese (VN) -->
+		<string>fil</string>      <!-- Filipino/Tagalog (PH) -->
+		<string>lo</string>       <!-- Lao (LA) -->
+		<string>km</string>       <!-- Khmer (KH) -->
+		<string>bn</string>       <!-- Bengali (migrant workers) -->
 	</array>
 
 	<!-- Minimum iOS Version -->

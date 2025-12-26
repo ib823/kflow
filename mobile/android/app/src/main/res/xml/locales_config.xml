@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    KerjaFlow Locale Configuration (Android 13+)
+    ============================================
+    Defines supported locales for per-app language preferences.
+
+    11 languages for 9 ASEAN countries:
+    - English (default, all countries)
+    - Bahasa Malaysia (MY, BN)
+    - Bahasa Indonesia (ID)
+    - Chinese Simplified (SG, MY)
+    - Tamil (MY, SG)
+    - Thai (TH)
+    - Vietnamese (VN)
+    - Filipino/Tagalog (PH)
+    - Lao (LA)
+    - Khmer (KH)
+    - Bengali (migrant workers)
+-->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="en" />
+    <locale android:name="ms-MY" />
+    <locale android:name="id-ID" />
+    <locale android:name="zh-Hans" />
+    <locale android:name="ta-IN" />
+    <locale android:name="th-TH" />
+    <locale android:name="vi-VN" />
+    <locale android:name="fil-PH" />
+    <locale android:name="lo-LA" />
+    <locale android:name="km-KH" />
+    <locale android:name="bn-BD" />
+</locale-config>

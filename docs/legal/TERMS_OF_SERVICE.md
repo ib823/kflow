@@ -1,117 +1,330 @@
 # KerjaFlow Terms of Service
 
-**Last Updated: December 2024**
+**Effective Date:** January 1, 2025
+**Last Updated:** December 26, 2025
+**Version:** 3.0
+
+---
 
 ## 1. Acceptance of Terms
 
-By downloading, installing, or using the KerjaFlow mobile application ("App"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the App.
+By accessing or using the KerjaFlow mobile application, web platform, or any related services (collectively, the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the Service.
 
-## 2. Description of Service
+These Terms constitute a legal agreement between:
+- **You** ("User", "Employee", or "you") - the individual using the Service
+- **Your Employer** ("Organization", "Company") - the entity that has subscribed to KerjaFlow
+- **KerjaFlow Sdn Bhd** ("KerjaFlow", "we", "us", or "our") - the provider of the Service
 
-KerjaFlow is an enterprise workforce management application that provides:
-- Leave management and requests
-- Payslip viewing and downloads
-- Employee document management
-- Notification services
-- HR self-service features
+---
 
-## 3. User Accounts
+## 2. Definitions
 
-### 3.1 Account Creation
-- Accounts are created by your employer's HR department
-- You are responsible for maintaining the confidentiality of your login credentials
-- You must immediately notify HR of any unauthorized use of your account
+| Term | Definition |
+|------|------------|
+| **Service** | The KerjaFlow mobile application, web platform, and all related services |
+| **User** | Any individual who accesses or uses the Service |
+| **Organization** | The employer or company that has subscribed to KerjaFlow |
+| **Administrator** | An Organization's authorized personnel with admin access |
+| **Employee Data** | Personal and employment information processed through the Service |
+| **Content** | All data, text, files, and materials uploaded or generated via the Service |
 
-### 3.2 Account Security
-- You must set up a 6-digit PIN for accessing sensitive information
-- Biometric authentication is optional but recommended
-- Never share your PIN or allow others to use your biometric data
+---
 
-## 4. Acceptable Use
+## 3. Eligibility
 
+To use the Service, you must:
+- Be at least 18 years of age
+- Be an employee, contractor, or authorized user of a subscribing Organization
+- Have received valid credentials from your Organization or KerjaFlow
+- Agree to these Terms and our Privacy Policy
+
+---
+
+## 4. Account Registration and Security
+
+### 4.1 Account Creation
+- Accounts are typically created by your Organization's Administrator
+- You may be required to complete registration by setting a password and PIN
+- You must provide accurate and complete information
+
+### 4.2 Account Security
+You are responsible for:
+- Maintaining the confidentiality of your login credentials
+- Setting a secure 6-digit PIN
+- Not sharing your account with others
+- Notifying us immediately of any unauthorized access
+
+### 4.3 Biometric Authentication
+- Biometric data (fingerprint, face ID) is stored only on your device
+- KerjaFlow does not collect or store biometric templates on our servers
+- You may disable biometric authentication at any time
+
+---
+
+## 5. Acceptable Use
+
+### 5.1 Permitted Uses
+You may use the Service to:
+- View your payslips and salary information
+- Submit and track leave requests
+- View your leave balances and history
+- Update your personal profile information
+- Receive notifications about HR matters
+- Download employment-related documents
+
+### 5.2 Prohibited Uses
 You agree NOT to:
-- Share your login credentials with others
-- Attempt to access other employees' data
-- Use the App for any unlawful purpose
+- Access accounts or data belonging to other users
 - Attempt to circumvent security measures
-- Reverse engineer or decompile the App
-- Submit false information or fraudulent requests
+- Use the Service for any unlawful purpose
+- Upload malicious code or viruses
+- Reverse engineer or decompile the application
+- Use automated systems to access the Service
+- Share confidential payroll information inappropriately
+- Misrepresent your identity or impersonate others
 
-## 5. Leave Requests
+### 5.3 Violations
+Violations of these Terms may result in:
+- Suspension or termination of your account
+- Reporting to your Organization
+- Legal action where appropriate
 
-### 5.1 Submission
-- Leave requests are subject to company policy and manager approval
-- Submitting a request does not guarantee approval
-- You must have sufficient leave balance
+---
 
-### 5.2 Cancellation
-- Pending requests may be cancelled before approval
-- Approved leave may only be cancelled with manager permission
-- Cancellation policies are governed by your company's HR policy
+## 6. Service Features
 
-## 6. Payslip Information
-
-- Payslips are confidential documents
+### 6.1 Payslip Access
+- Payslips are generated by your Organization
 - PIN verification is required to view payslip details
-- Downloaded PDFs should be stored securely
-- Report any discrepancies to your HR department immediately
+- PDF downloads are logged for audit purposes
+- Historical payslips are retained per legal requirements
 
-## 7. Intellectual Property
+### 6.2 Leave Management
+- Leave requests are subject to your Organization's policies
+- Approval workflows are configured by your Organization
+- Leave balances are calculated based on your Organization's rules
+- Public holidays are based on your country of employment
 
-- The App and its content are owned by KerjaFlow Sdn Bhd
-- You are granted a limited, non-exclusive license to use the App
-- You may not copy, modify, or distribute the App
+### 6.3 Notifications
+- Push notifications require your consent
+- You can manage notification preferences in the app
+- Critical notifications (security alerts) cannot be disabled
 
-## 8. Privacy
+### 6.4 Offline Mode
+- Some features are available offline
+- Data syncs automatically when connectivity is restored
+- Offline actions are queued and processed in order
 
-Your use of the App is also governed by our Privacy Policy. By using the App, you consent to the collection and use of data as described in the Privacy Policy.
+---
 
-## 9. Disclaimers
+## 7. Data Ownership and Rights
 
-THE APP IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND. WE DO NOT WARRANT THAT:
-- The App will be uninterrupted or error-free
-- Defects will be corrected
-- The App is free of viruses
+### 7.1 Your Data
+- You retain ownership of your personal data
+- Your Organization is the data controller for employment data
+- KerjaFlow is the data processor acting on behalf of your Organization
 
-## 10. Limitation of Liability
+### 7.2 Organization Data
+- Your Organization owns all employment-related data
+- Payroll calculations and configurations belong to your Organization
+- HR policies implemented in the Service are governed by your Organization
 
-TO THE MAXIMUM EXTENT PERMITTED BY LAW, KERJAFLOW SHALL NOT BE LIABLE FOR:
+### 7.3 KerjaFlow IP
+KerjaFlow retains all rights to:
+- The Service software and applications
+- Our trademarks, logos, and branding
+- Aggregated and anonymized analytics
+- System configurations and algorithms
+
+---
+
+## 8. Fees and Payment
+
+### 8.1 User Fees
+- The Service is provided to you free of charge
+- Your Organization pays subscription fees on your behalf
+- There are no in-app purchases or hidden fees
+
+### 8.2 Organization Fees
+- Fees are governed by a separate agreement with your Organization
+- Service availability depends on your Organization's subscription status
+
+---
+
+## 9. Service Availability
+
+### 9.1 Uptime
+- We strive for 99.9% service availability
+- Scheduled maintenance will be announced in advance
+- Emergency maintenance may occur without notice
+
+### 9.2 Modifications
+We reserve the right to:
+- Update the Service with new features
+- Modify existing features
+- Discontinue features with reasonable notice
+
+### 9.3 Termination
+Your access may be terminated:
+- By your Organization when your employment ends
+- By KerjaFlow for Terms violations
+- By KerjaFlow if the Organization's subscription ends
+
+---
+
+## 10. Disclaimers
+
+### 10.1 "As Is" Provision
+THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:
+- MERCHANTABILITY
+- FITNESS FOR A PARTICULAR PURPOSE
+- NON-INFRINGEMENT
+- ACCURACY OF PAYROLL CALCULATIONS
+
+### 10.2 Payroll Disclaimer
+- Payroll calculations are based on data provided by your Organization
+- Statutory rates are updated based on publicly available information
+- Final payroll responsibility lies with your Organization
+- Discrepancies should be reported to your HR department
+
+### 10.3 Third-Party Services
+- We are not responsible for third-party services integrated with KerjaFlow
+- Government statutory submission systems are maintained by respective authorities
+
+---
+
+## 11. Limitation of Liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW:
+
+### 11.1 Exclusion of Damages
+KerjaFlow shall not be liable for:
 - Indirect, incidental, or consequential damages
+- Loss of profits or revenue
 - Loss of data or business interruption
-- Damages exceeding the amount paid for the App (if any)
+- Damages arising from service unavailability
 
-## 11. Indemnification
+### 11.2 Liability Cap
+Our total liability for any claims shall not exceed:
+- The fees paid by your Organization in the 12 months preceding the claim, or
+- MYR 10,000, whichever is lower
 
-You agree to indemnify and hold harmless KerjaFlow from any claims arising from:
-- Your use of the App
+### 11.3 Exceptions
+These limitations do not apply to:
+- Liability that cannot be excluded by law
+- Gross negligence or willful misconduct
+- Breach of data protection obligations
+
+---
+
+## 12. Indemnification
+
+You agree to indemnify and hold harmless KerjaFlow, its officers, directors, employees, and agents from any claims, damages, or expenses arising from:
 - Your violation of these Terms
+- Your misuse of the Service
 - Your violation of any third-party rights
 
-## 12. Modifications
+---
 
-We reserve the right to modify these Terms at any time. Continued use of the App after changes constitutes acceptance of the modified Terms.
+## 13. Dispute Resolution
 
-## 13. Termination
+### 13.1 Governing Law
+These Terms are governed by the laws of Malaysia.
 
-- Your access may be terminated by your employer
-- We may suspend access for violation of these Terms
-- Upon termination, you must delete the App and any downloaded content
+### 13.2 Jurisdiction
+For disputes not resolved amicably:
+- Users in Malaysia: Courts of Kuala Lumpur
+- Users in Singapore: Singapore International Arbitration Centre (SIAC)
+- Users in other countries: Kuala Lumpur Regional Centre for Arbitration (KLRCA)
 
-## 14. Governing Law
+### 13.3 Arbitration
+Disputes exceeding MYR 50,000 shall be resolved by arbitration under:
+- KLRCA Arbitration Rules
+- Single arbitrator appointed by KLRCA
+- Proceedings in English
+- Seat of arbitration: Kuala Lumpur
 
-These Terms are governed by the laws of Malaysia. Any disputes shall be subject to the exclusive jurisdiction of the courts of Malaysia.
+---
 
-## 15. Severability
+## 14. Country-Specific Terms
 
-If any provision of these Terms is found invalid, the remaining provisions shall remain in effect.
+### 14.1 Malaysia
+- Subject to Personal Data Protection Act 2010
+- Malaysian Consumer Protection Act 1999 applies where applicable
 
-## 16. Contact
+### 14.2 Singapore
+- Subject to Personal Data Protection Act 2012
+- Electronic Transactions Act applies to electronic records
+
+### 14.3 Indonesia
+- Subject to Law No. 27 of 2022 on Personal Data Protection
+- Consumer Protection Law No. 8 of 1999 applies
+
+### 14.4 Other ASEAN Countries
+- Local consumer protection laws apply
+- Local data protection regulations take precedence where stricter
+
+---
+
+## 15. Changes to Terms
+
+### 15.1 Modifications
+We may modify these Terms at any time. We will notify you of material changes via:
+- In-app notification
+- Email to your registered address
+- Banner on our website
+
+### 15.2 Continued Use
+Your continued use of the Service after changes constitutes acceptance of the modified Terms.
+
+### 15.3 Objection
+If you do not agree to modified Terms:
+- Stop using the Service
+- Contact your Organization's Administrator
+- Request account deletion
+
+---
+
+## 16. General Provisions
+
+### 16.1 Entire Agreement
+These Terms, together with our Privacy Policy, constitute the entire agreement between you and KerjaFlow regarding the Service.
+
+### 16.2 Severability
+If any provision is found unenforceable, the remaining provisions remain in effect.
+
+### 16.3 Waiver
+Our failure to enforce any right does not constitute a waiver of that right.
+
+### 16.4 Assignment
+You may not assign your rights under these Terms. KerjaFlow may assign its rights to a successor entity.
+
+### 16.5 Force Majeure
+We are not liable for failures due to circumstances beyond our reasonable control, including natural disasters, government actions, or infrastructure failures.
+
+---
+
+## 17. Contact Information
 
 For questions about these Terms:
 
 **KerjaFlow Sdn Bhd**
+Level 18, Menara KerjaFlow
+Jalan Sultan Ismail
+50250 Kuala Lumpur, Malaysia
+
 Email: legal@kerjaflow.my
+Phone: +60 3-XXXX XXXX
+Website: https://kerjaflow.my
 
 ---
 
-By using KerjaFlow, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.
+## 18. Acknowledgment
+
+BY USING THE SERVICE, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO BE BOUND BY THESE TERMS OF SERVICE.
+
+---
+
+*These Terms of Service are available in multiple languages. In case of any discrepancy, the English version shall prevail.*
+
+**Languages available:** English | Bahasa Malaysia | Bahasa Indonesia | 中文 | தமிழ் | ภาษาไทย | Tiếng Việt | Filipino | ລາວ | ភាសាខ្មែរ | বাংলা

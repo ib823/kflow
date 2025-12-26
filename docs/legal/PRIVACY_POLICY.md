@@ -1,124 +1,325 @@
 # KerjaFlow Privacy Policy
 
-**Last Updated: December 2024**
+**Effective Date:** January 1, 2025
+**Last Updated:** December 26, 2025
+**Version:** 3.0
+
+---
 
 ## 1. Introduction
 
-KerjaFlow ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application and related services.
+KerjaFlow Sdn Bhd ("KerjaFlow", "we", "us", or "our") operates the KerjaFlow mobile application and web platform (collectively, the "Service"). This Privacy Policy explains how we collect, use, disclose, and safeguard your personal data when you use our Service.
 
-This policy complies with:
-- Personal Data Protection Act 2010 (PDPA) - Malaysia
-- General Data Protection Regulation (GDPR) - where applicable
+We are committed to protecting your privacy and complying with applicable data protection laws across ASEAN, including:
 
-## 2. Information We Collect
+- **Malaysia:** Personal Data Protection Act 2010 (PDPA)
+- **Singapore:** Personal Data Protection Act 2012 (PDPA)
+- **Indonesia:** Law No. 27 of 2022 on Personal Data Protection (PDP Law)
+- **Thailand:** Personal Data Protection Act B.E. 2562 (2019) (PDPA)
+- **Vietnam:** Law on Cybersecurity and Decree 13/2023
+- **Philippines:** Data Privacy Act of 2012 (DPA)
+- **Brunei:** Personal Data Protection Order 2024 (PDPO)
+- **Cambodia:** (Pending LPDP - we comply with draft provisions)
+- **Laos:** (Following regional best practices)
 
-### 2.1 Personal Data
-We collect the following personal data:
-- **Identity Data**: Full name, employee number, IC number (NRIC)
-- **Contact Data**: Email address, phone number
-- **Employment Data**: Job title, department, hire date, reporting manager
-- **Financial Data**: Bank account details (for payroll), EPF number, SOCSO number, tax number
-- **Leave Data**: Leave balances, leave requests, attendance records
+---
 
-### 2.2 Technical Data
-- Device information (model, OS version)
-- App version
+## 2. Data Controller Information
+
+**Data Controller:**
+KerjaFlow Sdn Bhd
+Registration No: 202401XXXXXX
+Level 18, Menara KerjaFlow
+Jalan Sultan Ismail
+50250 Kuala Lumpur, Malaysia
+
+**Data Protection Officer (DPO):**
+Email: dpo@kerjaflow.my
+Phone: +60 3-XXXX XXXX
+
+For users in specific countries, local representatives may be appointed as required by law.
+
+---
+
+## 3. Categories of Personal Data We Collect
+
+### 3.1 Employee Personal Data
+
+| Data Category | Examples | Legal Basis |
+|--------------|----------|-------------|
+| **Identity Data** | Full name, employee ID, date of birth, gender | Employment contract, legal obligation |
+| **National ID Data** | IC number (Malaysia), NRIC (Singapore), NIK (Indonesia), etc. | Legal obligation (statutory deductions) |
+| **Contact Data** | Email, phone number, home address | Employment contract |
+| **Employment Data** | Job title, department, employment dates, supervisor | Employment contract |
+| **Financial Data** | Bank account, salary, allowances, deductions | Employment contract, legal obligation |
+| **Leave Data** | Leave balances, leave requests, approvals | Legitimate interest |
+| **Document Data** | Work permit, visa, passport (for foreign workers) | Legal obligation |
+| **Biometric Data** | Fingerprint template, Face ID template (stored on device only) | Consent |
+| **Device Data** | Device ID, push notification token, OS version | Legitimate interest |
+
+### 3.2 Technical Data
+
 - IP address
-- Push notification tokens
-- Usage analytics (anonymized)
+- Browser type and version
+- Time zone setting
+- Operating system and platform
+- Login timestamps
+- Feature usage analytics (anonymized)
 
-### 2.3 Biometric Data
-If you enable biometric authentication:
-- Fingerprint data (stored locally on device only)
-- Face ID data (stored locally on device only)
+### 3.3 Sensitive Personal Data
 
-**Note**: Biometric templates are never transmitted to our servers.
+We may process the following sensitive personal data with your explicit consent or as required by law:
 
-## 3. How We Use Your Information
+- Religious information (for public holiday entitlements)
+- Health information (for medical leave, if voluntarily provided)
+- Biometric identifiers (stored locally on your device, not transmitted to servers)
 
-We use your personal data to:
-- Process leave requests and approvals
-- Generate and distribute payslips
-- Manage employee documents
-- Send notifications about your employment matters
-- Provide HR self-service features
-- Comply with legal obligations
+---
 
-### 3.1 Legal Basis for Processing (GDPR)
-- **Contract**: Processing necessary for employment contract
-- **Legal Obligation**: Compliance with employment laws
-- **Legitimate Interest**: Business operations and HR management
-- **Consent**: For optional features (push notifications, biometrics)
+## 4. How We Collect Your Data
 
-## 4. Data Sharing
+### 4.1 Direct Collection
+- When your employer registers you on the platform
+- When you create or update your profile
+- When you submit leave requests or view payslips
+- When you contact our support team
 
-We may share your data with:
-- **Your Employer**: HR department, managers (as necessary for HR processes)
-- **Government Agencies**: EPF, SOCSO, LHDN (as required by law)
-- **Service Providers**: Secure cloud hosting, payment processors
+### 4.2 Automatic Collection
+- Device information when you install the app
+- Usage data when you interact with the Service
+- Push notification tokens for sending alerts
 
-We do NOT:
-- Sell your personal data
-- Share data with third-party advertisers
-- Use data for profiling or automated decision-making
+### 4.3 From Third Parties
+- From your employer (initial registration data)
+- From government APIs (statutory rate updates)
 
-## 5. Data Security
+---
 
-We implement:
-- End-to-end encryption for data transmission (TLS 1.3)
-- AES-256 encryption for data at rest
-- PIN and biometric authentication
-- Secure token-based sessions
-- Regular security audits
+## 5. How We Use Your Data
 
-## 6. Data Retention
+We use your personal data for the following purposes:
+
+| Purpose | Legal Basis |
+|---------|-------------|
+| Process payroll and statutory deductions | Legal obligation |
+| Manage leave requests and balances | Legitimate interest, contract |
+| Send notifications (leave approvals, payslips) | Legitimate interest |
+| Provide customer support | Legitimate interest |
+| Comply with legal and regulatory requirements | Legal obligation |
+| Improve our Service | Legitimate interest |
+| Detect and prevent fraud | Legitimate interest |
+
+---
+
+## 6. Data Sharing and Disclosure
+
+### 6.1 Within Your Organization
+- Your employer's HR and payroll administrators
+- Your direct supervisor (for leave approvals)
+- Finance department (for payroll processing)
+
+### 6.2 Third-Party Service Providers
+We may share data with service providers who assist us in:
+
+| Provider Type | Purpose | Data Shared |
+|--------------|---------|-------------|
+| Cloud hosting | Data storage | All data (encrypted) |
+| Payment processors | Salary disbursement | Bank details (employer initiated) |
+| Government agencies | Statutory contributions | As required by law |
+
+All third-party providers are contractually bound to protect your data.
+
+### 6.3 Legal Requirements
+We may disclose your data when required by:
+- Court orders or legal process
+- Government or regulatory authorities
+- Law enforcement agencies
+
+---
+
+## 7. Data Storage and Residency
+
+### 7.1 Data Residency by Country
+
+To comply with local data protection laws, we store employee data in designated locations:
+
+| Country | Storage Location | Legal Requirement |
+|---------|-----------------|-------------------|
+| Malaysia | Malaysia (Hub) | PDPA - no specific localization |
+| Singapore | Singapore | PDPA - no specific localization |
+| **Indonesia** | **Indonesia** | **PDP Law - mandatory local storage** |
+| Thailand | Thailand | PDPA - conditional transfer rules |
+| **Vietnam** | **Vietnam** | **Decree 13/2023 - mandatory local storage** |
+| Philippines | Malaysia (Hub) | DPA - no specific localization |
+| Laos | Thailand (shared) | No specific requirement |
+| Cambodia | Vietnam (shared) | Pending LPDP |
+| Brunei | Malaysia (Hub) | PDPO - adequate protection required |
+
+### 7.2 Data Retention
 
 | Data Type | Retention Period |
-|-----------|------------------|
+|-----------|-----------------|
 | Employment records | Duration of employment + 7 years |
-| Payslip data | 7 years |
-| Leave records | 7 years |
-| Access logs | 1 year |
+| Payslip records | 7 years after generation |
+| Leave records | 3 years after the leave period |
+| Audit logs | 2 years |
+| Device tokens | Until logout or device removal |
 
-## 7. Your Rights
+---
 
-### Under PDPA (Malaysia):
-- Right to access your personal data
-- Right to correct inaccurate data
-- Right to withdraw consent
-- Right to make complaints to JPDP
+## 8. Data Security
 
-### Under GDPR (if applicable):
-- Right to be informed
-- Right of access
-- Right to rectification
-- Right to erasure
-- Right to restrict processing
-- Right to data portability
-- Right to object
+We implement robust security measures to protect your data:
 
-To exercise these rights, contact your HR department or email: privacy@kerjaflow.my
+### 8.1 Technical Measures
+- **Encryption in transit:** TLS 1.3 for all communications
+- **Encryption at rest:** AES-256 for stored data
+- **Field-level encryption:** Sensitive fields (IC, bank account, salary)
+- **Secure authentication:** JWT tokens with 15-minute expiry
+- **PIN protection:** SHA-256 hashed, stored locally
+- **Biometric data:** Never transmitted, stored on device only
 
-## 8. Children's Privacy
+### 8.2 Organizational Measures
+- Role-based access control
+- Regular security audits
+- Employee training on data protection
+- Incident response procedures
 
-KerjaFlow is not intended for individuals under 18 years of age. We do not knowingly collect data from minors.
+### 8.3 Security Certifications
+- ISO 27001 (in progress)
+- SOC 2 Type II (planned)
 
-## 9. Changes to This Policy
+---
 
-We may update this Privacy Policy periodically. Changes will be notified via:
+## 9. Your Rights
+
+Depending on your country of residence, you have the following rights:
+
+### 9.1 Universal Rights
+- **Access:** Request a copy of your personal data
+- **Rectification:** Correct inaccurate or incomplete data
+- **Deletion:** Request erasure of your data (subject to legal retention requirements)
+- **Restriction:** Limit how we process your data
+- **Portability:** Receive your data in a machine-readable format
+- **Objection:** Object to certain processing activities
+- **Withdraw consent:** Where processing is based on consent
+
+### 9.2 Exercising Your Rights
+
+**To exercise any of these rights:**
+
+1. **In-app:** Go to Profile > Privacy > Data Requests
+2. **Email:** privacy@kerjaflow.my
+3. **Data Deletion Request:** https://kerjaflow.my/privacy/delete
+
+We will respond within:
+- Malaysia: 21 days
+- Singapore: Reasonable time
+- Indonesia: 3 x 24 hours (confirmation) + 14 days
+- Other countries: 30 days
+
+### 9.3 Data Deletion
+
+When you request data deletion:
+
+1. We verify your identity
+2. We notify your employer (data controller)
+3. We delete data not required for legal retention
+4. We provide confirmation within the statutory timeframe
+
+**Note:** Some data may be retained for legal compliance (e.g., payroll records for tax purposes).
+
+---
+
+## 10. Cookies and Tracking
+
+### 10.1 Mobile App
+The KerjaFlow mobile app does not use cookies. We use:
+- Local storage for preferences
+- Secure storage for authentication tokens
+- Anonymous analytics (can be disabled)
+
+### 10.2 Web Platform
+Our web platform uses:
+- **Essential cookies:** Required for functionality
+- **Analytics cookies:** To improve user experience (opt-out available)
+
+We do **NOT** use:
+- Third-party advertising cookies
+- Cross-site tracking
+
+---
+
+## 11. Children's Privacy
+
+KerjaFlow is designed for adult employees. We do not knowingly collect data from individuals under 18 years of age. If you believe we have inadvertently collected such data, please contact us immediately.
+
+---
+
+## 12. Changes to This Policy
+
+We may update this Privacy Policy from time to time. We will notify you of material changes via:
 - In-app notification
-- Email (for significant changes)
+- Email to registered users
+- Banner on our website
 
-## 10. Contact Us
+The "Last Updated" date at the top indicates when the policy was last revised.
+
+---
+
+## 13. Contact Us
+
+For any privacy-related inquiries:
 
 **Data Protection Officer**
 KerjaFlow Sdn Bhd
 Email: dpo@kerjaflow.my
+Phone: +60 3-XXXX XXXX
 
-**Regulatory Authority (Malaysia)**
-Jabatan Perlindungan Data Peribadi (JPDP)
-Website: www.pdp.gov.my
+**General Inquiries**
+Email: support@kerjaflow.my
+Website: https://kerjaflow.my/contact
 
 ---
 
-By using KerjaFlow, you acknowledge that you have read and understood this Privacy Policy.
+## 14. Country-Specific Provisions
+
+### 14.1 Malaysia (PDPA 2010)
+- Commissioner: Jabatan Perlindungan Data Peribadi Malaysia
+- Website: https://www.pdp.gov.my
+
+### 14.2 Singapore (PDPA 2012)
+- Commissioner: Personal Data Protection Commission
+- Website: https://www.pdpc.gov.sg
+
+### 14.3 Indonesia (PDP Law)
+- Ministry of Communication and Information Technology (Kominfo)
+- Data stored locally in Indonesia as required
+
+### 14.4 Vietnam (Decree 13/2023)
+- Ministry of Public Security
+- Data stored locally in Vietnam as required
+
+### 14.5 Philippines (DPA 2012)
+- National Privacy Commission
+- Website: https://www.privacy.gov.ph
+
+### 14.6 Thailand (PDPA 2019)
+- Office of the Personal Data Protection Committee
+- Website: https://www.pdpc.or.th
+
+### 14.7 Brunei (PDPO 2024)
+- Autoriti Monetari Brunei Darussalam (AMBD)
+- Data protection requirements effective January 2026
+
+---
+
+## 15. Consent
+
+By using the KerjaFlow Service, you acknowledge that you have read and understood this Privacy Policy. Where required by law, we will obtain your explicit consent for specific data processing activities.
+
+---
+
+*This Privacy Policy is available in multiple languages. In case of any discrepancy, the English version shall prevail.*
+
+**Languages available:** English | Bahasa Malaysia | Bahasa Indonesia | 中文 | தமிழ் | ภาษาไทย | Tiếng Việt | Filipino | ລາວ | ភាសាខ្មែរ | বাংলা

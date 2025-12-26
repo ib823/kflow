@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    KerjaFlow Data Extraction Rules (Android 12+)
+    =============================================
+    Defines what data can be extracted via cloud backup and device-to-device transfer.
+
+    Required for Android 12+ (API 31+) when targeting SDK 31 or higher.
+-->
+<data-extraction-rules>
+    <!-- Cloud Backup Rules -->
+    <cloud-backup>
+        <!-- Include non-sensitive preferences -->
+        <include domain="sharedpref" path="FlutterSharedPreferences.xml" />
+
+        <!-- Exclude all sensitive data from cloud backup -->
+        <exclude domain="sharedpref" path="FlutterSecureStorage.xml" />
+        <exclude domain="sharedpref" path="kerjaflow_secure_prefs.xml" />
+        <exclude domain="sharedpref" path="pin_storage.xml" />
+        <exclude domain="file" path="auth_tokens" />
+        <exclude domain="file" path=".auth" />
+        <exclude domain="file" path="biometric_key" />
+        <exclude domain="file" path="app_flutter/hive" />
+        <exclude domain="cache" path="." />
+        <exclude domain="database" path="." />
+    </cloud-backup>
+
+    <!-- Device-to-Device Transfer Rules (Android 12+) -->
+    <device-transfer>
+        <!-- Include non-sensitive preferences for device migration -->
+        <include domain="sharedpref" path="FlutterSharedPreferences.xml" />
+
+        <!-- Exclude sensitive data from device transfer -->
+        <exclude domain="sharedpref" path="FlutterSecureStorage.xml" />
+        <exclude domain="sharedpref" path="kerjaflow_secure_prefs.xml" />
+        <exclude domain="sharedpref" path="pin_storage.xml" />
+        <exclude domain="file" path="auth_tokens" />
+        <exclude domain="file" path=".auth" />
+        <exclude domain="file" path="biometric_key" />
+        <exclude domain="file" path="app_flutter/hive" />
+        <exclude domain="cache" path="." />
+        <exclude domain="database" path="." />
+    </device-transfer>
+</data-extraction-rules>

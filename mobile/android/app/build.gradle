@@ -7,6 +7,14 @@ plugins {
     // id "com.huawei.agconnect"
 }
 
+// =============================================================================
+// KerjaFlow v3.0 - Android Build Configuration
+// =============================================================================
+// Version naming convention:
+//   versionName: MAJOR.MINOR.PATCH (e.g., 3.0.0)
+//   versionCode: MAJOR * 10000 + MINOR * 100 + PATCH (e.g., 30000)
+// =============================================================================
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -15,14 +23,18 @@ if (localPropertiesFile.exists()) {
     }
 }
 
+// Version configuration - update these for each release
+def appVersionName = System.getenv('VERSION_NAME') ?: '3.0.0'
+def appVersionCode = (System.getenv('VERSION_CODE') ?: '30000').toInteger()
+
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
+    flutterVersionCode = appVersionCode.toString()
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0.0'
+    flutterVersionName = appVersionName
 }
 
 def keystoreProperties = new Properties()
@@ -33,16 +45,18 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "my.kerjaflow.app"
-    compileSdk flutter.compileSdkVersion
+    compileSdk 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        // Required for desugaring (Java 8+ APIs on older Android)
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
 
     sourceSets {
@@ -51,16 +65,38 @@ android {
 
     defaultConfig {
         applicationId "my.kerjaflow.app"
-        minSdkVersion 23
-        targetSdkVersion flutter.targetSdkVersion
+        minSdkVersion 24  // Android 7.0+ for better security APIs
+        targetSdkVersion 34  // Android 14 (required for Play Store 2024+)
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
 
         // Multi-dex support
         multiDexEnabled true
 
-        // Localization
-        resConfigs "en", "ms"
+        // Localization - 11 languages for 9 ASEAN countries
+        resConfigs "en",      // English (default)
+                   "ms",      // Bahasa Malaysia (MY, BN)
+                   "id",      // Bahasa Indonesia (ID)
+                   "zh",      // Chinese Simplified (SG, MY)
+                   "ta",      // Tamil (MY, SG)
+                   "th",      // Thai (TH)
+                   "vi",      // Vietnamese (VN)
+                   "tl",      // Filipino/Tagalog (PH)
+                   "lo",      // Lao (LA)
+                   "km",      // Khmer (KH)
+                   "bn"       // Bengali (migrant workers)
+
+        // Test instrumentation runner
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // Build config fields for environment-specific settings
+        buildConfigField "String", "API_BASE_URL", "\"https://api.kerjaflow.my\""
+        buildConfigField "Boolean", "ENABLE_ANALYTICS", "true"
+    }
+
+    // Build config generation
+    buildFeatures {
+        buildConfig true
     }
 
     signingConfigs {
@@ -79,6 +115,8 @@ android {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
             debuggable true
+            buildConfigField "String", "API_BASE_URL", "\"https://dev-api.kerjaflow.my\""
+            buildConfigField "Boolean", "ENABLE_ANALYTICS", "false"
         }
 
         release {
@@ -86,6 +124,20 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            // Enable R8 full mode for better optimization
+            // Note: May require testing for compatibility
+            // android.enableR8.fullMode=true in gradle.properties
+        }
+
+        // Staging build for QA testing
+        staging {
+            initWith debug
+            applicationIdSuffix ".staging"
+            versionNameSuffix "-staging"
+            debuggable false
+            buildConfigField "String", "API_BASE_URL", "\"https://staging-api.kerjaflow.my\""
+            buildConfigField "Boolean", "ENABLE_ANALYTICS", "true"
         }
     }
 
@@ -94,14 +146,59 @@ android {
     productFlavors {
         google {
             dimension "store"
-            // Google Play Store variant
+            // Google Play Store variant (default)
+            buildConfigField "String", "STORE", "\"google\""
+            buildConfigField "Boolean", "HUAWEI_SERVICES", "false"
         }
 
         huawei {
             dimension "store"
             applicationIdSuffix ".huawei"
-            // Huawei AppGallery variant
+            // Huawei AppGallery variant (no GMS)
+            buildConfigField "String", "STORE", "\"huawei\""
+            buildConfigField "Boolean", "HUAWEI_SERVICES", "true"
         }
+
+        dev {
+            dimension "store"
+            applicationIdSuffix ".dev"
+            // Development variant for testing
+            buildConfigField "String", "STORE", "\"dev\""
+            buildConfigField "Boolean", "HUAWEI_SERVICES", "false"
+        }
+    }
+
+    // APK/AAB naming convention
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def versionName = variant.versionName
+            def versionCode = variant.versionCode
+            def flavor = variant.flavorName
+            def buildType = variant.buildType.name
+
+            // Format: kerjaflow-v3.0.0-30000-google-release.apk
+            outputFileName = "kerjaflow-v${versionName}-${versionCode}-${flavor}-${buildType}.apk"
+        }
+    }
+
+    // Bundle configuration for AAB
+    bundle {
+        language {
+            enableSplit = true
+        }
+        density {
+            enableSplit = true
+        }
+        abi {
+            enableSplit = true
+        }
+    }
+
+    // Lint configuration
+    lint {
+        checkReleaseBuilds true
+        abortOnError false
+        warning 'InvalidPackage'
     }
 }
 
@@ -112,15 +209,31 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    // Core library desugaring (Java 8+ APIs on older Android)
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+
     // REMOVED: Firebase and Huawei - zero cost enforcement
     // All push notifications use local notifications only
 
     // Biometric authentication
-    implementation 'androidx.biometric:biometric:1.1.0'
+    implementation 'androidx.biometric:biometric:1.2.0-alpha05'
 
-    // Security
+    // Security - encrypted shared preferences
     implementation 'androidx.security:security-crypto:1.1.0-alpha06'
 
     // Multi-dex
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    // AndroidX Core (required for modern Android features)
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+
+    // WorkManager for background tasks
+    implementation 'androidx.work:work-runtime-ktx:2.9.0'
+
+    // Testing dependencies
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test:rules:1.5.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }

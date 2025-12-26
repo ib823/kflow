@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    KerjaFlow Backup Rules
+    ======================
+    Defines what data is included/excluded from Android Auto Backup.
+
+    Security Note: We exclude sensitive data from cloud backup to comply
+    with data protection regulations (PDPA Malaysia, PDPO Brunei, etc.)
+-->
+<full-backup-content>
+    <!-- Include app preferences (non-sensitive settings) -->
+    <include domain="sharedpref" path="FlutterSharedPreferences.xml" />
+
+    <!-- Include cached data for offline access -->
+    <include domain="database" path="." />
+
+    <!-- Exclude sensitive data -->
+    <exclude domain="sharedpref" path="FlutterSecureStorage.xml" />
+    <exclude domain="sharedpref" path="kerjaflow_secure_prefs.xml" />
+
+    <!-- Exclude authentication tokens -->
+    <exclude domain="file" path="auth_tokens" />
+    <exclude domain="file" path=".auth" />
+
+    <!-- Exclude biometric keys -->
+    <exclude domain="file" path="biometric_key" />
+
+    <!-- Exclude PIN data -->
+    <exclude domain="sharedpref" path="pin_storage.xml" />
+
+    <!-- Exclude cache (will be rebuilt) -->
+    <exclude domain="cache" path="." />
+
+    <!-- Exclude temporary files -->
+    <exclude domain="file" path="tmp" />
+    <exclude domain="file" path="temp" />
+
+    <!-- Exclude Hive boxes with sensitive data -->
+    <exclude domain="file" path="app_flutter/hive" />
+</full-backup-content>
