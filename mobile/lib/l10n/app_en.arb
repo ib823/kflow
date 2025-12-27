@@ -1,0 +1,788 @@
+{
+  "@@locale": "en",
+  "@@last_modified": "2025-12-27T00:00:00.000Z",
+  "@@context": "KerjaFlow - Enterprise Workforce Management Platform for ASEAN",
+
+  "appName": "KerjaFlow",
+  "@appName": { "description": "Application name" },
+
+  "navHome": "Home",
+  "@navHome": { "description": "Bottom navigation: Home tab" },
+
+  "navPayslip": "Payslip",
+  "@navPayslip": { "description": "Bottom navigation: Payslip tab" },
+
+  "navLeave": "Leave",
+  "@navLeave": { "description": "Bottom navigation: Leave tab" },
+
+  "navInbox": "Inbox",
+  "@navInbox": { "description": "Bottom navigation: Inbox/Notifications tab" },
+
+  "navProfile": "Profile",
+  "@navProfile": { "description": "Bottom navigation: Profile tab" },
+
+  "loginTitle": "Welcome to KerjaFlow",
+  "@loginTitle": { "description": "Login screen title" },
+
+  "loginSubtitle": "Sign in to continue",
+  "@loginSubtitle": { "description": "Login screen subtitle" },
+
+  "loginEmail": "Email or Employee ID",
+  "@loginEmail": { "description": "Login email field label" },
+
+  "loginPassword": "Password",
+  "@loginPassword": { "description": "Login password field label" },
+
+  "loginButton": "Login",
+  "@loginButton": { "description": "Login submit button" },
+
+  "loginForgotPassword": "Forgot Password?",
+  "@loginForgotPassword": { "description": "Forgot password link" },
+
+  "loginRememberMe": "Remember me",
+  "@loginRememberMe": { "description": "Remember me checkbox" },
+
+  "loginInvalidCredentials": "Invalid email or password",
+  "@loginInvalidCredentials": { "description": "Login error message" },
+
+  "loginAccountLocked": "Account locked. Try again in 15 minutes.",
+  "@loginAccountLocked": { "description": "Account lockout message" },
+
+  "logoutButton": "Logout",
+  "@logoutButton": { "description": "Logout button text" },
+
+  "logoutConfirmTitle": "Logout",
+  "@logoutConfirmTitle": { "description": "Logout confirmation dialog title" },
+
+  "logoutConfirmMessage": "Are you sure you want to logout?",
+  "@logoutConfirmMessage": { "description": "Logout confirmation message" },
+
+  "pinSetupTitle": "Create Your PIN",
+  "@pinSetupTitle": { "description": "PIN setup screen title" },
+
+  "pinSetupSubtitle": "Enter a 6-digit PIN to secure your account",
+  "@pinSetupSubtitle": { "description": "PIN setup instruction" },
+
+  "pinConfirmTitle": "Confirm Your PIN",
+  "@pinConfirmTitle": { "description": "PIN confirmation screen title" },
+
+  "pinConfirmSubtitle": "Enter the same PIN again to confirm",
+  "@pinConfirmSubtitle": { "description": "PIN confirmation instruction" },
+
+  "pinMismatch": "PINs do not match. Please try again.",
+  "@pinMismatch": { "description": "PIN mismatch error" },
+
+  "pinEntryTitle": "Enter PIN",
+  "@pinEntryTitle": { "description": "PIN entry screen title" },
+
+  "pinEntrySubtitle": "Enter your 6-digit PIN to continue",
+  "@pinEntrySubtitle": { "description": "PIN entry instruction" },
+
+  "pinVerifyBiometric": "Use fingerprint instead",
+  "@pinVerifyBiometric": { "description": "Biometric option on PIN screen" },
+
+  "pinForgot": "Forgot PIN?",
+  "@pinForgot": { "description": "Forgot PIN link" },
+
+  "pinAttemptsRemaining": "{count, plural, =1{1 attempt remaining} other{{count} attempts remaining}}",
+  "@pinAttemptsRemaining": {
+    "description": "Remaining PIN attempts",
+    "placeholders": {
+      "count": { "type": "int", "example": "3" }
+    }
+  },
+
+  "pinInvalid": "Invalid PIN",
+  "@pinInvalid": { "description": "Invalid PIN error" },
+
+  "pinSetupLater": "Set up later",
+  "@pinSetupLater": { "description": "Skip PIN setup option" },
+
+  "pinRequired": "PIN required",
+  "@pinRequired": { "description": "PIN required indicator" },
+
+  "biometricPrompt": "Verify your identity",
+  "@biometricPrompt": { "description": "Biometric prompt message" },
+
+  "biometricUseFingerprint": "Use Fingerprint",
+  "@biometricUseFingerprint": { "description": "Use fingerprint button" },
+
+  "biometricUsePinInstead": "Use PIN Instead",
+  "@biometricUsePinInstead": { "description": "Fall back to PIN option" },
+
+  "dashboardGreeting": "Good {timeOfDay}, {name}",
+  "@dashboardGreeting": {
+    "description": "Dashboard greeting with time and name",
+    "placeholders": {
+      "timeOfDay": { "type": "String", "example": "morning" },
+      "name": { "type": "String", "example": "Ahmad" }
+    }
+  },
+
+  "dashboardMorning": "morning",
+  "@dashboardMorning": { "description": "Morning greeting" },
+
+  "dashboardAfternoon": "afternoon",
+  "@dashboardAfternoon": { "description": "Afternoon greeting" },
+
+  "dashboardEvening": "evening",
+  "@dashboardEvening": { "description": "Evening greeting" },
+
+  "dashboardQuickActions": "Quick Actions",
+  "@dashboardQuickActions": { "description": "Quick actions section header" },
+
+  "dashboardUpcoming": "Upcoming",
+  "@dashboardUpcoming": { "description": "Upcoming events section header" },
+
+  "leaveBalanceTitle": "Leave Balance",
+  "@leaveBalanceTitle": { "description": "Leave balance section header" },
+
+  "leaveAnnual": "Annual Leave",
+  "@leaveAnnual": { "description": "Annual leave type label" },
+
+  "leaveMedical": "Medical Leave",
+  "@leaveMedical": { "description": "Medical leave type label" },
+
+  "leaveEmergency": "Emergency Leave",
+  "@leaveEmergency": { "description": "Emergency leave type label" },
+
+  "leaveMaternity": "Maternity Leave",
+  "@leaveMaternity": { "description": "Maternity leave type label" },
+
+  "leavePaternity": "Paternity Leave",
+  "@leavePaternity": { "description": "Paternity leave type label" },
+
+  "leaveCompassionate": "Compassionate Leave",
+  "@leaveCompassionate": { "description": "Compassionate leave type label" },
+
+  "leaveUnpaid": "Unpaid Leave",
+  "@leaveUnpaid": { "description": "Unpaid leave type label" },
+
+  "leaveRemainingDays": "{count, plural, =0{No days} =1{1 day} other{{count} days}} remaining",
+  "@leaveRemainingDays": {
+    "description": "Remaining leave days with pluralization",
+    "placeholders": {
+      "count": { "type": "int", "example": "5" }
+    }
+  },
+
+  "leaveDaysCount": "{count, plural, =0{0 days} =1{1 day} other{{count} days}}",
+  "@leaveDaysCount": {
+    "description": "Day count with pluralization",
+    "placeholders": {
+      "count": { "type": "int", "example": "3" }
+    }
+  },
+
+  "leaveApply": "Apply for Leave",
+  "@leaveApply": { "description": "Apply for leave button" },
+
+  "leaveHistory": "Leave History",
+  "@leaveHistory": { "description": "Leave history section header" },
+
+  "leaveSelectType": "Select leave type",
+  "@leaveSelectType": { "description": "Leave type selection label" },
+
+  "leaveStartDate": "Start Date",
+  "@leaveStartDate": { "description": "Leave start date label" },
+
+  "leaveEndDate": "End Date",
+  "@leaveEndDate": { "description": "Leave end date label" },
+
+  "leaveReason": "Reason",
+  "@leaveReason": { "description": "Leave reason field label" },
+
+  "leaveReasonPlaceholder": "Please provide a reason for your leave request",
+  "@leaveReasonPlaceholder": { "description": "Leave reason placeholder text" },
+
+  "leaveAttachment": "Attachment",
+  "@leaveAttachment": { "description": "Leave attachment label" },
+
+  "leaveAttachmentUpload": "Upload attachment",
+  "@leaveAttachmentUpload": { "description": "Upload attachment button" },
+
+  "leaveWorkingDays": "Working days",
+  "@leaveWorkingDays": { "description": "Working days count label" },
+
+  "leaveInsufficientBalance": "Insufficient leave balance",
+  "@leaveInsufficientBalance": { "description": "Insufficient balance error" },
+
+  "leaveOverlapping": "Leave dates overlap with existing request",
+  "@leaveOverlapping": { "description": "Overlapping leave error" },
+
+  "leaveMinimumNotice": "Minimum notice period not met",
+  "@leaveMinimumNotice": { "description": "Minimum notice error" },
+
+  "publicHolidays": "Public Holidays",
+  "@publicHolidays": { "description": "Public holidays section header" },
+
+  "payslipMonthYear": "{month} {year}",
+  "@payslipMonthYear": {
+    "description": "Payslip month/year header",
+    "placeholders": {
+      "month": { "type": "String", "example": "December" },
+      "year": { "type": "String", "example": "2025" }
+    }
+  },
+
+  "payslipGrossEarnings": "Gross Earnings",
+  "@payslipGrossEarnings": { "description": "Payslip gross earnings label" },
+
+  "payslipDeductions": "Deductions",
+  "@payslipDeductions": { "description": "Payslip deductions label" },
+
+  "payslipNetPay": "Net Pay",
+  "@payslipNetPay": { "description": "Payslip net pay label" },
+
+  "payslipBasicSalary": "Basic Salary",
+  "@payslipBasicSalary": { "description": "Basic salary label" },
+
+  "payslipOvertime": "Overtime",
+  "@payslipOvertime": { "description": "Overtime label" },
+
+  "payslipAllowances": "Allowances",
+  "@payslipAllowances": { "description": "Allowances label" },
+
+  "payslipBonus": "Bonus",
+  "@payslipBonus": { "description": "Bonus label" },
+
+  "payslipStatutory": "Statutory Contributions",
+  "@payslipStatutory": { "description": "Statutory contributions section" },
+
+  "payslipEmployeeContribution": "Employee",
+  "@payslipEmployeeContribution": { "description": "Employee contribution column" },
+
+  "payslipEmployerContribution": "Employer",
+  "@payslipEmployerContribution": { "description": "Employer contribution column" },
+
+  "payslipDownloadPdf": "Download PDF",
+  "@payslipDownloadPdf": { "description": "Download PDF button" },
+
+  "payslipShare": "Share",
+  "@payslipShare": { "description": "Share payslip button" },
+
+  "payslipPinProtected": "PIN protected",
+  "@payslipPinProtected": { "description": "PIN protection indicator" },
+
+  "payslipViewBreakdown": "View Breakdown",
+  "@payslipViewBreakdown": { "description": "View breakdown button" },
+
+  "payslipYouKeep": "What You Keep",
+  "@payslipYouKeep": { "description": "Net pay visual label" },
+
+  "approvalPending": "Pending Approval",
+  "@approvalPending": { "description": "Pending approval section header" },
+
+  "approvalApprove": "Approve",
+  "@approvalApprove": { "description": "Approve button" },
+
+  "approvalReject": "Reject",
+  "@approvalReject": { "description": "Reject button" },
+
+  "approvalRejectReason": "Rejection Reason",
+  "@approvalRejectReason": { "description": "Rejection reason field" },
+
+  "approvalRejectReasonPlaceholder": "Please provide a reason for rejection",
+  "@approvalRejectReasonPlaceholder": { "description": "Rejection reason placeholder" },
+
+  "approvalNoItems": "No pending approvals",
+  "@approvalNoItems": { "description": "Empty approvals message" },
+
+  "notificationTitle": "Notifications",
+  "@notificationTitle": { "description": "Notifications screen title" },
+
+  "notificationMarkAllRead": "Mark all as read",
+  "@notificationMarkAllRead": { "description": "Mark all read button" },
+
+  "notificationEmpty": "No notifications",
+  "@notificationEmpty": { "description": "Empty notifications message" },
+
+  "notificationUnreadCount": "{count, plural, =0{No unread} =1{1 unread} other{{count} unread}}",
+  "@notificationUnreadCount": {
+    "description": "Unread notification count",
+    "placeholders": {
+      "count": { "type": "int", "example": "5" }
+    }
+  },
+
+  "profileTitle": "Profile",
+  "@profileTitle": { "description": "Profile screen title" },
+
+  "profileEmployeeId": "Employee ID",
+  "@profileEmployeeId": { "description": "Employee ID label" },
+
+  "profileDepartment": "Department",
+  "@profileDepartment": { "description": "Department label" },
+
+  "profilePosition": "Position",
+  "@profilePosition": { "description": "Position label" },
+
+  "profileJoinDate": "Join Date",
+  "@profileJoinDate": { "description": "Join date label" },
+
+  "profileEmail": "Email",
+  "@profileEmail": { "description": "Email label" },
+
+  "profilePhone": "Phone",
+  "@profilePhone": { "description": "Phone label" },
+
+  "profileEmergencyContact": "Emergency Contact",
+  "@profileEmergencyContact": { "description": "Emergency contact label" },
+
+  "profileChangePhoto": "Change Photo",
+  "@profileChangePhoto": { "description": "Change photo button" },
+
+  "profileEditProfile": "Edit Profile",
+  "@profileEditProfile": { "description": "Edit profile button" },
+
+  "documentTitle": "Documents",
+  "@documentTitle": { "description": "Documents screen title" },
+
+  "documentUpload": "Upload Document",
+  "@documentUpload": { "description": "Upload document button" },
+
+  "documentDownload": "Download",
+  "@documentDownload": { "description": "Download button" },
+
+  "documentDelete": "Delete",
+  "@documentDelete": { "description": "Delete document button" },
+
+  "documentEmpty": "No documents",
+  "@documentEmpty": { "description": "Empty documents message" },
+
+  "statusPending": "Pending",
+  "@statusPending": { "description": "Status: Pending approval" },
+
+  "statusApproved": "Approved",
+  "@statusApproved": { "description": "Status: Approved" },
+
+  "statusRejected": "Rejected",
+  "@statusRejected": { "description": "Status: Rejected" },
+
+  "statusCancelled": "Cancelled",
+  "@statusCancelled": { "description": "Status: Cancelled" },
+
+  "statusProcessing": "Processing",
+  "@statusProcessing": { "description": "Status: Processing" },
+
+  "statusCompleted": "Completed",
+  "@statusCompleted": { "description": "Status: Completed" },
+
+  "actionSubmit": "Submit",
+  "@actionSubmit": { "description": "Submit button text" },
+
+  "actionCancel": "Cancel",
+  "@actionCancel": { "description": "Cancel button text" },
+
+  "actionSave": "Save",
+  "@actionSave": { "description": "Save button text" },
+
+  "actionRetry": "Try Again",
+  "@actionRetry": { "description": "Retry button text" },
+
+  "actionConfirm": "Confirm",
+  "@actionConfirm": { "description": "Confirm button text" },
+
+  "actionDelete": "Delete",
+  "@actionDelete": { "description": "Delete button text" },
+
+  "actionEdit": "Edit",
+  "@actionEdit": { "description": "Edit button text" },
+
+  "actionClose": "Close",
+  "@actionClose": { "description": "Close button text" },
+
+  "actionBack": "Back",
+  "@actionBack": { "description": "Back button text" },
+
+  "actionContinue": "Continue",
+  "@actionContinue": { "description": "Continue button text" },
+
+  "actionSkip": "Skip",
+  "@actionSkip": { "description": "Skip button text" },
+
+  "actionDone": "Done",
+  "@actionDone": { "description": "Done button text" },
+
+  "actionYes": "Yes",
+  "@actionYes": { "description": "Yes button text" },
+
+  "actionNo": "No",
+  "@actionNo": { "description": "No button text" },
+
+  "actionOk": "OK",
+  "@actionOk": { "description": "OK button text" },
+
+  "actionSeeMore": "See More",
+  "@actionSeeMore": { "description": "See more button text" },
+
+  "actionSeeLess": "See Less",
+  "@actionSeeLess": { "description": "See less button text" },
+
+  "errorGeneric": "Something went wrong. Please try again.",
+  "@errorGeneric": { "description": "Generic error message" },
+
+  "errorNetwork": "No internet connection",
+  "@errorNetwork": { "description": "Network error message" },
+
+  "errorSessionExpired": "Your session has expired. Please login again.",
+  "@errorSessionExpired": { "description": "Session expired message" },
+
+  "errorServerError": "Server error. Please try again later.",
+  "@errorServerError": { "description": "Server error message" },
+
+  "errorValidation": "Please check your input and try again.",
+  "@errorValidation": { "description": "Validation error message" },
+
+  "errorFieldRequired": "This field is required",
+  "@errorFieldRequired": { "description": "Required field error" },
+
+  "errorInvalidEmail": "Please enter a valid email address",
+  "@errorInvalidEmail": { "description": "Invalid email error" },
+
+  "errorPasswordTooShort": "Password must be at least 8 characters",
+  "@errorPasswordTooShort": { "description": "Password too short error" },
+
+  "cannotConnectNow": "Cannot connect right now",
+  "@cannotConnectNow": { "description": "Connection error heading" },
+
+  "checkConnectionAndRetry": "Check your connection and try again",
+  "@checkConnectionAndRetry": { "description": "Connection error instruction" },
+
+  "offlineDataAvailable": "You can still view saved data",
+  "@offlineDataAvailable": { "description": "Offline data available message" },
+
+  "offlineModeActive": "Working offline - changes saved",
+  "@offlineModeActive": { "description": "Offline mode banner message" },
+
+  "successLeaveSubmitted": "Leave request submitted successfully",
+  "@successLeaveSubmitted": { "description": "Leave submission success" },
+
+  "successProfileUpdated": "Profile updated successfully",
+  "@successProfileUpdated": { "description": "Profile update success" },
+
+  "successPinChanged": "PIN changed successfully",
+  "@successPinChanged": { "description": "PIN change success" },
+
+  "successDocumentUploaded": "Document uploaded successfully",
+  "@successDocumentUploaded": { "description": "Document upload success" },
+
+  "successApproved": "Request approved",
+  "@successApproved": { "description": "Approval success message" },
+
+  "successRejected": "Request rejected",
+  "@successRejected": { "description": "Rejection success message" },
+
+  "settingsTitle": "Settings",
+  "@settingsTitle": { "description": "Settings screen title" },
+
+  "settingsLanguage": "Language",
+  "@settingsLanguage": { "description": "Language setting" },
+
+  "settingsAccessibility": "Accessibility",
+  "@settingsAccessibility": { "description": "Accessibility section" },
+
+  "settingsLargeText": "Large Text",
+  "@settingsLargeText": { "description": "Large text mode setting" },
+
+  "settingsLargeTextDesc": "Make text bigger",
+  "@settingsLargeTextDesc": { "description": "Large text description" },
+
+  "settingsHighContrast": "High Contrast",
+  "@settingsHighContrast": { "description": "High contrast mode setting" },
+
+  "settingsHighContrastDesc": "Easier to see outdoors",
+  "@settingsHighContrastDesc": { "description": "High contrast description" },
+
+  "settingsAudioFeedback": "Sound Effects",
+  "@settingsAudioFeedback": { "description": "Audio feedback setting" },
+
+  "settingsAudioFeedbackDesc": "Hear success and error sounds",
+  "@settingsAudioFeedbackDesc": { "description": "Audio feedback description" },
+
+  "settingsHapticFeedback": "Vibration",
+  "@settingsHapticFeedback": { "description": "Haptic feedback setting" },
+
+  "settingsHapticFeedbackDesc": "Feel taps and actions",
+  "@settingsHapticFeedbackDesc": { "description": "Haptic feedback description" },
+
+  "settingsTTS": "Voice Readout",
+  "@settingsTTS": { "description": "Text-to-speech setting" },
+
+  "settingsTTSDesc": "Read screen content aloud",
+  "@settingsTTSDesc": { "description": "TTS description" },
+
+  "settingsSimpleMode": "Simple Mode",
+  "@settingsSimpleMode": { "description": "Simple mode setting" },
+
+  "settingsSimpleModeDesc": "Hide advanced features",
+  "@settingsSimpleModeDesc": { "description": "Simple mode description" },
+
+  "settingsBiometricFirst": "Fingerprint First",
+  "@settingsBiometricFirst": { "description": "Biometric first setting" },
+
+  "settingsBiometricFirstDesc": "Use fingerprint before PIN",
+  "@settingsBiometricFirstDesc": { "description": "Biometric first description" },
+
+  "settingsGloveMode": "Glove Mode",
+  "@settingsGloveMode": { "description": "Glove mode setting" },
+
+  "settingsGloveModeDesc": "Bigger buttons for gloves",
+  "@settingsGloveModeDesc": { "description": "Glove mode description" },
+
+  "settingsVisual": "Visual Settings",
+  "@settingsVisual": { "description": "Visual settings section header" },
+
+  "settingsAudio": "Audio Settings",
+  "@settingsAudio": { "description": "Audio settings section header" },
+
+  "settingsInteraction": "Interaction Settings",
+  "@settingsInteraction": { "description": "Interaction settings section header" },
+
+  "settingsPrivacy": "Privacy Policy",
+  "@settingsPrivacy": { "description": "Privacy policy link" },
+
+  "settingsTerms": "Terms & Conditions",
+  "@settingsTerms": { "description": "Terms link" },
+
+  "settingsAbout": "About",
+  "@settingsAbout": { "description": "About section" },
+
+  "settingsVersion": "Version {version}",
+  "@settingsVersion": {
+    "description": "App version display",
+    "placeholders": {
+      "version": { "type": "String", "example": "1.0.0" }
+    }
+  },
+
+  "accessibilityPinDot": "PIN digit {position} of 6",
+  "@accessibilityPinDot": {
+    "description": "Screen reader label for PIN dots",
+    "placeholders": {
+      "position": { "type": "int", "example": "3" }
+    }
+  },
+
+  "accessibilityPinDotFilled": "PIN digit {position} of 6, entered",
+  "@accessibilityPinDotFilled": {
+    "description": "Screen reader label for filled PIN dots",
+    "placeholders": {
+      "position": { "type": "int", "example": "3" }
+    }
+  },
+
+  "accessibilityPinDotEmpty": "PIN digit {position} of 6, empty",
+  "@accessibilityPinDotEmpty": {
+    "description": "Screen reader label for empty PIN dots",
+    "placeholders": {
+      "position": { "type": "int", "example": "3" }
+    }
+  },
+
+  "accessibilityDeleteDigit": "Delete last digit",
+  "@accessibilityDeleteDigit": { "description": "Delete digit button label" },
+
+  "accessibilityDigitButton": "Digit {digit}",
+  "@accessibilityDigitButton": {
+    "description": "Number pad digit button label",
+    "placeholders": {
+      "digit": { "type": "String", "example": "5" }
+    }
+  },
+
+  "accessibilityStatusIndicator": "{status}. {iconDescription}",
+  "@accessibilityStatusIndicator": {
+    "description": "Combined status with icon for screen readers",
+    "placeholders": {
+      "status": { "type": "String", "example": "Approved" },
+      "iconDescription": { "type": "String", "example": "Green checkmark icon" }
+    }
+  },
+
+  "accessibilityPendingIcon": "Yellow clock icon",
+  "@accessibilityPendingIcon": { "description": "Pending status icon description" },
+
+  "accessibilityApprovedIcon": "Green checkmark icon",
+  "@accessibilityApprovedIcon": { "description": "Approved status icon description" },
+
+  "accessibilityRejectedIcon": "Red X icon",
+  "@accessibilityRejectedIcon": { "description": "Rejected status icon description" },
+
+  "accessibilityCancelledIcon": "Grey block icon",
+  "@accessibilityCancelledIcon": { "description": "Cancelled status icon description" },
+
+  "accessibilityPayslipCard": "Payslip for {period}, Net salary {amount}. Tap to view details. PIN required.",
+  "@accessibilityPayslipCard": {
+    "description": "Payslip card accessibility label",
+    "placeholders": {
+      "period": { "type": "String", "example": "December 2025" },
+      "amount": { "type": "String", "example": "RM 3,500.00" }
+    }
+  },
+
+  "accessibilityLeaveCard": "Leave request from {startDate} to {endDate}, {days} days. Status: {status}.",
+  "@accessibilityLeaveCard": {
+    "description": "Leave card accessibility label",
+    "placeholders": {
+      "startDate": { "type": "String", "example": "1 Jan" },
+      "endDate": { "type": "String", "example": "5 Jan" },
+      "days": { "type": "int", "example": "5" },
+      "status": { "type": "String", "example": "Pending" }
+    }
+  },
+
+  "loadingPleaseWait": "Please wait...",
+  "@loadingPleaseWait": { "description": "Loading indicator message" },
+
+  "loadingSubmitting": "Submitting...",
+  "@loadingSubmitting": { "description": "Submitting indicator message" },
+
+  "loadingProcessing": "Processing...",
+  "@loadingProcessing": { "description": "Processing indicator message" },
+
+  "emptyNoData": "No data available",
+  "@emptyNoData": { "description": "Empty state message" },
+
+  "emptyNoResults": "No results found",
+  "@emptyNoResults": { "description": "No search results message" },
+
+  "languageEnglish": "English",
+  "@languageEnglish": { "description": "English language name" },
+
+  "languageMalay": "Bahasa Malaysia",
+  "@languageMalay": { "description": "Malay language name" },
+
+  "languageJawi": "جاوي (Jawi)",
+  "@languageJawi": { "description": "Jawi language name" },
+
+  "languageIndonesian": "Bahasa Indonesia",
+  "@languageIndonesian": { "description": "Indonesian language name" },
+
+  "languageChinese": "简体中文",
+  "@languageChinese": { "description": "Chinese Simplified language name" },
+
+  "languageBengali": "বাংলা",
+  "@languageBengali": { "description": "Bengali language name" },
+
+  "languageNepali": "नेपाली",
+  "@languageNepali": { "description": "Nepali language name" },
+
+  "languageVietnamese": "Tiếng Việt",
+  "@languageVietnamese": { "description": "Vietnamese language name" },
+
+  "languageTamil": "தமிழ்",
+  "@languageTamil": { "description": "Tamil language name" },
+
+  "languageThai": "ภาษาไทย",
+  "@languageThai": { "description": "Thai language name" },
+
+  "languageKhmer": "ភាសាខ្មែរ",
+  "@languageKhmer": { "description": "Khmer language name" },
+
+  "languageMyanmar": "မြန်မာ",
+  "@languageMyanmar": { "description": "Myanmar language name" },
+
+  "languageLao": "ພາສາລາວ",
+  "@languageLao": { "description": "Lao language name" },
+
+  "languageTagalog": "Filipino",
+  "@languageTagalog": { "description": "Tagalog/Filipino language name" },
+
+  "languageJavanese": "Basa Jawa",
+  "@languageJavanese": { "description": "Javanese language name" },
+
+  "languageSundanese": "Basa Sunda",
+  "@languageSundanese": { "description": "Sundanese language name" },
+
+  "languageMadurese": "Basa Madhura",
+  "@languageMadurese": { "description": "Madurese language name" },
+
+  "languageBalinese": "Basa Bali",
+  "@languageBalinese": { "description": "Balinese language name" },
+
+  "languageMinangkabau": "Baso Minang",
+  "@languageMinangkabau": { "description": "Minangkabau language name" },
+
+  "onboardingWelcome": "Welcome",
+  "@onboardingWelcome": { "description": "Onboarding welcome screen" },
+
+  "onboardingPayslip": "View your payslip anytime",
+  "@onboardingPayslip": { "description": "Onboarding payslip feature" },
+
+  "onboardingLeave": "Apply for leave easily",
+  "@onboardingLeave": { "description": "Onboarding leave feature" },
+
+  "onboardingNotifications": "Stay updated with notifications",
+  "@onboardingNotifications": { "description": "Onboarding notifications feature" },
+
+  "onboardingGetStarted": "Get Started",
+  "@onboardingGetStarted": { "description": "Onboarding get started button" },
+
+  "confirmDialogTitle": "Confirm Action",
+  "@confirmDialogTitle": { "description": "Confirm dialog title" },
+
+  "deleteConfirmTitle": "Delete?",
+  "@deleteConfirmTitle": { "description": "Delete confirmation title" },
+
+  "deleteConfirmMessage": "This action cannot be undone.",
+  "@deleteConfirmMessage": { "description": "Delete confirmation message" },
+
+  "cancelLeaveConfirmTitle": "Cancel Leave Request?",
+  "@cancelLeaveConfirmTitle": { "description": "Cancel leave confirmation title" },
+
+  "cancelLeaveConfirmMessage": "Are you sure you want to cancel this leave request?",
+  "@cancelLeaveConfirmMessage": { "description": "Cancel leave confirmation message" },
+
+  "dateToday": "Today",
+  "@dateToday": { "description": "Today label" },
+
+  "dateYesterday": "Yesterday",
+  "@dateYesterday": { "description": "Yesterday label" },
+
+  "dateTomorrow": "Tomorrow",
+  "@dateTomorrow": { "description": "Tomorrow label" },
+
+  "dateJustNow": "Just now",
+  "@dateJustNow": { "description": "Just now label" },
+
+  "dateMinutesAgo": "{count, plural, =1{1 minute ago} other{{count} minutes ago}}",
+  "@dateMinutesAgo": {
+    "description": "Minutes ago",
+    "placeholders": {
+      "count": { "type": "int", "example": "5" }
+    }
+  },
+
+  "dateHoursAgo": "{count, plural, =1{1 hour ago} other{{count} hours ago}}",
+  "@dateHoursAgo": {
+    "description": "Hours ago",
+    "placeholders": {
+      "count": { "type": "int", "example": "3" }
+    }
+  },
+
+  "dateDaysAgo": "{count, plural, =1{1 day ago} other{{count} days ago}}",
+  "@dateDaysAgo": {
+    "description": "Days ago",
+    "placeholders": {
+      "count": { "type": "int", "example": "7" }
+    }
+  },
+
+  "currencyFormat": "RM {amount}",
+  "@currencyFormat": {
+    "description": "Malaysian Ringgit currency format",
+    "placeholders": {
+      "amount": { "type": "String", "example": "3,500.00" }
+    }
+  },
+
+  "percentFormat": "{value}%",
+  "@percentFormat": {
+    "description": "Percentage format",
+    "placeholders": {
+      "value": { "type": "String", "example": "75" }
+    }
+  }
+}
