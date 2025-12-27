@@ -1,0 +1,67 @@
+{
+  "@@locale": "su",
+  "@@last_modified": "2025-12-27T00:00:00.000Z",
+  "@@context": "Sundanese - Basa Sunda (Indonesia - West Java)",
+
+  "appName": "KerjaFlow",
+  "navHome": "Beranda",
+  "navPayslip": "Slip Gajih",
+  "navLeave": "Cuti",
+  "navInbox": "Kotak Asup",
+  "navProfile": "Profil",
+
+  "loginTitle": "Wilujeng Sumping di KerjaFlow",
+  "loginSubtitle": "Asup kanggo neraskeun",
+  "loginEmail": "Email atawa ID Pagawe",
+  "loginPassword": "Sandi",
+  "loginButton": "Asup",
+  "loginForgotPassword": "Hilap Sandi?",
+
+  "pinSetupTitle": "Jieun PIN Anjeun",
+  "pinEntryTitle": "Asupkeun PIN",
+  "pinVerifyBiometric": "Pake sidik ramo",
+  "pinInvalid": "PIN salah",
+
+  "dashboardGreeting": "Wilujeng {timeOfDay}, {name}",
+  "dashboardMorning": "enjing",
+  "dashboardAfternoon": "siang",
+  "dashboardEvening": "wengi",
+
+  "leaveBalanceTitle": "Saldo Cuti",
+  "leaveAnnual": "Cuti Taunan",
+  "leaveMedical": "Cuti Gering",
+  "leaveApply": "Ngajukeun Cuti",
+  "leaveRemainingDays": "{count, plural, =0{Teu aya poe} =1{1 poe} other{{count} poe}} sesa",
+
+  "payslipGrossEarnings": "Panghasilan Kotor",
+  "payslipDeductions": "Potongan",
+  "payslipNetPay": "Gajih Bersih",
+  "payslipDownloadPdf": "Undeur PDF",
+
+  "statusPending": "Ngadagoan",
+  "statusApproved": "Disatujuan",
+  "statusRejected": "Ditolak",
+  "statusCancelled": "Dibatalkeun",
+
+  "actionSubmit": "Kirim",
+  "actionCancel": "Batal",
+  "actionSave": "Simpen",
+  "actionRetry": "Coba Deui",
+  "actionYes": "Muhun",
+  "actionNo": "Henteu",
+
+  "errorGeneric": "Aya nu salah. Cobian deui.",
+  "errorNetwork": "Teu aya koneksi internet",
+
+  "settingsTitle": "Pangaturan",
+  "settingsLanguage": "Basa",
+
+  "loadingPleaseWait": "Antosan...",
+  "emptyNoData": "Teu aya data",
+
+  "languageSundanese": "Basa Sunda",
+  "dateToday": "Poe ieu",
+
+  "currencyFormat": "Rp {amount}",
+  "percentFormat": "{value}%"
+}

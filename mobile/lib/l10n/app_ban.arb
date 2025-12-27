@@ -1,0 +1,47 @@
+{
+  "@@locale": "ban",
+  "@@last_modified": "2025-12-27T00:00:00.000Z",
+  "@@context": "Balinese - Basa Bali (Indonesia - Bali)",
+
+  "appName": "KerjaFlow",
+  "navHome": "Beranda",
+  "navPayslip": "Slip Gaji",
+  "navLeave": "Cuti",
+  "navInbox": "Kotak Masuk",
+  "navProfile": "Profil",
+
+  "loginTitle": "Rahajeng Rauh ring KerjaFlow",
+  "loginEmail": "Email wiadin ID Pegawe",
+  "loginPassword": "Sandi",
+  "loginButton": "Ngranjing",
+
+  "pinSetupTitle": "Ngawetuang PIN Ragane",
+  "pinEntryTitle": "Ketikang PIN",
+  "pinInvalid": "PIN iwang",
+
+  "leaveBalanceTitle": "Saldo Cuti",
+  "leaveAnnual": "Cuti Tahunan",
+  "leaveMedical": "Cuti Sakit",
+  "leaveApply": "Ngajuang Cuti",
+
+  "payslipGrossEarnings": "Pangasilan Kotor",
+  "payslipNetPay": "Gaji Bersih",
+
+  "statusPending": "Ngantosang",
+  "statusApproved": "Kasetujuin",
+  "statusRejected": "Katulak",
+
+  "actionSubmit": "Kirim",
+  "actionCancel": "Batal",
+  "actionSave": "Simpen",
+  "actionYes": "Inggih",
+  "actionNo": "Nenten",
+
+  "errorGeneric": "Wenten sane iwang. Coba malih.",
+  "settingsLanguage": "Basa",
+  "loadingPleaseWait": "Antosang...",
+  "emptyNoData": "Tan wenten data",
+  "languageBalinese": "Basa Bali",
+  "currencyFormat": "Rp {amount}",
+  "percentFormat": "{value}%"
+}

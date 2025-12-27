@@ -1,0 +1,68 @@
+{
+  "@@locale": "my",
+  "@@last_modified": "2025-12-27T00:00:00.000Z",
+  "@@context": "Myanmar - မြန်မာ",
+
+  "appName": "KerjaFlow",
+  "navHome": "ပင်မစာမျက်နှာ",
+  "navPayslip": "လစာစလစ်",
+  "navLeave": "ခွင့်",
+  "navInbox": "စာတိုက်ပုံး",
+  "navProfile": "ပရိုဖိုင်",
+
+  "loginTitle": "KerjaFlow မှ ကြိုဆိုပါသည်",
+  "loginSubtitle": "ဆက်လက်ရန် အကောင့်ဝင်ပါ",
+  "loginEmail": "အီးမေးလ် သို့မဟုတ် ဝန်ထမ်း ID",
+  "loginPassword": "စကားဝှက်",
+  "loginButton": "အကောင့်ဝင်ရန်",
+  "loginForgotPassword": "စကားဝှက်မေ့နေပါသလား?",
+
+  "pinSetupTitle": "သင့် PIN ဖန်တီးပါ",
+  "pinEntryTitle": "PIN ထည့်ပါ",
+  "pinVerifyBiometric": "လက်ဗွေသုံးပါ",
+  "pinInvalid": "PIN မမှန်ပါ",
+
+  "dashboardGreeting": "မင်္ဂလာပါ {name}",
+  "dashboardMorning": "နံနက်",
+  "dashboardAfternoon": "နေ့လည်",
+  "dashboardEvening": "ညနေ",
+
+  "leaveBalanceTitle": "ခွင့်လက်ကျန်",
+  "leaveAnnual": "နှစ်ပတ်လည်ခွင့်",
+  "leaveMedical": "ဆေးခွင့်",
+  "leaveApply": "ခွင့်တောင်းရန်",
+  "leaveRemainingDays": "{count, plural, =0{ရက်မရှိပါ} =1{၁ ရက်} other{{count} ရက်}} ကျန်ပါသည်",
+
+  "payslipGrossEarnings": "စုစုပေါင်းဝင်ငွေ",
+  "payslipDeductions": "နုတ်ယူမှုများ",
+  "payslipNetPay": "အသားတင်လစာ",
+  "payslipBasicSalary": "အခြေခံလစာ",
+  "payslipDownloadPdf": "PDF ဒေါင်းလုပ်",
+
+  "statusPending": "စောင့်ဆိုင်းဆဲ",
+  "statusApproved": "အတည်ပြုပြီး",
+  "statusRejected": "ငြင်းပယ်ပြီး",
+  "statusCancelled": "ပယ်ဖျက်ပြီး",
+
+  "actionSubmit": "တင်သွင်းရန်",
+  "actionCancel": "မလုပ်တော့ပါ",
+  "actionSave": "သိမ်းဆည်းရန်",
+  "actionRetry": "ထပ်ကြိုးစားပါ",
+  "actionYes": "ဟုတ်ကဲ့",
+  "actionNo": "မဟုတ်ပါ",
+
+  "errorGeneric": "တစ်ခုခုမှားသွားပါပြီ။ ထပ်ကြိုးစားပါ။",
+  "errorNetwork": "အင်တာနက်ချိတ်ဆက်မှုမရှိပါ",
+
+  "settingsTitle": "ဆက်တင်များ",
+  "settingsLanguage": "ဘာသာစကား",
+
+  "loadingPleaseWait": "ခဏစောင့်ပါ...",
+  "emptyNoData": "ဒေတာမရှိပါ",
+
+  "languageMyanmar": "မြန်မာ",
+  "dateToday": "ဒီနေ့",
+
+  "currencyFormat": "RM {amount}",
+  "percentFormat": "{value}%"
+}

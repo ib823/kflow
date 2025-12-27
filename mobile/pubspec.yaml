@@ -103,11 +103,13 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true  # Enable Flutter localization code generation
 
   assets:
     - assets/images/
     - assets/icons/
     - assets/fonts/
+    - assets/sounds/
 
   # fonts:
   #   - family: Inter
