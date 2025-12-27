@@ -1,0 +1,71 @@
+{
+  "@@locale": "km",
+  "@@last_modified": "2025-12-27T00:00:00.000Z",
+  "@@context": "Khmer - ភាសាខ្មែរ",
+
+  "appName": "KerjaFlow",
+  "navHome": "ទំព័រដើម",
+  "navPayslip": "ប័ណ្ណប្រាក់ខែ",
+  "navLeave": "ច្បាប់ឈប់សម្រាក",
+  "navInbox": "ប្រអប់សំបុត្រ",
+  "navProfile": "ប្រវត្តិរូប",
+
+  "loginTitle": "សូមស្វាគមន៍មក KerjaFlow",
+  "loginSubtitle": "ចូលដើម្បីបន្ត",
+  "loginEmail": "អ៊ីមែល ឬ លេខបុគ្គលិក",
+  "loginPassword": "ពាក្យសម្ងាត់",
+  "loginButton": "ចូល",
+  "loginForgotPassword": "ភ្លេចពាក្យសម្ងាត់?",
+
+  "pinSetupTitle": "បង្កើត PIN របស់អ្នក",
+  "pinSetupSubtitle": "បញ្ចូល PIN ៦ ខ្ទង់ដើម្បីការពារគណនីរបស់អ្នក",
+  "pinEntryTitle": "បញ្ចូល PIN",
+  "pinVerifyBiometric": "ប្រើស្នាមម្រាមដៃ",
+  "pinForgot": "ភ្លេច PIN?",
+  "pinInvalid": "PIN មិនត្រឹមត្រូវ",
+
+  "dashboardGreeting": "អរុណសួស្តី {name}",
+  "dashboardMorning": "ព្រឹក",
+  "dashboardAfternoon": "រសៀល",
+  "dashboardEvening": "ល្ងាច",
+
+  "leaveBalanceTitle": "សមតុល្យច្បាប់ឈប់សម្រាក",
+  "leaveAnnual": "ច្បាប់ឈប់សម្រាកប្រចាំឆ្នាំ",
+  "leaveMedical": "ច្បាប់ឈប់សម្រាកជំងឺ",
+  "leaveApply": "ស្នើសុំច្បាប់ឈប់សម្រាក",
+  "leaveRemainingDays": "{count, plural, =0{គ្មានថ្ងៃ} =1{១ ថ្ងៃ} other{{count} ថ្ងៃ}} នៅសល់",
+
+  "payslipGrossEarnings": "ប្រាក់ចំណូលសរុប",
+  "payslipDeductions": "ការកាត់កង",
+  "payslipNetPay": "ប្រាក់ខែសុទ្ធ",
+  "payslipBasicSalary": "ប្រាក់ខែមូលដ្ឋាន",
+  "payslipDownloadPdf": "ទាញយក PDF",
+
+  "statusPending": "កំពុងរង់ចាំ",
+  "statusApproved": "បានអនុម័ត",
+  "statusRejected": "បានបដិសេធ",
+  "statusCancelled": "បានលុបចោល",
+
+  "actionSubmit": "ដាក់ស្នើ",
+  "actionCancel": "បោះបង់",
+  "actionSave": "រក្សាទុក",
+  "actionRetry": "ព្យាយាមម្តងទៀត",
+  "actionConfirm": "បញ្ជាក់",
+  "actionYes": "បាទ/ចាស",
+  "actionNo": "ទេ",
+
+  "errorGeneric": "មានបញ្ហាកើតឡើង។ សូមព្យាយាមម្តងទៀត។",
+  "errorNetwork": "គ្មានការតភ្ជាប់អ៊ីនធឺណិត",
+
+  "settingsTitle": "ការកំណត់",
+  "settingsLanguage": "ភាសា",
+
+  "loadingPleaseWait": "សូមរង់ចាំ...",
+  "emptyNoData": "គ្មានទិន្នន័យ",
+
+  "languageKhmer": "ភាសាខ្មែរ",
+  "dateToday": "ថ្ងៃនេះ",
+
+  "currencyFormat": "៛{amount}",
+  "percentFormat": "{value}%"
+}

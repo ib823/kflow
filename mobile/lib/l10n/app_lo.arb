@@ -1,0 +1,68 @@
+{
+  "@@locale": "lo",
+  "@@last_modified": "2025-12-27T00:00:00.000Z",
+  "@@context": "Lao - ພາສາລາວ",
+
+  "appName": "KerjaFlow",
+  "navHome": "ໜ້າຫຼັກ",
+  "navPayslip": "ໃບເງິນເດືອນ",
+  "navLeave": "ລາພັກ",
+  "navInbox": "ກ່ອງຂໍ້ຄວາມ",
+  "navProfile": "ໂປຣໄຟລ໌",
+
+  "loginTitle": "ຍິນດີຕ້ອນຮັບສູ່ KerjaFlow",
+  "loginSubtitle": "ເຂົ້າສູ່ລະບົບເພື່ອດຳເນີນການຕໍ່",
+  "loginEmail": "ອີເມວ ຫຼື ລະຫັດພະນັກງານ",
+  "loginPassword": "ລະຫັດຜ່ານ",
+  "loginButton": "ເຂົ້າສູ່ລະບົບ",
+  "loginForgotPassword": "ລືມລະຫັດຜ່ານ?",
+
+  "pinSetupTitle": "ສ້າງ PIN ຂອງທ່ານ",
+  "pinEntryTitle": "ໃສ່ PIN",
+  "pinVerifyBiometric": "ໃຊ້ລາຍນິ້ວມື",
+  "pinInvalid": "PIN ບໍ່ຖືກຕ້ອງ",
+
+  "dashboardGreeting": "ສະບາຍດີ {name}",
+  "dashboardMorning": "ຕອນເຊົ້າ",
+  "dashboardAfternoon": "ຕອນບ່າຍ",
+  "dashboardEvening": "ຕອນແລງ",
+
+  "leaveBalanceTitle": "ຍອດລາພັກ",
+  "leaveAnnual": "ລາພັກປະຈຳປີ",
+  "leaveMedical": "ລາປ່ວຍ",
+  "leaveApply": "ຂໍລາພັກ",
+  "leaveRemainingDays": "{count, plural, =0{ບໍ່ມີມື້} =1{1 ມື້} other{{count} ມື້}} ເຫຼືອ",
+
+  "payslipGrossEarnings": "ລາຍຮັບລວມ",
+  "payslipDeductions": "ການຫັກ",
+  "payslipNetPay": "ເງິນເດືອນສຸດທິ",
+  "payslipBasicSalary": "ເງິນເດືອນພື້ນຖານ",
+  "payslipDownloadPdf": "ດາວໂຫຼດ PDF",
+
+  "statusPending": "ລໍຖ້າ",
+  "statusApproved": "ອະນຸມັດແລ້ວ",
+  "statusRejected": "ປະຕິເສດ",
+  "statusCancelled": "ຍົກເລີກ",
+
+  "actionSubmit": "ສົ່ງ",
+  "actionCancel": "ຍົກເລີກ",
+  "actionSave": "ບັນທຶກ",
+  "actionRetry": "ລອງໃໝ່",
+  "actionYes": "ແມ່ນ",
+  "actionNo": "ບໍ່",
+
+  "errorGeneric": "ມີບາງຢ່າງຜິດພາດ. ກະລຸນາລອງໃໝ່.",
+  "errorNetwork": "ບໍ່ມີການເຊື່ອມຕໍ່ອິນເຕີເນັດ",
+
+  "settingsTitle": "ການຕັ້ງຄ່າ",
+  "settingsLanguage": "ພາສາ",
+
+  "loadingPleaseWait": "ກະລຸນາລໍຖ້າ...",
+  "emptyNoData": "ບໍ່ມີຂໍ້ມູນ",
+
+  "languageLao": "ພາສາລາວ",
+  "dateToday": "ມື້ນີ້",
+
+  "currencyFormat": "₭{amount}",
+  "percentFormat": "{value}%"
+}

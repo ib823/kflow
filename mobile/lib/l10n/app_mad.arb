@@ -1,0 +1,47 @@
+{
+  "@@locale": "mad",
+  "@@last_modified": "2025-12-27T00:00:00.000Z",
+  "@@context": "Madurese - Basa Madhura (Indonesia - Madura)",
+
+  "appName": "KerjaFlow",
+  "navHome": "Beranda",
+  "navPayslip": "Slip Gaji",
+  "navLeave": "Cuti",
+  "navInbox": "Kotak Maso'",
+  "navProfile": "Profil",
+
+  "loginTitle": "Selamet Dhateng e KerjaFlow",
+  "loginEmail": "Email otaba ID Pegawe",
+  "loginPassword": "Sandi",
+  "loginButton": "Maso'",
+
+  "pinSetupTitle": "Agebey PIN Sampeyan",
+  "pinEntryTitle": "Maso'agi PIN",
+  "pinInvalid": "PIN sala",
+
+  "leaveBalanceTitle": "Saldo Cuti",
+  "leaveAnnual": "Cuti Tahunan",
+  "leaveMedical": "Cuti Sake'",
+  "leaveApply": "Ngajuagi Cuti",
+
+  "payslipGrossEarnings": "Pangasilan Kotor",
+  "payslipNetPay": "Gaji Bersih",
+
+  "statusPending": "Nunggu",
+  "statusApproved": "Esetujui",
+  "statusRejected": "Etola'",
+
+  "actionSubmit": "Kirim",
+  "actionCancel": "Batal",
+  "actionSave": "Simpen",
+  "actionYes": "Iya",
+  "actionNo": "Bunten",
+
+  "errorGeneric": "Badha se sala. Coba pole.",
+  "settingsLanguage": "Basa",
+  "loadingPleaseWait": "Nunggu...",
+  "emptyNoData": "Tadha' data",
+  "languageMadurese": "Basa Madhura",
+  "currencyFormat": "Rp {amount}",
+  "percentFormat": "{value}%"
+}

@@ -1,0 +1,51 @@
+{
+  "@@locale": "min",
+  "@@last_modified": "2025-12-27T00:00:00.000Z",
+  "@@context": "Minangkabau - Baso Minang (Indonesia - West Sumatra)",
+
+  "appName": "KerjaFlow",
+  "navHome": "Beranda",
+  "navPayslip": "Slip Gaji",
+  "navLeave": "Cuti",
+  "navInbox": "Kotak Masuak",
+  "navProfile": "Profil",
+
+  "loginTitle": "Salamaik Datang ka KerjaFlow",
+  "loginEmail": "Email atau ID Pagawai",
+  "loginPassword": "Kato Sandi",
+  "loginButton": "Masuak",
+  "loginForgotPassword": "Lupo Kato Sandi?",
+
+  "pinSetupTitle": "Buek PIN Awak",
+  "pinEntryTitle": "Masuakan PIN",
+  "pinInvalid": "PIN salah",
+
+  "leaveBalanceTitle": "Saldo Cuti",
+  "leaveAnnual": "Cuti Tahunan",
+  "leaveMedical": "Cuti Sakik",
+  "leaveApply": "Maajukan Cuti",
+
+  "payslipGrossEarnings": "Panghasilan Kotor",
+  "payslipNetPay": "Gaji Barasiah",
+
+  "statusPending": "Manunggu",
+  "statusApproved": "Disatujui",
+  "statusRejected": "Ditulak",
+
+  "actionSubmit": "Kirim",
+  "actionCancel": "Batalan",
+  "actionSave": "Simpan",
+  "actionRetry": "Cubo Lai",
+  "actionYes": "Iyo",
+  "actionNo": "Indak",
+
+  "errorGeneric": "Ado nan salah. Cubo lai.",
+  "errorNetwork": "Indak ado koneksi internet",
+
+  "settingsLanguage": "Bahaso",
+  "loadingPleaseWait": "Tunggu sabanta...",
+  "emptyNoData": "Indak ado data",
+  "languageMinangkabau": "Baso Minang",
+  "currencyFormat": "Rp {amount}",
+  "percentFormat": "{value}%"
+}
