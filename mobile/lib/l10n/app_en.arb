@@ -784,5 +784,161 @@
     "placeholders": {
       "value": { "type": "String", "example": "75" }
     }
-  }
+  },
+
+  "statutoryContributions": "Statutory Contributions",
+  "@statutoryContributions": { "description": "Section header for statutory deductions" },
+
+  "statutoryEpf": "EPF",
+  "@statutoryEpf": { "description": "Employees Provident Fund - Malaysia. NEVER translate acronym." },
+
+  "statutoryEpfDescription": "Employees Provident Fund",
+  "@statutoryEpfDescription": { "description": "EPF full name in English" },
+
+  "statutorySocso": "SOCSO",
+  "@statutorySocso": { "description": "Social Security Organization - Malaysia. NEVER translate acronym." },
+
+  "statutorySocsoDescription": "Social Security Organization",
+  "@statutorySocsoDescription": { "description": "SOCSO full name in English" },
+
+  "statutoryEis": "EIS",
+  "@statutoryEis": { "description": "Employment Insurance System - Malaysia. NEVER translate acronym." },
+
+  "statutoryEisDescription": "Employment Insurance System",
+  "@statutoryEisDescription": { "description": "EIS full name in English" },
+
+  "statutoryPcb": "PCB",
+  "@statutoryPcb": { "description": "Monthly Tax Deduction - Malaysia. NEVER translate acronym." },
+
+  "statutoryPcbDescription": "Monthly Tax Deduction",
+  "@statutoryPcbDescription": { "description": "PCB/MTD full name in English" },
+
+  "statutoryCpf": "CPF",
+  "@statutoryCpf": { "description": "Central Provident Fund - Singapore. NEVER translate acronym." },
+
+  "statutoryCpfDescription": "Central Provident Fund",
+  "@statutoryCpfDescription": { "description": "CPF full name in English" },
+
+  "statutoryBpjsTk": "BPJS-TK",
+  "@statutoryBpjsTk": { "description": "Employment Social Security - Indonesia. NEVER translate acronym." },
+
+  "statutoryBpjsTkDescription": "Employment Social Security",
+  "@statutoryBpjsTkDescription": { "description": "BPJS Ketenagakerjaan full name in English" },
+
+  "statutoryBpjsKes": "BPJS-Kes",
+  "@statutoryBpjsKes": { "description": "Health Social Security - Indonesia. NEVER translate acronym." },
+
+  "statutoryBpjsKesDescription": "Health Insurance",
+  "@statutoryBpjsKesDescription": { "description": "BPJS Kesehatan full name in English" },
+
+  "statutorySss": "SSS",
+  "@statutorySss": { "description": "Social Security System - Philippines. NEVER translate acronym." },
+
+  "statutorySssDescription": "Social Security System",
+  "@statutorySssDescription": { "description": "SSS full name in English" },
+
+  "statutoryPhilHealth": "PhilHealth",
+  "@statutoryPhilHealth": { "description": "Philippine Health Insurance. NEVER translate." },
+
+  "statutoryPhilHealthDescription": "Philippine Health Insurance",
+  "@statutoryPhilHealthDescription": { "description": "PhilHealth full name in English" },
+
+  "statutoryPagIbig": "Pag-IBIG",
+  "@statutoryPagIbig": { "description": "Home Development Mutual Fund - Philippines. NEVER translate." },
+
+  "statutoryPagIbigDescription": "Home Development Mutual Fund",
+  "@statutoryPagIbigDescription": { "description": "Pag-IBIG/HDMF full name in English" },
+
+  "statutorySsf": "SSF",
+  "@statutorySsf": { "description": "Social Security Fund - Thailand. NEVER translate acronym." },
+
+  "statutorySsfDescription": "Social Security Fund",
+  "@statutorySsfDescription": { "description": "SSF full name in English" },
+
+  "statutoryBhxh": "BHXH",
+  "@statutoryBhxh": { "description": "Social Insurance - Vietnam. NEVER translate acronym." },
+
+  "statutoryBhxhDescription": "Social Insurance",
+  "@statutoryBhxhDescription": { "description": "BHXH full name in English" },
+
+  "statutoryBhyt": "BHYT",
+  "@statutoryBhyt": { "description": "Health Insurance - Vietnam. NEVER translate acronym." },
+
+  "statutoryBhytDescription": "Health Insurance",
+  "@statutoryBhytDescription": { "description": "BHYT full name in English" },
+
+  "statutoryNssf": "NSSF",
+  "@statutoryNssf": { "description": "National Social Security Fund - Cambodia. NEVER translate acronym." },
+
+  "statutoryNssfDescription": "National Social Security Fund",
+  "@statutoryNssfDescription": { "description": "NSSF full name in English" },
+
+  "statutorySsb": "SSB",
+  "@statutorySsb": { "description": "Social Security Board - Myanmar. NEVER translate acronym." },
+
+  "statutorySsbDescription": "Social Security Board",
+  "@statutorySsbDescription": { "description": "SSB full name in English" },
+
+  "statutoryTap": "TAP",
+  "@statutoryTap": { "description": "Employees Trust Fund - Brunei. NEVER translate acronym." },
+
+  "statutoryTapDescription": "Employees Trust Fund",
+  "@statutoryTapDescription": { "description": "TAP full name in English" },
+
+  "statutoryLsso": "LSSO",
+  "@statutoryLsso": { "description": "Lao Social Security Organization. NEVER translate acronym." },
+
+  "statutoryLssoDescription": "Lao Social Security Organization",
+  "@statutoryLssoDescription": { "description": "LSSO full name in English" },
+
+  "contributionEmployee": "Employee",
+  "@contributionEmployee": { "description": "Employee contribution column header" },
+
+  "contributionEmployer": "Employer",
+  "@contributionEmployer": { "description": "Employer contribution column header" },
+
+  "contributionTotal": "Total",
+  "@contributionTotal": { "description": "Total contribution row header" },
+
+  "currencyMyr": "RM",
+  "@currencyMyr": { "description": "Malaysian Ringgit symbol" },
+
+  "currencySgd": "S$",
+  "@currencySgd": { "description": "Singapore Dollar symbol" },
+
+  "currencyIdr": "Rp",
+  "@currencyIdr": { "description": "Indonesian Rupiah symbol" },
+
+  "currencyThb": "฿",
+  "@currencyThb": { "description": "Thai Baht symbol" },
+
+  "currencyPhp": "₱",
+  "@currencyPhp": { "description": "Philippine Peso symbol" },
+
+  "currencyVnd": "₫",
+  "@currencyVnd": { "description": "Vietnamese Dong symbol" },
+
+  "currencyKhr": "៛",
+  "@currencyKhr": { "description": "Cambodian Riel symbol" },
+
+  "currencyMmk": "K",
+  "@currencyMmk": { "description": "Myanmar Kyat symbol" },
+
+  "currencyBnd": "B$",
+  "@currencyBnd": { "description": "Brunei Dollar symbol" },
+
+  "currencyLak": "₭",
+  "@currencyLak": { "description": "Lao Kip symbol" },
+
+  "halfDayAm": "AM (Morning)",
+  "@halfDayAm": { "description": "Half day morning option" },
+
+  "halfDayPm": "PM (Afternoon)",
+  "@halfDayPm": { "description": "Half day afternoon option" },
+
+  "leaveHalfDay": "Half Day",
+  "@leaveHalfDay": { "description": "Half day leave option" },
+
+  "leaveFullDay": "Full Day",
+  "@leaveFullDay": { "description": "Full day leave option" }
 }

@@ -1,12 +1,43 @@
 # KerjaFlow Localization Configuration
-# Supports 19 languages for ASEAN workforce management
+# =====================================
+# Supports 12 primary languages for ASEAN workforce management:
+# - Latin scripts: English, Malay, Indonesian, Vietnamese, Filipino
+# - Han script: Chinese Simplified
+# - Complex scripts: Thai, Tamil, Khmer, Myanmar, Bengali, Nepali
+#
+# IMPORTANT: Statutory terms (EPF, SOCSO, CPF, BPJS, SSS) are NEVER translated.
+# They appear as acronyms with localized descriptions in parentheses.
 
 arb-dir: lib/l10n
 template-arb-file: app_en.arb
-output-localization-file: app_localizations.dart
+output-localization-file: app_localizations.g.dart
 output-class: AppLocalizations
-synthetic-package: true
+synthetic-package: false
 nullable-getter: false
+
+# Use deferred loading for complex script locales to optimize initial load
+use-deferred-loading: true
+
+# Generate the localizations delegate
+preferred-supported-locales:
+  - en
+  - ms
+  - id
+  - zh
+  - ta
+  - th
+  - vi
+  - tl
+  - km
+  - my
+  - bn
+  - ne
 
 # Untranslated messages report for quality tracking
 untranslated-messages-file: l10n_untranslated.txt
+
+# Header for generated files
+header: |
+  // GENERATED FILE - DO NOT EDIT
+  // KerjaFlow Localization - 12 ASEAN Languages
+  // Run 'flutter gen-l10n' to regenerate

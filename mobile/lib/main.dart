@@ -4,10 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/config/app_config.dart';
-import 'core/localization/app_localizations.dart';
+import 'core/localization/locale_config.dart';
 import 'core/router/app_router.dart';
+import 'core/theme/fonts.dart';
 import 'shared/theme/app_theme.dart';
 import 'core/network/dio_client.dart';
+
+// Import generated localizations (run 'flutter gen-l10n' to generate)
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,27 +55,84 @@ class KerjaFlowApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'KerjaFlow',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
+      theme: _buildTheme(context, locale, AppTheme.lightTheme),
+      darkTheme: _buildTheme(context, locale, AppTheme.darkTheme),
       themeMode: ThemeMode.light,
       locale: locale,
-      supportedLocales: const [
-        Locale('en', ''),
-        Locale('ms', ''),
-        Locale('id', ''),
-      ],
+      // 12 supported locales for ASEAN workforce management
+      supportedLocales: LocaleConfig.supportedLocales,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      // Resolve locale with fallback support
+      localeResolutionCallback: (locale, supportedLocales) {
+        if (locale == null) return LocaleConfig.defaultLocale;
+        return LocaleConfig.resolveLocale(locale);
+      },
       routerConfig: ref.watch(appRouterProvider),
     );
   }
+
+  /// Build theme with locale-specific font configuration
+  ThemeData _buildTheme(BuildContext context, Locale locale, ThemeData baseTheme) {
+    final localeCode = locale.languageCode;
+
+    // Apply locale-specific font if needed
+    if (KerjaFlowFonts.requiresSpecialFont(localeCode)) {
+      return baseTheme.copyWith(
+        textTheme: KerjaFlowFonts.getTextTheme(
+          localeCode,
+          baseTheme: baseTheme.textTheme,
+        ),
+      );
+    }
+
+    return baseTheme;
+  }
 }
 
-// Locale provider
+/// Locale provider for app-wide locale state management
+///
+/// Defaults to English. User preference is persisted via secure storage.
 final localeProvider = StateProvider<Locale>((ref) {
-  return const Locale('en', '');
+  return LocaleConfig.defaultLocale;
 });
+
+/// Provider for changing locale
+final localeNotifierProvider = StateNotifierProvider<LocaleNotifier, Locale>((ref) {
+  return LocaleNotifier(ref);
+});
+
+/// Notifier for managing locale changes with persistence
+class LocaleNotifier extends StateNotifier<Locale> {
+  final Ref ref;
+
+  LocaleNotifier(this.ref) : super(LocaleConfig.defaultLocale) {
+    _loadSavedLocale();
+  }
+
+  Future<void> _loadSavedLocale() async {
+    // TODO: Load from secure storage when implemented
+    // final savedLocale = await SecureStorage.getLocale();
+    // if (savedLocale != null) {
+    //   state = savedLocale;
+    // }
+  }
+
+  Future<void> setLocale(Locale locale) async {
+    if (LocaleConfig.isSupported(locale)) {
+      state = locale;
+      ref.read(localeProvider.notifier).state = locale;
+      // TODO: Persist to secure storage
+      // await SecureStorage.setLocale(locale);
+    }
+  }
+
+  /// Get current locale metadata
+  LocaleMetadata? get currentMetadata {
+    return LocaleConfig.getMetadata(state.languageCode);
+  }
+}

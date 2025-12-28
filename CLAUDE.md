@@ -1,577 +1,481 @@
-# CLAUDE.md - KerjaFlow v3.0 Development Instructions
+# CLAUDE.md - KerjaFlow v4.1 Development Instructions
 
-> **Last Updated:** December 2025
-> **Completeness:** Phase 1-3 Complete (100%), Phase 4-6 In Progress
-> **Total Infrastructure Cost:** $109-114/month (100% open-source)
-
----
-
-## PROJECT OVERVIEW
-
-KerjaFlow is an enterprise workforce management platform for **9 ASEAN countries** targeting blue-collar workers, migrant workers (Bangladesh, Nepal), and manufacturing professionals.
-
-### Countries & Data Routing
-
-| Country | Flag | VPS Location | VPN IP | DB Alias | Monthly Cost |
-|---------|------|--------------|--------|----------|--------------|
-| Malaysia | MY | **Hub** (Shinjiru) | 10.10.0.1 | `default` | $59 |
-| Singapore | SG | Singapore | 10.10.1.1 | `singapore` | $8 |
-| Indonesia | ID | Indonesia | 10.10.2.1 | `indonesia` | $15 |
-| Thailand | TH | Thailand | 10.10.3.1 | `thailand` | $12 |
-| Laos | LA | -> Thailand | 10.10.3.1 | `thailand` | $0 |
-| Vietnam | VN | Vietnam | 10.10.4.1 | `vietnam` | $15 |
-| Cambodia | KH | -> Vietnam | 10.10.4.1 | `vietnam` | $0 |
-| Philippines | PH | -> Hub | 10.10.0.1 | `default` | $0 |
-| Brunei | BN | -> Hub | 10.10.0.1 | `default` | $0 |
-
-**MANDATORY LOCAL STORAGE:** Indonesia (PP 71/2019), Vietnam (Cybersecurity Law)
-**MONITOR:** Cambodia LPDP draft law (may require local VPS if enacted)
-
-### Tech Stack
-
-| Layer | Technology | Version |
-|-------|------------|---------|
-| Backend | Odoo Community | 17.0 |
-| Mobile | Flutter | 3.x |
-| Database | PostgreSQL | 15 |
-| Cache | Redis | 7 |
-| Storage | MinIO | Latest |
-| Proxy | Nginx | 1.25 |
-| VPN | WireGuard | Latest |
-| Language | Python | 3.10+ |
+> **Version:** 4.1 | **Last Updated:** December 2025  
+> **Status:** Production-Ready | **Languages:** 12 Verified | **Countries:** 9 ASEAN
 
 ---
 
-## IMPLEMENTATION STATUS
+## ⚠️ CRITICAL RULES - READ BEFORE WRITING ANY CODE
 
-### PHASE 1: Database & Core Models - COMPLETE
+### ALWAYS DO ✅
+| # | Rule | Why |
+|---|------|-----|
+| 1 | Include `country_code` in ALL employee queries | Data residency compliance (ID, VN laws) |
+| 2 | Use `payslip_date` for statutory rate lookups | Rates change; Cambodia Oct 2027 auto-increase |
+| 3 | Use `Decimal` for ALL money calculations | Float precision loss is ILLEGAL for statutory |
+| 4 | Validate input BEFORE database operations | Security and data integrity |
+| 5 | Log ALL sensitive data access | 7-year audit trail required |
+| 6 | Route ID/VN employee data to local VPS | MANDATORY by law |
+| 7 | Preserve statutory acronyms in translations | EPF/KWSP, SOCSO/PERKESO recognition |
+| 8 | Support complex scripts with Noto Sans fonts | Khmer, Myanmar, Thai, Tamil, Bengali, Nepali |
 
-**Location:** `backend/odoo/addons/kerjaflow/models/`
-
-| Model | File | Status |
-|-------|------|--------|
-| kf.company | `kf_company.py` | Done |
-| kf.department | `kf_department.py` | Done |
-| kf.job.position | `kf_job_position.py` | Done |
-| kf.country.config | `kf_country_config.py` | Done |
-| kf.statutory.rate | `kf_statutory_rate.py` | Done |
-| kf.employee | `kf_employee.py` | Done - 50+ fields, IC validation for 9 countries |
-| kf.user | `kf_user.py` | Done |
-| kf.foreign.worker.detail | `kf_foreign_worker_detail.py` | Done |
-| kf.document | `kf_document.py` | Done |
-| kf.leave.type | `kf_leave_type.py` | Done |
-| kf.leave.balance | `kf_leave_balance.py` | Done |
-| kf.leave.request | `kf_leave_request.py` | Done - State machine |
-| kf.public.holiday | `kf_public_holiday.py` | Done |
-| kf.payslip | `kf_payslip.py` | Done |
-| kf.payslip.line | `kf_payslip_line.py` | Done |
-| kf.notification | `kf_notification.py` | Done |
-| kf.audit.log | `kf_audit_log.py` | Done |
-| kf.regulatory.monitor | `compliance.py` | Done - Cambodia LPDP tracking |
-| kf.compliance.alert | `compliance.py` | Done |
-
-**Total: 19 models**
-
-### PHASE 2: Authentication & Security - COMPLETE
-
-**Location:** `backend/odoo/addons/kerjaflow/`
-
-| Component | Location | Status |
-|-----------|----------|--------|
-| JWT tokens | `controllers/auth_controller.py` | Done |
-| Login/Logout/Refresh | `controllers/auth_controller.py` | Done |
-| PIN setup/verify | `controllers/auth_controller.py` | Done - 6-digit, bcrypt |
-| Lockout (5 attempts) | `controllers/auth_controller.py` | Done - 15-min lockout |
-| Single device session | `controllers/auth_controller.py` | Done |
-| JWT config | `config.py` | Done |
-| RS256 service | `auth_service.py` (root) | Done |
-
-### PHASE 3: API Development - COMPLETE (32/32 Endpoints)
-
-**Location:** `backend/odoo/addons/kerjaflow/controllers/`
-
-| Controller | File | Endpoints | Status |
-|------------|------|-----------|--------|
-| Base | `main.py` | - | Done - API prefix, response helpers |
-| Auth | `auth_controller.py` | 6 | Done |
-| Profile | `profile_controller.py` | 4 | Done |
-| Payslip | `payslip_controller.py` | 3 | Done |
-| Leave | `leave_controller.py` | 8 | Done |
-| Approval | `approval_controller.py` | 3 | Done |
-| Notification | `notification_controller.py` | 4 | Done |
-| Document | `document_controller.py` | 4 | Done |
-
-**Total: 32/32 endpoints implemented**
-
-#### Endpoint Details
-
-**Authentication (6)**
-- `POST /api/v1/auth/login` - User login with credentials
-- `POST /api/v1/auth/refresh` - Refresh access token
-- `POST /api/v1/auth/logout` - Invalidate session
-- `POST /api/v1/auth/pin/setup` - Set up 6-digit PIN
-- `POST /api/v1/auth/pin/verify` - Verify PIN for sensitive ops
-- `POST /api/v1/auth/password/change` - Change password
-
-**Profile & Dashboard (4)**
-- `GET /api/v1/profile` - Get employee profile
-- `PATCH /api/v1/profile` - Update profile fields
-- `POST /api/v1/profile/photo` - Upload profile photo
-- `GET /api/v1/dashboard` - Aggregated home screen data
-
-**Payslips (3)**
-- `GET /api/v1/payslips` - List payslips with pagination
-- `GET /api/v1/payslips/{id}` - Payslip detail (PIN required)
-- `GET /api/v1/payslips/{id}/pdf` - Download PDF (PIN required)
-
-**Leave Management (8)**
-- `GET /api/v1/leave/balances` - Get leave balances
-- `GET /api/v1/leave/types` - Get available leave types
-- `GET /api/v1/leave/requests` - List leave requests
-- `POST /api/v1/leave/requests` - Submit new request
-- `GET /api/v1/leave/requests/{id}` - Request detail
-- `POST /api/v1/leave/requests/{id}/cancel` - Cancel request
-- `GET /api/v1/public-holidays` - Get public holidays
-
-**Approvals (3)**
-- `GET /api/v1/approvals/pending` - Pending approvals list
-- `POST /api/v1/approvals/{id}/approve` - Approve request
-- `POST /api/v1/approvals/{id}/reject` - Reject with reason
-
-**Notifications (4)**
-- `GET /api/v1/notifications` - List with cursor pagination
-- `GET /api/v1/notifications/unread-count` - Badge count
-- `POST /api/v1/notifications/{id}/read` - Mark as read
-- `POST /api/v1/notifications/read-all` - Mark all read
-
-**Documents (4)**
-- `GET /api/v1/documents` - List documents
-- `POST /api/v1/documents` - Upload document
-- `GET /api/v1/documents/{id}` - Document detail
-- `GET /api/v1/documents/{id}/download` - Download file
-
-### PHASE 4: Mobile App - IN PROGRESS
-
-**Location:** `mobile/`
-
-| Component | Status |
-|-----------|--------|
-| main.dart | Done - 11 locales, Riverpod |
-| auth_service.dart | Done - JWT, secure storage |
-| Screens | Not started |
-| Offline cache | Not started |
-
-### PHASE 5-6: Testing & Deployment - PENDING
+### NEVER DO ❌
+| # | Rule | Consequence |
+|---|------|-------------|
+| 1 | NEVER use `float` for money | Statutory calculation errors = ILLEGAL |
+| 2 | NEVER hardcode statutory rates | Rates change; use `kf.statutory.rate` lookup |
+| 3 | NEVER use `date.today()` for payroll | Wrong rate for historical payslips |
+| 4 | NEVER skip audit logging | Compliance violation, legal liability |
+| 5 | NEVER query ID/VN data from wrong VPS | Data residency violation = ILLEGAL |
+| 6 | NEVER translate statutory IDs | "EPF Number" stays in English |
 
 ---
 
-## DATA ARCHITECTURE
+## PART I: PROJECT OVERVIEW
 
-### CENTRAL Tables (Malaysia Hub ONLY)
+### 1.1 What is KerjaFlow?
+Enterprise workforce management platform serving:
+- **9 ASEAN countries**: MY, SG, ID, TH, PH, VN, KH, MM, BN
+- **Target users**: Blue-collar workers, migrant workers (BD, NP, MM, ID)
+- **Industries**: Manufacturing, plantations, construction, retail, logistics
 
-```
-kf_company              kf_department           kf_job_position
-kf_leave_type           kf_public_holiday       kf_country_config
-kf_statutory_rate       kf_regulatory_monitor   kf_compliance_alert
-```
+### 1.2 Architecture Position
+KerjaFlow = **headless canonical calculation engine** + ERP adapters
 
-### REGIONAL Tables (Per-Country VPS)
+| Customer Type | Solution |
+|---------------|----------|
+| SME without ERP | KerjaFlow IS the system of record |
+| Enterprise with SAP/Oracle/Workday | ERP = system of record; KerjaFlow = ASEAN compliance layer |
 
-```
-kf_employee             kf_user                 kf_foreign_worker_detail
-kf_document             kf_payslip              kf_payslip_line
-kf_leave_balance        kf_leave_request        kf_notification
-kf_audit_log
-```
+---
 
-### Routing Logic
+## PART II: DATA RESIDENCY & ROUTING
 
+### 2.1 Country Configuration
+
+| Country | Code | VPS | DB Alias | Data Residency Law |
+|---------|------|-----|----------|-------------------|
+| Malaysia | MY | Hub (KL) | `default` | PDPA 2010 |
+| Singapore | SG | Singapore | `singapore` | PDPA 2012 |
+| Indonesia | ID | Indonesia | `indonesia` | **PP 71/2019 - MANDATORY LOCAL** |
+| Thailand | TH | Thailand | `thailand` | PDPA 2019 |
+| Laos | LA | → Thailand | `thailand` | No specific law |
+| Vietnam | VN | Vietnam | `vietnam` | **Cybersecurity Law - MANDATORY LOCAL** |
+| Cambodia | KH | → Vietnam | `vietnam` | LPDP Draft - MONITOR |
+| Philippines | PH | → Hub | `default` | Data Privacy Act 2012 |
+| Brunei | BN | → Hub | `default` | PDPO - Grace period ends Jan 2026 |
+
+### 2.2 Data Routing Implementation
 ```python
-# ALWAYS route by country_code
+# FILE: backend/odoo/addons/kerjaflow/utils/data_router.py
 COUNTRY_TO_DB = {
     'MY': 'default', 'PH': 'default', 'BN': 'default',
     'SG': 'singapore',
     'ID': 'indonesia',  # MANDATORY LOCAL
     'TH': 'thailand', 'LA': 'thailand',
     'VN': 'vietnam',    # MANDATORY LOCAL
-    'KH': 'vietnam',    # Monitor LPDP
+    'KH': 'vietnam',
 }
+
+def get_database_for_country(country_code: str) -> str:
+    """Returns database alias. NEVER query ID/VN from wrong VPS."""
+    return COUNTRY_TO_DB[country_code]
 ```
 
----
+### 2.3 Table Distribution
+**CENTRAL (Hub only):** kf_company, kf_department, kf_job_position, kf_leave_type, kf_public_holiday, kf_country_config, kf_statutory_rate, kf_regulatory_monitor, kf_compliance_alert
 
-## STATUTORY RATES
-
-| Country | System | EE% | ER% | Cap | Notes |
-|---------|--------|-----|-----|-----|-------|
-| MY | EPF | 11.0 | 12-13 | None | Age-based employer |
-| MY | SOCSO | 0.5 | 1.25 | RM 5,000 | |
-| MY | EIS | 0.2 | 0.2 | RM 5,000 | |
-| SG | CPF | 20.0 | 17.0 | SGD 6,800 | Age-tiered |
-| ID | BPJS TK | 2.0 | 3.7 | Various | |
-| ID | BPJS Kes | 1.0 | 4.0 | IDR 12M | |
-| TH | SSF | 5.0 | 5.0 | THB 15,000 | |
-| VN | SI | 8.0 | 17.5 | 20x min | |
-| VN | HI | 1.5 | 3.0 | 20x min | |
-| VN | UI | 1.0 | 1.0 | 20x min | |
-| PH | SSS | 4.5 | 9.5 | PHP 30,000 | |
-| PH | PhilHealth | 2.5 | 2.5 | PHP 100,000 | |
-| PH | HDMF | 2.0 | 2.0 | PHP 5,000 | |
-| LA | LSSO | 4.5 | 5.0 | LAK 4.5M | |
-| KH | NSSF Risk | 0.0 | 0.8 | KHR 1.2M | |
-| KH | NSSF Health | 0.0 | 2.6 | KHR 1.2M | |
-| KH | NSSF Pension | **2->4** | **2->4** | KHR 1.2M | **Oct 2027 auto-increase** |
-| BN | SPK | 8.5 | 8.5 | None | TAP+SCP combined |
-
-### Cambodia Oct 2027 Rate Change
-
-Pre-configured in `004_compliance_monitoring.sql`:
-- Current: 2% + 2% (until Sep 2027)
-- Future: 4% + 4% (from Oct 2027) - **AUTO-ACTIVATES**
-- Verification: `SELECT * FROM get_statutory_rate('KH', 'NSSF_PENSION', '2027-10-15');`
+**REGIONAL (Per-country):** kf_employee, kf_user, kf_foreign_worker_detail, kf_document, kf_payslip, kf_payslip_line, kf_leave_balance, kf_leave_request, kf_notification, kf_audit_log
 
 ---
 
-## CODING STANDARDS
+## PART III: IMPLEMENTATION STATUS
 
-### Python (Odoo)
+| Phase | Description | Status | Completion |
+|-------|-------------|--------|------------|
+| Phase 1 | Database & Core Models | ✅ COMPLETE | 19/19 models |
+| Phase 2 | Authentication & Security | ✅ COMPLETE | JWT, PIN, lockout |
+| Phase 3 | API Development | ✅ COMPLETE | 32/32 endpoints |
+| Phase 4 | Mobile App | 🔄 IN PROGRESS | ~45% (auth done) |
+| Phase 5 | Testing | ⏳ PENDING | 0% |
+| Phase 6 | Deployment | ⏳ PENDING | 0% |
 
+### Backend Models (19 Complete)
+**Location:** `backend/odoo/addons/kerjaflow/models/`
+
+| Model | File | Key Notes |
+|-------|------|-----------|
+| kf.employee | kf_employee.py | 50+ fields, IC validation 9 countries |
+| kf.user | kf_user.py | JWT, PIN, sessions, single device |
+| kf.statutory.rate | kf_statutory_rate.py | Date-effective, wage brackets |
+| kf.payslip | kf_payslip.py | Multi-currency, statutory contributions |
+| kf.leave.request | kf_leave_request.py | State machine workflow |
+| kf.public.holiday | kf_public_holiday.py | 381+ entries 2025-2026 |
+| kf.audit.log | kf_audit_log.py | 7-year retention |
+
+Others: kf_company, kf_department, kf_job_position, kf_country_config, kf_foreign_worker_detail, kf_document, kf_leave_type, kf_leave_balance, kf_payslip_line, kf_notification, compliance.py (regulatory_monitor, compliance_alert)
+
+### API Endpoints (32 Complete)
+**Base URL:** `/api/v1`
+
+| Category | Count | Endpoints |
+|----------|-------|-----------|
+| Auth | 6 | login, refresh, logout, pin/setup, pin/verify, password/change |
+| Profile | 4 | GET profile, PATCH profile, photo, dashboard |
+| Payslip | 3 | list, detail (PIN), pdf (PIN) |
+| Leave | 8 | types, balances, requests (CRUD), calendar, holidays |
+| Approval | 3 | list, approve, reject |
+| Notification | 4 | list, count, read, read-all |
+| Document | 4 | list, upload, download, delete |
+
+---
+
+## PART IV: STATUTORY RATES
+
+### 4.1 Complete Rate Table
+
+| Country | System | Code | Employee % | Employer % | Wage Cap |
+|---------|--------|------|------------|------------|----------|
+| MY | EPF | EPF_EE/ER | 11.0 | 12.0/13.0 | None |
+| MY | SOCSO | SOCSO_EE/ER | 0.5 | 1.25 | RM5,000 |
+| MY | EIS | EIS_EE/ER | 0.2 | 0.2 | RM5,000 |
+| SG | CPF | CPF_EE/ER | 20.0 | 17.0 | SGD 6,800 |
+| ID | BPJS TK | BPJS_TK | 2.0 | 3.7 | Various |
+| ID | BPJS Kes | BPJS_KES | 1.0 | 4.0 | IDR 12M |
+| TH | SSF | SSF | 5.0 | 5.0 | THB 15,000 |
+| VN | SI/HI/UI | Multiple | 10.5 | 21.5 | 20× min wage |
+| PH | SSS | SSS | 4.5 | 9.5 | PHP 30,000 |
+| PH | PhilHealth | PH | 2.5 | 2.5 | PHP 100,000 |
+| PH | HDMF | HDMF | 2.0 | 2.0 | PHP 5,000 |
+| KH | NSSF | NSSF_PENSION | 2.0→**4.0** | 2.0→**4.0** | KHR 1.2M |
+| BN | TAP/SCP | TAP/SCP | 8.5 | 8.5 | None |
+| LA | LSSO | LSSO | 4.5 | 5.0 | LAK 4.5M |
+
+**Note:** Cambodia NSSF Pension increases to 4% in **October 2027** (pre-configured in database)
+
+### 4.2 Statutory Rate Lookup (MANDATORY PATTERN)
 ```python
-# -*- coding: utf-8 -*-
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
-from decimal import Decimal
-from datetime import date
-from typing import Dict, List, Optional
-import logging
+# FILE: backend/odoo/addons/kerjaflow/utils/statutory_calculator.py
 
-_logger = logging.getLogger(__name__)
-
-class KfEmployee(models.Model):
-    _name = 'kf.employee'
-    _description = 'KerjaFlow Employee'
-
-    # ALWAYS include country_code (CRITICAL)
-    country_id = fields.Many2one('kf.country.config', required=True)
-    country_code = fields.Char(related='country_id.country_code', store=True, index=True)
-
-    # Money = Decimal, NOT float
-    basic_salary = fields.Monetary(currency_field='currency_id')
-
-    # ALWAYS use payslip_date for rate lookup
-    def get_statutory_rate(self, contribution_type, effective_date):
-        """NEVER use date.today() - use payslip_date"""
-        return self.env['kf.statutory.rate'].search([
-            ('country_code', '=', self.country_code),
-            ('contribution_type', '=', contribution_type),
+class StatutoryCalculator:
+    def get_rate(self, country_code: str, rate_code: str, 
+                 effective_date: date, wage_amount: Decimal = None) -> Decimal:
+        """ALWAYS use payslip_date, NEVER date.today()"""
+        domain = [
+            ('country_code', '=', country_code),
+            ('rate_code', '=', rate_code),
             ('effective_from', '<=', effective_date),
-            '|', ('effective_to', '=', False),
-                 ('effective_to', '>=', effective_date),
-        ], order='effective_from desc', limit=1)
+            '|', ('effective_to', '=', False), ('effective_to', '>=', effective_date),
+        ]
+        rate = self.env['kf.statutory.rate'].search(domain, order='effective_from desc', limit=1)
+        return Decimal(str(rate.employee_rate or rate.employer_rate))
+    
+    def calculate_contribution(self, country_code: str, rate_code: str,
+                               payslip_date: date, gross_wage: Decimal) -> Decimal:
+        rate = self.get_rate(country_code, rate_code, payslip_date, gross_wage)
+        return (gross_wage * rate / Decimal('100')).quantize(Decimal('0.01'))
+
+# CORRECT USAGE:
+epf = calc.calculate_contribution('MY', 'EPF_EE', payslip.pay_date, gross)
+
+# WRONG (NEVER DO):
+epf = gross * Decimal('0.11')  # Hardcoded rate
+epf = calc.calculate_contribution('MY', 'EPF_EE', date.today(), gross)  # Wrong date
 ```
 
-### Flutter (Dart)
+---
+
+## PART V: LOCALIZATION (12 Languages)
+
+### 5.1 Language Configuration
+
+| Code | Language | Script | Font | Market |
+|------|----------|--------|------|--------|
+| en | English | Latin | Roboto | Universal |
+| ms_MY | Bahasa Malaysia | Latin | Roboto | MY, BN |
+| id_ID | Bahasa Indonesia | Latin | Roboto | ID |
+| zh_CN | Chinese Simplified | Han | Roboto | SG, MY |
+| ta_IN | Tamil | Tamil | NotoSansTamil | MY, SG |
+| th_TH | Thai | Thai | NotoSansThai | TH |
+| vi_VN | Vietnamese | Latin | Roboto | VN |
+| tl_PH | Filipino | Latin | Roboto | PH |
+| km_KH | Khmer | Khmer | NotoSansKhmer | KH |
+| my_MM | Burmese | Myanmar | NotoSansMyanmar | MM |
+| bn_BD | Bengali | Bengali | NotoSansBengali | BD migrants |
+| ne_NP | Nepali | Devanagari | NotoSansDevanagari | NP migrants |
+
+### 5.2 ARB Files
+**Location:** `mobile/l10n/app_{code}.arb` (197+ keys each)
+
+### 5.3 Statutory Term Handling
+**Rule:** Preserve official acronyms with translated descriptions
 
 ```dart
-// Use freezed for models
-@freezed
-class Employee with _$Employee {
-  const factory Employee({
-    required int id,
-    required String countryCode,
-    required String fullName,
-  }) = _Employee;
-}
+// CORRECT
+'epf_employee': 'KWSP Pekerja'          // Malaysia
+'epf_employee': 'EPF (雇员公积金)'       // Chinese
 
-// Use Riverpod for state
-final employeeProvider = FutureProvider.family<Employee, int>((ref, id) async {
-  final api = ref.watch(apiServiceProvider);
-  return api.getEmployee(id);
-});
-
-// Secure storage for tokens
-final storage = FlutterSecureStorage(
-  aOptions: AndroidOptions(encryptedSharedPreferences: true),
-);
+// WRONG - loses recognition
+'epf_employee': 'Kumpulan Wang Simpanan Pekerja'
 ```
 
-### SQL
-
-```sql
--- ALWAYS include country_code
-SELECT * FROM kf_employee WHERE country_code = 'KH' AND company_id = %s;
-
--- NEVER use string concatenation
-cursor.execute("SELECT * FROM kf_employee WHERE id = %s", (employee_id,))
-
--- Date-based rate lookup
-SELECT * FROM get_statutory_rate('KH', 'NSSF_PENSION', '2027-10-15');
+### 5.4 Font Configuration
+```dart
+// FILE: mobile/lib/core/theme/fonts.dart
+static const Map<String, String> scriptFonts = {
+  'km': 'NotoSansKhmer',
+  'my': 'NotoSansMyanmar',
+  'th': 'NotoSansThai',
+  'ta': 'NotoSansTamil',
+  'bn': 'NotoSansBengali',
+  'ne': 'NotoSansDevanagari',
+};
 ```
 
 ---
 
-## IC FORMAT VALIDATION
+## PART VI: IC VALIDATION
 
 | Country | Pattern | Example |
 |---------|---------|---------|
 | MY | `^\d{6}-\d{2}-\d{4}$` | 900101-01-1234 |
-| SG | `^[STFGM]\d{7}[A-Z]$` | S1234567D |
+| SG | `^[STFGM]\d{7}[A-Z]$` | S1234567D (checksum validated) |
 | ID | `^\d{16}$` | 3201011234567890 |
 | TH | `^\d{13}$` | 1234567890123 |
-| VN | `^\d{9}\|\d{12}$` | 012345678 or 012345678901 |
+| VN | `^\d{9}$\|^\d{12}$` | 012345678 |
 | PH | `^\d{4}-\d{7}-\d{1}$` | 1234-5678901-2 |
 | BN | `^\d{2}-\d{6}$` | 12-345678 |
-| LA | `^.{6,20}$` | Variable |
-| KH | `^.{6,20}$` | Variable |
+| LA/KH | `^.{6,20}$` | Variable |
+
+**Implementation:** `backend/odoo/addons/kerjaflow/utils/ic_validator.py`
 
 ---
 
-## LOCALIZATION (11 Languages)
+## PART VII: MOBILE SCREENS (27 Total)
 
-| Code | Language | Script | Countries |
-|------|----------|--------|-----------|
-| en | English | Latin | All |
-| ms_MY | Bahasa Malaysia | Latin | MY, BN |
-| id_ID | Bahasa Indonesia | Latin | ID |
-| zh_CN | Chinese Simplified | Han | SG, MY |
-| ta_IN | Tamil | Tamil | MY, SG |
-| th_TH | Thai | Thai | TH |
-| vi_VN | Vietnamese | Latin+diacritics | VN |
-| tl_PH | Filipino | Latin | PH |
-| lo_LA | Lao | **Lao script** | LA |
-| km_KH | Khmer | **Khmer script** | KH |
-| bn_BD | Bengali | Bengali | Migrant workers |
+### Screen Inventory
 
-**Required fonts:** NotoSansLao, NotoSansKhmer, NotoSansThai, NotoSansBengali
+| ID | Screen | API Endpoint | Status |
+|----|--------|--------------|--------|
+| **Auth (6)** |||
+| S-001 | Login | POST /auth/login | ✅ |
+| S-002 | PIN Setup | POST /auth/pin/setup | ✅ |
+| S-003 | PIN Entry | POST /auth/pin/verify | ✅ |
+| S-004 | Forgot Password | — | ⏳ |
+| S-005 | Reset Password | POST /auth/password/change | ⏳ |
+| S-006 | Biometric | Local | ✅ |
+| **Dashboard (2)** |||
+| S-010 | Dashboard | GET /dashboard | ⏳ |
+| S-011 | Offline Banner | Local | ⏳ |
+| **Payslip (3)** |||
+| S-020 | Payslip List | GET /payslips | ⏳ |
+| S-021 | Payslip Detail | GET /payslips/{id} (PIN) | ⏳ |
+| S-022 | Payslip PDF | GET /payslips/{id}/pdf (PIN) | ⏳ |
+| **Leave (6)** |||
+| S-030 | Leave Balance | GET /leave/balances | ⏳ |
+| S-031 | Leave History | GET /leave/requests | ⏳ |
+| S-032 | Leave Apply | POST /leave/requests | ⏳ |
+| S-033 | Leave Detail | GET /leave/requests/{id} | ⏳ |
+| S-034 | Leave Calendar | GET /leave/calendar | ⏳ |
+| S-035 | Leave Approval | GET /approvals | ⏳ |
+| **Notification (2)** |||
+| S-050 | Notification List | GET /notifications | ⏳ |
+| S-051 | Notification Detail | — | ⏳ |
+| **Document (3)** |||
+| S-060 | Document List | GET /documents | ⏳ |
+| S-061 | Document Upload | POST /documents | ⏳ |
+| S-062 | Document Viewer | GET /documents/{id} | ⏳ |
+| **Profile (3)** |||
+| S-070 | Profile View | GET /profile | ⏳ |
+| S-071 | Profile Edit | PATCH /profile | ⏳ |
+| S-080 | Settings | Local | ⏳ |
+| **System (2)** |||
+| SYS-01 | Offline Banner | Local | ⏳ |
+| SYS-02 | Error Screen | Local | ⏳ |
 
 ---
 
-## SECURITY REQUIREMENTS
+## PART VIII: SECURITY
 
-### Authentication
-
+### 8.1 Authentication
 | Item | Specification |
 |------|---------------|
-| Algorithm | RS256 (RSA + SHA256) |
-| Access Token | 24 hours |
-| Refresh Token | 7 days |
-| PIN | 6 digits, bcrypt cost 10 |
-| Lockout | 5 failures -> 15 min |
+| JWT Algorithm | RS256 (RSA + SHA256) |
+| Access Token TTL | 24 hours |
+| Refresh Token TTL | 7 days |
+| PIN Format | 6 digits, bcrypt cost 10 |
+| Lockout | 5 failed attempts → 15 min |
 | Sessions | Single device only |
 
-### Rate Limiting (Nginx)
+### 8.2 Encryption (AES-256-GCM)
+- `ic_no` - National ID
+- `passport_no` - Passport
+- `bank_account_no` - Bank account
+- `basic_salary` - Salary
 
-| Endpoint | Limit |
-|----------|-------|
-| `/api/v1/auth/*` | 10/minute |
-| `/api/v1/payslips/*` | 30/minute |
-| General API | 60/minute |
+### 8.3 Rate Limits (Nginx)
+| Endpoint | Limit | Burst |
+|----------|-------|-------|
+| `/api/v1/auth/*` | 10/min | 5 |
+| `/api/v1/payslips/*` | 30/min | 10 |
+| General | 60/min | 20 |
 
-### Field Encryption
-
-Encrypt at rest: `ic_no`, `passport_no`, `bank_account_no`, `basic_salary`
+### 8.4 Audit Logging (MANDATORY)
+```python
+self.env['kf.audit.log'].create({
+    'user_id': self.env.user.id,
+    'employee_id': employee.id,
+    'action': 'VIEW_PAYSLIP',
+    'resource_type': 'kf.payslip',
+    'resource_id': payslip.id,
+    'ip_address': request.httprequest.remote_addr,
+    'country_code': employee.country_code,
+})
+```
 
 ---
 
-## FILE STRUCTURE
+## PART IX: CODING STANDARDS
+
+### 9.1 Python (Odoo)
+```python
+from decimal import Decimal
+from datetime import date
+
+# Money: ALWAYS Decimal
+amount = Decimal(str(self.basic_salary))
+
+# Queries: ALWAYS include country_code
+employees = self.env['kf.employee'].search([
+    ('country_code', '=', 'MY'),
+    ('company_id', '=', company_id),
+])
+
+# Rates: ALWAYS use payslip_date
+rate = calc.get_rate('MY', 'EPF_EE', payslip.pay_date)
+```
+
+### 9.2 Flutter (Dart)
+```dart
+// Models: Use freezed
+@freezed
+class Payslip with _$Payslip {
+  const factory Payslip({
+    required int id,
+    required String netSalary,  // Money as String
+  }) = _Payslip;
+}
+
+// State: Use Riverpod
+final payslipsProvider = FutureProvider<List<Payslip>>((ref) async {
+  return ref.watch(payslipRepositoryProvider).getPayslips();
+});
+
+// Storage: Use FlutterSecureStorage for tokens
+```
+
+---
+
+## PART X: FILE STRUCTURE
 
 ```
 kerjaflow/
-├── CLAUDE.md                              <- THIS FILE
-├── backend/
-│   └── odoo/
-│       └── addons/
-│           └── kerjaflow/
-│               ├── __init__.py
-│               ├── __manifest__.py
-│               ├── config.py              <- JWT configuration
-│               ├── models/
-│               │   ├── __init__.py
-│               │   ├── kf_company.py
-│               │   ├── kf_department.py
-│               │   ├── kf_employee.py     <- 50+ fields, IC validation
-│               │   ├── kf_user.py
-│               │   ├── kf_statutory_rate.py
-│               │   ├── kf_country_config.py
-│               │   ├── kf_payslip.py
-│               │   ├── kf_payslip_line.py
-│               │   ├── kf_leave_type.py
-│               │   ├── kf_leave_balance.py
-│               │   ├── kf_leave_request.py
-│               │   ├── kf_public_holiday.py
-│               │   ├── kf_document.py
-│               │   ├── kf_foreign_worker_detail.py
-│               │   ├── kf_notification.py
-│               │   ├── kf_audit_log.py
-│               │   └── compliance.py      <- LPDP + rate monitoring
-│               ├── controllers/
-│               │   ├── __init__.py
-│               │   ├── main.py            <- Base controller
-│               │   ├── auth_controller.py
-│               │   ├── profile_controller.py
-│               │   ├── payslip_controller.py
-│               │   ├── leave_controller.py
-│               │   ├── approval_controller.py
-│               │   ├── notification_controller.py
-│               │   └── document_controller.py
-│               ├── security/
-│               │   ├── ir.model.access.csv
-│               │   ├── kerjaflow_groups.xml
-│               │   └── kerjaflow_security.xml
-│               ├── data/
-│               │   ├── kf_leave_type_data.xml
-│               │   └── kf_public_holiday_data.xml
-│               └── tests/
-│                   ├── __init__.py
-│                   ├── common.py
-│                   ├── test_employee.py
-│                   ├── test_leave.py
-│                   ├── test_payslip.py
-│                   └── integration/
-│                       ├── test_auth_api.py
-│                       ├── test_leave_api.py
-│                       └── test_payslip_api.py
+├── CLAUDE.md                           ← THIS FILE
+├── backend/odoo/addons/kerjaflow/
+│   ├── models/                         # 19 models
+│   ├── controllers/                    # 8 controllers
+│   ├── utils/                          # data_router, statutory_calculator, ic_validator
+│   ├── security/                       # RBAC
+│   └── tests/
 ├── mobile/
-│   └── lib/
-│       ├── main.dart                      <- 11 locales
-│       └── services/
-│           └── auth_service.dart          <- JWT + PIN
-├── infrastructure/
-│   ├── docker/
-│   │   ├── docker-compose.hub.yml
-│   │   └── docker-compose.regional.yml
-│   ├── nginx/nginx.conf
-│   └── wireguard/wg0.conf.hub
-├── database/
-│   └── migrations/
-│       └── 004_compliance_monitoring.sql
-└── docs/
-    ├── specs/                             <- 10 specification docs
-    └── architecture/
+│   ├── lib/
+│   │   ├── core/                       # config, network, storage, theme, localization
+│   │   ├── features/                   # auth, dashboard, payslip, leave, etc.
+│   │   └── shared/                     # widgets, utils
+│   ├── l10n/                           # 12 ARB files
+│   └── pubspec.yaml
+├── integrations/                       # ERP adapters
+│   ├── common/                         # canonical_model, base_adapter
+│   ├── sap_successfactors/
+│   ├── oracle_hcm/
+│   └── workday/
+├── database/migrations/                # 14 SQL files
+└── docs/specs/                         # 10 specification documents
 ```
 
 ---
 
-## CRITICAL RULES
+## PART XI: ERP INTEGRATION
 
-### ALWAYS
+### Priority Tiers
+| Tier | Systems | Timeline |
+|------|---------|----------|
+| 1 | SAP SuccessFactors, Oracle HCM, Workday | 6-12 months |
+| 2 | Microsoft Dynamics 365, SAP S/4HANA, ADP | 12-18 months |
+| 3 | UKG Pro, Infor, Ceridian | 18-24 months |
+| 4 | BambooHR, Gusto, Paylocity | 24+ months |
 
-1. Include `country_code` in employee queries
-2. Use `payslip_date` for statutory rate lookup (NEVER `date.today()`)
-3. Use `Decimal` for money calculations
-4. Validate input before database operations
-5. Log sensitive data access (audit trail)
-6. Route ID/VN data to local VPS
+### Canonical Models
+**Location:** `integrations/common/canonical_model.py`
+- CanonicalEmployee, CanonicalLeaveBalance, CanonicalLeaveRequest, CanonicalPayslip, CanonicalDocument
 
-### NEVER
+### Base Adapter Interface
+**Location:** `integrations/common/base_adapter.py`
+- authenticate(), sync_employees(), push_leave_request(), sync_payslips(), health_check()
 
-1. Hardcode statutory rates
-2. Store passwords in plain text
-3. Use `float` for money
-4. Query ID/VN employee data from wrong VPS
-5. Skip IC format validation
-6. Use `date.today()` in payroll calculations
+**Full specs:** `docs/architecture/KerjaFlow_ERP_Integration_Architecture_Complete.docx`
 
 ---
 
-## COMMON TASKS
+## PART XII: VALIDATION COMMANDS
 
-### Create API Endpoint
-
+### Flutter
 ```bash
-# Reference: docs/api/kerjaflow_openapi.yaml
-# Pattern: /api/v1/{resource}
-
-# Example: Leave request list
-GET /api/v1/leave/requests
-Authorization: Bearer {access_token}
-Response: { success: true, data: [...], meta: { page, per_page, total } }
+flutter analyze              # Expected: No issues found
+flutter test --coverage      # Expected: All pass
+flutter gen-l10n             # Expected: 12 locales generated
+flutter build apk --debug    # Expected: BUILD SUCCESSFUL
 ```
 
-### Add New Country
-
-1. Add to `kf_country_config` (country_code, vps_ip, db_alias)
-2. Add IC pattern to `kf_employee.IC_FORMAT_PATTERNS`
-3. Add statutory rates to `kf_statutory_rate`
-4. Add to `COUNTRY_TO_DB` in router
-5. Add locale to Flutter `supportedLocales`
-
-### Calculate Payroll
-
-```python
-# CRITICAL: Use payslip date, not today
-def calculate_deductions(employee, payslip_date):
-    rates = employee.env['kf.statutory.rate'].search([
-        ('country_code', '=', employee.country_code),
-        ('effective_from', '<=', payslip_date),
-        '|', ('effective_to', '=', False),
-             ('effective_to', '>=', payslip_date),
-    ])
-    # Oct 2027 Cambodia payslip auto-uses 4% rate
+### Python
+```bash
+flake8 backend/odoo/addons/kerjaflow
+pytest backend/kerjaflow/tests/ -v --cov  # Expected: >80% coverage
+python validation/statutory_rate_validator.py --all
 ```
 
 ---
 
-## COMPLIANCE MONITORING
+## PART XIII: QUICK REFERENCE
 
-### Cambodia LPDP (Draft)
+### Start Mobile Screen
+```bash
+claude "Create S-010 Dashboard screen with GET /api/v1/dashboard. Use Riverpod + freezed. Include loading, error, offline states."
+```
 
-- **Status:** Monitoring (14-day review cycle)
-- **If enacted with data residency:** Provision Cambodia VPS ($15-20/mo), migrate from Vietnam
-- **Location:** `kf_regulatory_monitor` table
+### Verify Completion
+```bash
+claude "Audit KerjaFlow: verify 19 models, 32 endpoints, 27 screens, 12 ARB files. Check for float in money, date.today() in payroll, missing country_code in queries."
+```
 
-### Cambodia NSSF Oct 2027
+### Critical Files
+| Purpose | Location |
+|---------|----------|
+| Data routing | `utils/data_router.py` |
+| Rate lookup | `utils/statutory_calculator.py` |
+| IC validation | `utils/ic_validator.py` |
+| Fonts | `lib/core/theme/fonts.dart` |
+| Statutory terms | `lib/core/localization/statutory_terms.dart` |
 
-- **Status:** Pre-configured, automatic
-- **Action:** None - system auto-selects 4% for Oct 2027+ payslips
-- **Verify:** `SELECT * FROM get_statutory_rate('KH', 'NSSF_PENSION', '2027-10-15');`
-
-### Brunei PDPO
-
-- **Status:** Enacted, grace period ends Jan 2026
-- **Action:** Appoint DPO with CIPM certification by Dec 2025
-
----
-
-## REFERENCE DOCUMENTS
-
-| Document | Location |
-|----------|----------|
-| Data Foundation | `docs/specs/01_Data_Foundation.md` |
+### Reference Documents
+| Doc | Location |
+|-----|----------|
 | API Contract | `docs/specs/02_API_Contract.md` |
-| OpenAPI Spec | `docs/specs/03_OpenAPI.yaml` |
+| OpenAPI | `docs/specs/03_OpenAPI.yaml` |
 | Business Logic | `docs/specs/04_Business_Logic.md` |
-| Quality Spec | `docs/specs/05_Quality_Specification.md` |
-| Security Hardening | `docs/specs/06_Security_Hardening.md` |
-| Operations Runbook | `docs/specs/07_Operations_Runbook.md` |
-| Technical Addendum | `docs/specs/08_Technical_Addendum.md` |
 | Mobile UX | `docs/specs/09_Mobile_UX_Specification.md` |
-| Implementation Plan | `docs/specs/10_Implementation_Plan.md` |
-| Architecture v3 | `docs/architecture/KerjaFlow_Budget_Enterprise_Architecture_v3.docx` |
+| ERP Integration | `docs/architecture/KerjaFlow_ERP_Integration_Architecture_Complete.docx` |
 
 ---
 
-## NEXT STEPS
-
-**Current Position:** End of Phase 3, Starting Phase 4
-
-**Phase 4 Tasks:**
-1. Build Flutter screens for all 32 API endpoints
-2. Implement offline-first caching with Hive/Isar
-3. Add biometric authentication
-4. Integrate FCM/HMS push notifications
-
-**Phase 5 Tasks:**
-1. Complete integration test coverage
-2. Load testing with k6
-3. Security audit
-
-**Command to start Phase 4:**
-```bash
-claude "Create Flutter login screen with email/password fields, connecting to POST /api/v1/auth/login endpoint"
-```
-
----
-
-*KerjaFlow v3.0 - Built for Malaysian regulated industries*
-*9 ASEAN countries | 11 languages | $109-114/month infrastructure*
+*KerjaFlow v4.1 — 9 ASEAN countries | 12 languages | $109-114/month infrastructure*

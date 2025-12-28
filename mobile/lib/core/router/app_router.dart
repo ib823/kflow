@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../features/auth/presentation/login_screen.dart';
-import '../../features/auth/presentation/pin_setup_screen.dart';
-import '../../features/auth/presentation/pin_verify_screen.dart';
+import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/auth/presentation/screens/pin_setup_screen.dart';
+import '../../features/auth/presentation/screens/pin_entry_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/leave/presentation/leave_balance_screen.dart';
 import '../../features/leave/presentation/leave_request_screen.dart';
@@ -23,7 +23,8 @@ class AppRoutes {
   static const splash = '/';
   static const login = '/login';
   static const pinSetup = '/pin-setup';
-  static const pinVerify = '/pin-verify';
+  static const pinEntry = '/pin-entry';
+  static const dashboard = '/dashboard';
   static const home = '/home';
   static const leaveBalance = '/leave/balance';
   static const leaveHistory = '/leave/history';
@@ -87,11 +88,15 @@ GoRouter appRouter(AppRouterRef ref) {
         builder: (context, state) => const PinSetupScreen(),
       ),
       GoRoute(
-        path: AppRoutes.pinVerify,
+        path: AppRoutes.pinEntry,
         builder: (context, state) {
-          final returnTo = state.uri.queryParameters['returnTo'];
-          return PinVerifyScreen(returnTo: returnTo);
+          final purpose = state.uri.queryParameters['purpose'] ?? 'app_unlock';
+          return PinEntryScreen(purpose: purpose);
         },
+      ),
+      GoRoute(
+        path: AppRoutes.dashboard,
+        builder: (context, state) => const HomeScreen(),
       ),
       GoRoute(
         path: AppRoutes.home,
