@@ -518,10 +518,12 @@ class AuthController(KerjaFlowController):
     # Helper methods
 
     def _generate_access_token(self, user):
-        """Generate JWT access token."""
+        """Generate JWT access token using RS256."""
         from ..config import config
 
-        secret = config.get_jwt_secret()
+        # Use private key for signing (RS256)
+        private_key = config.get_jwt_private_key()
+        algorithm = config.get_jwt_algorithm()  # RS256
         expires_at = datetime.now() + timedelta(hours=config.get_access_token_expire_hours())
 
         payload = {
@@ -529,17 +531,17 @@ class AuthController(KerjaFlowController):
             'emp': str(user.employee_id.id),
             'cid': str(user.company_id.id),
             'role': user.role,
-            'iss': 'kerjaflow',
-            'aud': 'kerjaflow-mobile',
+            'iss': config.get_jwt_issuer(),
+            'aud': config.get_jwt_audience(),
             'iat': datetime.now().timestamp(),
             'exp': expires_at.timestamp(),
         }
 
-        token = jwt.encode(payload, secret, algorithm='HS256')
+        token = jwt.encode(payload, private_key, algorithm=algorithm)
         return token, expires_at
 
     def _get_user_from_token(self):
-        """Extract user from Authorization header."""
+        """Extract user from Authorization header using RS256 verification."""
         auth_header = request.httprequest.headers.get('Authorization')
         if not auth_header or not auth_header.startswith('Bearer '):
             return None
@@ -548,10 +550,11 @@ class AuthController(KerjaFlowController):
 
         try:
             from ..config import config
+            # Use public key for verification (RS256)
             payload = jwt.decode(
                 token,
-                config.get_jwt_secret(),
-                algorithms=[config.get_jwt_algorithm()],
+                config.get_jwt_public_key(),
+                algorithms=[config.get_jwt_algorithm()],  # RS256
                 audience=config.get_jwt_audience(),
                 issuer=config.get_jwt_issuer(),
             )
