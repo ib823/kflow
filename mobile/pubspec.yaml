@@ -66,6 +66,12 @@ dependencies:
   open_file: ^3.3.2
   path_provider: ^2.1.2
 
+  # Sharing
+  share_plus: ^7.2.2
+
+  # URL Launcher
+  url_launcher: ^6.2.4
+
   # Utilities
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1

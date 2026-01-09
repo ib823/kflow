@@ -77,24 +77,14 @@ class SettingsScreen extends ConsumerWidget {
             title: const Text('Change PIN'),
             subtitle: const Text('Update your 6-digit PIN'),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-              // TODO: Navigate to change PIN screen
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('PIN change coming soon')),
-              );
-            },
+            onTap: () => context.push('/settings/pin'),
           ),
           ListTile(
             leading: const Icon(Icons.password),
             title: const Text('Change Password'),
             subtitle: const Text('Update your account password'),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-              // TODO: Navigate to change password screen
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Password change coming soon')),
-              );
-            },
+            onTap: () => context.push('/settings/password'),
           ),
 
           const Divider(height: 32),
@@ -126,8 +116,10 @@ class SettingsScreen extends ConsumerWidget {
           _buildSectionHeader(theme, 'About'),
           ListTile(
             leading: const Icon(Icons.info_outline),
-            title: const Text('App Version'),
-            subtitle: const Text('1.0.0 (Build 1)'),
+            title: const Text('About KerjaFlow'),
+            subtitle: const Text('Version, licenses, and more'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/settings/about'),
           ),
           ListTile(
             leading: const Icon(Icons.description_outlined),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../shared/theme/app_theme.dart';
 
@@ -87,6 +88,17 @@ class PayslipDetailScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
+          // View PDF Button
+          ElevatedButton.icon(
+            onPressed: () => context.push('/payslips/$payslipId/pdf'),
+            icon: const Icon(Icons.picture_as_pdf),
+            label: const Text('View PDF'),
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(double.infinity, 48),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+
           // Employee Info Card
           Card(
             elevation: 0,
