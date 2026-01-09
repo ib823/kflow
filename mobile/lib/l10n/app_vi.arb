@@ -2,14 +2,12 @@
   "@@locale": "vi",
   "@@last_modified": "2025-12-27T00:00:00.000Z",
   "@@context": "Vietnamese - Tiếng Việt",
-
   "appName": "KerjaFlow",
   "navHome": "Trang chủ",
   "navPayslip": "Phiếu lương",
   "navLeave": "Nghỉ phép",
   "navInbox": "Hộp thư",
   "navProfile": "Hồ sơ",
-
   "loginTitle": "Chào mừng đến KerjaFlow",
   "loginSubtitle": "Đăng nhập để tiếp tục",
   "loginEmail": "Email hoặc Mã nhân viên",
@@ -19,11 +17,9 @@
   "loginRememberMe": "Ghi nhớ tôi",
   "loginInvalidCredentials": "Email hoặc mật khẩu không đúng",
   "loginAccountLocked": "Tài khoản đã bị khóa. Vui lòng thử lại sau 15 phút.",
-
   "logoutButton": "Đăng xuất",
   "logoutConfirmTitle": "Đăng xuất",
   "logoutConfirmMessage": "Bạn có chắc muốn đăng xuất không?",
-
   "pinSetupTitle": "Tạo mã PIN",
   "pinSetupSubtitle": "Nhập mã PIN 6 chữ số để bảo vệ tài khoản",
   "pinConfirmTitle": "Xác nhận mã PIN",
@@ -37,18 +33,15 @@
   "pinInvalid": "Mã PIN không đúng",
   "pinSetupLater": "Thiết lập sau",
   "pinRequired": "Yêu cầu mã PIN",
-
   "biometricPrompt": "Xác minh danh tính của bạn",
   "biometricUseFingerprint": "Dùng vân tay",
   "biometricUsePinInstead": "Dùng mã PIN",
-
   "dashboardGreeting": "Chào buổi {timeOfDay}, {name}",
   "dashboardMorning": "sáng",
   "dashboardAfternoon": "chiều",
   "dashboardEvening": "tối",
   "dashboardQuickActions": "Thao tác nhanh",
   "dashboardUpcoming": "Sắp tới",
-
   "leaveBalanceTitle": "Số ngày nghỉ còn lại",
   "leaveAnnual": "Nghỉ phép năm",
   "leaveMedical": "Nghỉ ốm",
@@ -72,9 +65,7 @@
   "leaveInsufficientBalance": "Không đủ số ngày nghỉ",
   "leaveOverlapping": "Ngày nghỉ trùng với đơn nghỉ hiện có",
   "leaveMinimumNotice": "Chưa đủ thời gian báo trước tối thiểu",
-
   "publicHolidays": "Ngày lễ",
-
   "payslipMonthYear": "Tháng {month} {year}",
   "payslipGrossEarnings": "Tổng thu nhập",
   "payslipDeductions": "Các khoản khấu trừ",
@@ -91,19 +82,16 @@
   "payslipPinProtected": "Được bảo vệ bằng PIN",
   "payslipViewBreakdown": "Xem chi tiết",
   "payslipYouKeep": "Bạn nhận được",
-
   "approvalPending": "Chờ duyệt",
   "approvalApprove": "Duyệt",
   "approvalReject": "Từ chối",
   "approvalRejectReason": "Lý do từ chối",
   "approvalRejectReasonPlaceholder": "Vui lòng cho biết lý do từ chối",
   "approvalNoItems": "Không có đơn chờ duyệt",
-
   "notificationTitle": "Thông báo",
   "notificationMarkAllRead": "Đánh dấu tất cả đã đọc",
   "notificationEmpty": "Không có thông báo",
   "notificationUnreadCount": "{count, plural, =0{Không có chưa đọc} =1{1 chưa đọc} other{{count} chưa đọc}}",
-
   "profileTitle": "Hồ sơ",
   "profileEmployeeId": "Mã nhân viên",
   "profileDepartment": "Phòng ban",
@@ -114,20 +102,17 @@
   "profileEmergencyContact": "Liên hệ khẩn cấp",
   "profileChangePhoto": "Đổi ảnh",
   "profileEditProfile": "Sửa hồ sơ",
-
   "documentTitle": "Tài liệu",
   "documentUpload": "Tải lên tài liệu",
   "documentDownload": "Tải xuống",
   "documentDelete": "Xóa",
   "documentEmpty": "Không có tài liệu",
-
   "statusPending": "Chờ xử lý",
   "statusApproved": "Đã duyệt",
   "statusRejected": "Đã từ chối",
   "statusCancelled": "Đã hủy",
   "statusProcessing": "Đang xử lý",
   "statusCompleted": "Hoàn thành",
-
   "actionSubmit": "Gửi",
   "actionCancel": "Hủy",
   "actionSave": "Lưu",
@@ -145,7 +130,6 @@
   "actionOk": "OK",
   "actionSeeMore": "Xem thêm",
   "actionSeeLess": "Thu gọn",
-
   "errorGeneric": "Đã xảy ra lỗi. Vui lòng thử lại.",
   "errorNetwork": "Không có kết nối internet",
   "errorSessionExpired": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
@@ -154,19 +138,16 @@
   "errorFieldRequired": "Trường này là bắt buộc",
   "errorInvalidEmail": "Vui lòng nhập địa chỉ email hợp lệ",
   "errorPasswordTooShort": "Mật khẩu phải có ít nhất 8 ký tự",
-
   "cannotConnectNow": "Không thể kết nối ngay bây giờ",
   "checkConnectionAndRetry": "Kiểm tra kết nối và thử lại",
   "offlineDataAvailable": "Bạn vẫn có thể xem dữ liệu đã lưu",
   "offlineModeActive": "Đang làm việc ngoại tuyến - đã lưu thay đổi",
-
   "successLeaveSubmitted": "Đơn nghỉ phép đã được gửi thành công",
   "successProfileUpdated": "Hồ sơ đã được cập nhật thành công",
   "successPinChanged": "Mã PIN đã được thay đổi thành công",
   "successDocumentUploaded": "Tài liệu đã được tải lên thành công",
   "successApproved": "Đơn đã được duyệt",
   "successRejected": "Đơn đã bị từ chối",
-
   "settingsTitle": "Cài đặt",
   "settingsLanguage": "Ngôn ngữ",
   "settingsAccessibility": "Trợ năng",
@@ -193,7 +174,6 @@
   "settingsTerms": "Điều khoản & Điều kiện",
   "settingsAbout": "Giới thiệu",
   "settingsVersion": "Phiên bản {version}",
-
   "accessibilityPinDot": "Chữ số PIN {position} của 6",
   "accessibilityPinDotFilled": "Chữ số PIN {position} của 6, đã nhập",
   "accessibilityPinDotEmpty": "Chữ số PIN {position} của 6, trống",
@@ -206,14 +186,11 @@
   "accessibilityCancelledIcon": "Biểu tượng chặn màu xám",
   "accessibilityPayslipCard": "Phiếu lương {period}, Lương thực nhận {amount}. Chạm để xem chi tiết. Yêu cầu PIN.",
   "accessibilityLeaveCard": "Đơn nghỉ từ {startDate} đến {endDate}, {days} ngày. Trạng thái: {status}.",
-
   "loadingPleaseWait": "Vui lòng chờ...",
   "loadingSubmitting": "Đang gửi...",
   "loadingProcessing": "Đang xử lý...",
-
   "emptyNoData": "Không có dữ liệu",
   "emptyNoResults": "Không tìm thấy kết quả",
-
   "languageEnglish": "English",
   "languageMalay": "Bahasa Malaysia",
   "languageJawi": "جاوي (Jawi)",
@@ -233,19 +210,16 @@
   "languageMadurese": "Basa Madhura",
   "languageBalinese": "Basa Bali",
   "languageMinangkabau": "Baso Minang",
-
   "onboardingWelcome": "Chào mừng",
   "onboardingPayslip": "Xem phiếu lương mọi lúc",
   "onboardingLeave": "Xin nghỉ phép dễ dàng",
   "onboardingNotifications": "Cập nhật qua thông báo",
   "onboardingGetStarted": "Bắt đầu",
-
   "confirmDialogTitle": "Xác nhận thao tác",
   "deleteConfirmTitle": "Xóa?",
   "deleteConfirmMessage": "Thao tác này không thể hoàn tác.",
   "cancelLeaveConfirmTitle": "Hủy đơn nghỉ phép?",
   "cancelLeaveConfirmMessage": "Bạn có chắc muốn hủy đơn nghỉ phép này không?",
-
   "dateToday": "Hôm nay",
   "dateYesterday": "Hôm qua",
   "dateTomorrow": "Ngày mai",
@@ -253,10 +227,8 @@
   "dateMinutesAgo": "{count, plural, =1{1 phút trước} other{{count} phút trước}}",
   "dateHoursAgo": "{count, plural, =1{1 giờ trước} other{{count} giờ trước}}",
   "dateDaysAgo": "{count, plural, =1{1 ngày trước} other{{count} ngày trước}}",
-
   "currencyFormat": "{amount} VND",
   "percentFormat": "{value}%",
-
   "statutoryContributions": "Đóng góp bắt buộc",
   "statutoryEpf": "EPF",
   "statutoryEpfDescription": "Quỹ Tiết kiệm Nhân viên",
@@ -292,11 +264,9 @@
   "statutoryTapDescription": "Quỹ Tín thác Nhân viên",
   "statutoryLsso": "LSSO",
   "statutoryLssoDescription": "Tổ chức An sinh Xã hội Lào",
-
   "contributionEmployee": "Nhân viên",
   "contributionEmployer": "Người sử dụng lao động",
   "contributionTotal": "Tổng cộng",
-
   "currencyMyr": "RM",
   "currencySgd": "S$",
   "currencyIdr": "Rp",
@@ -307,7 +277,6 @@
   "currencyMmk": "K",
   "currencyBnd": "B$",
   "currencyLak": "₭",
-
   "halfDayAm": "Buổi sáng",
   "halfDayPm": "Buổi chiều",
   "leaveHalfDay": "Nửa ngày",

@@ -2,14 +2,12 @@
   "@@locale": "ne",
   "@@last_modified": "2025-12-27T00:00:00.000Z",
   "@@context": "Nepali - नेपाली (Nepal migrant workers)",
-
   "appName": "KerjaFlow",
   "navHome": "गृह",
   "navPayslip": "तलब स्लिप",
   "navLeave": "बिदा",
   "navInbox": "इनबक्स",
   "navProfile": "प्रोफाइल",
-
   "loginTitle": "KerjaFlow मा स्वागत छ",
   "loginSubtitle": "जारी राख्न लग इन गर्नुहोस्",
   "loginEmail": "इमेल वा कर्मचारी ID",
@@ -19,11 +17,9 @@
   "loginRememberMe": "मलाई सम्झनुहोस्",
   "loginInvalidCredentials": "गलत इमेल वा पासवर्ड",
   "loginAccountLocked": "खाता लक भयो। १५ मिनेटपछि फेरि प्रयास गर्नुहोस्।",
-
   "logoutButton": "लग आउट",
   "logoutConfirmTitle": "लग आउट",
   "logoutConfirmMessage": "के तपाईं लग आउट गर्न चाहनुहुन्छ?",
-
   "pinSetupTitle": "आफ्नो PIN बनाउनुहोस्",
   "pinSetupSubtitle": "आफ्नो खाता सुरक्षित गर्न ६ अंकको PIN हाल्नुहोस्",
   "pinConfirmTitle": "PIN पुष्टि गर्नुहोस्",
@@ -37,18 +33,15 @@
   "pinInvalid": "गलत PIN",
   "pinSetupLater": "पछि सेट गर्नुहोस्",
   "pinRequired": "PIN आवश्यक छ",
-
   "biometricPrompt": "आफ्नो पहिचान प्रमाणित गर्नुहोस्",
   "biometricUseFingerprint": "औंला छाप प्रयोग गर्नुहोस्",
   "biometricUsePinInstead": "PIN प्रयोग गर्नुहोस्",
-
   "dashboardGreeting": "शुभ {timeOfDay}, {name}",
   "dashboardMorning": "प्रभात",
   "dashboardAfternoon": "दिउँसो",
   "dashboardEvening": "साँझ",
   "dashboardQuickActions": "छिटो कार्यहरू",
   "dashboardUpcoming": "आउँदै गरेको",
-
   "leaveBalanceTitle": "बिदा ब्यालेन्स",
   "leaveAnnual": "वार्षिक बिदा",
   "leaveMedical": "बिरामी बिदा",
@@ -72,9 +65,7 @@
   "leaveInsufficientBalance": "बिदा ब्यालेन्स अपर्याप्त",
   "leaveOverlapping": "बिदा मिति अवस्थित आवेदनसँग ओभरल्याप",
   "leaveMinimumNotice": "न्यूनतम सूचना अवधि पूरा भएन",
-
   "publicHolidays": "सार्वजनिक बिदा",
-
   "payslipMonthYear": "{month} {year}",
   "payslipGrossEarnings": "कुल आम्दानी",
   "payslipDeductions": "कटौती",
@@ -91,19 +82,16 @@
   "payslipPinProtected": "PIN सुरक्षित",
   "payslipViewBreakdown": "विवरण हेर्नुहोस्",
   "payslipYouKeep": "तपाईंले पाउने",
-
   "approvalPending": "स्वीकृतिको पर्खाइमा",
   "approvalApprove": "स्वीकृत गर्नुहोस्",
   "approvalReject": "अस्वीकार",
   "approvalRejectReason": "अस्वीकार कारण",
   "approvalRejectReasonPlaceholder": "अस्वीकारको कारण दिनुहोस्",
   "approvalNoItems": "कुनै पर्खाइ स्वीकृति छैन",
-
   "notificationTitle": "सूचनाहरू",
   "notificationMarkAllRead": "सबै पढिएको चिन्ह लगाउनुहोस्",
   "notificationEmpty": "कुनै सूचना छैन",
   "notificationUnreadCount": "{count, plural, =0{नपढिएको छैन} =1{१ नपढिएको} other{{count} नपढिएको}}",
-
   "profileTitle": "प्रोफाइल",
   "profileEmployeeId": "कर्मचारी ID",
   "profileDepartment": "विभाग",
@@ -114,20 +102,17 @@
   "profileEmergencyContact": "आकस्मिक सम्पर्क",
   "profileChangePhoto": "फोटो बदल्नुहोस्",
   "profileEditProfile": "प्रोफाइल सम्पादन",
-
   "documentTitle": "कागजातहरू",
   "documentUpload": "कागजात अपलोड",
   "documentDownload": "डाउनलोड",
   "documentDelete": "मेटाउनुहोस्",
   "documentEmpty": "कुनै कागजात छैन",
-
   "statusPending": "पर्खाइमा",
   "statusApproved": "स्वीकृत",
   "statusRejected": "अस्वीकृत",
   "statusCancelled": "रद्द",
   "statusProcessing": "प्रशोधन",
   "statusCompleted": "सम्पन्न",
-
   "actionSubmit": "पेश गर्नुहोस्",
   "actionCancel": "रद्द",
   "actionSave": "बचत गर्नुहोस्",
@@ -145,7 +130,6 @@
   "actionOk": "ठीक छ",
   "actionSeeMore": "थप हेर्नुहोस्",
   "actionSeeLess": "कम हेर्नुहोस्",
-
   "errorGeneric": "केही गलत भयो। फेरि प्रयास गर्नुहोस्।",
   "errorNetwork": "इन्टरनेट जडान छैन",
   "errorSessionExpired": "तपाईंको सत्र समाप्त भयो। फेरि लग इन गर्नुहोस्।",
@@ -154,19 +138,16 @@
   "errorFieldRequired": "यो फिल्ड आवश्यक छ",
   "errorInvalidEmail": "कृपया मान्य इमेल ठेगाना हाल्नुहोस्",
   "errorPasswordTooShort": "पासवर्ड कम्तीमा ८ अक्षर हुनुपर्छ",
-
   "cannotConnectNow": "अहिले जडान गर्न सकिँदैन",
   "checkConnectionAndRetry": "आफ्नो जडान जाँच गरी फेरि प्रयास गर्नुहोस्",
   "offlineDataAvailable": "तपाईं बचत गरिएको डाटा हेर्न सक्नुहुन्छ",
   "offlineModeActive": "अफलाइन काम - परिवर्तन बचत भयो",
-
   "successLeaveSubmitted": "बिदा आवेदन सफलतापूर्वक पेश भयो",
   "successProfileUpdated": "प्रोफाइल सफलतापूर्वक अद्यावधिक भयो",
   "successPinChanged": "PIN सफलतापूर्वक परिवर्तन भयो",
   "successDocumentUploaded": "कागजात सफलतापूर्वक अपलोड भयो",
   "successApproved": "आवेदन स्वीकृत",
   "successRejected": "आवेदन अस्वीकृत",
-
   "settingsTitle": "सेटिङहरू",
   "settingsLanguage": "भाषा",
   "settingsAccessibility": "पहुँचयोग्यता",
@@ -193,7 +174,6 @@
   "settingsTerms": "नियम र सर्तहरू",
   "settingsAbout": "बारेमा",
   "settingsVersion": "संस्करण {version}",
-
   "accessibilityPinDot": "PIN अंक {position} / ६",
   "accessibilityPinDotFilled": "PIN अंक {position} / ६, प्रविष्ट",
   "accessibilityPinDotEmpty": "PIN अंक {position} / ६, खाली",
@@ -206,14 +186,11 @@
   "accessibilityCancelledIcon": "खैरो ब्लक आइकन",
   "accessibilityPayslipCard": "{period} को तलब स्लिप, शुद्ध तलब {amount}। विवरण हेर्न ट्याप गर्नुहोस्। PIN चाहिन्छ।",
   "accessibilityLeaveCard": "{startDate} देखि {endDate} सम्म बिदा आवेदन, {days} दिन। स्थिति: {status}।",
-
   "loadingPleaseWait": "कृपया पर्खनुहोस्...",
   "loadingSubmitting": "पेश गर्दै...",
   "loadingProcessing": "प्रशोधन गर्दै...",
-
   "emptyNoData": "कुनै डाटा उपलब्ध छैन",
   "emptyNoResults": "कुनै परिणाम फेला परेन",
-
   "languageEnglish": "English",
   "languageMalay": "Bahasa Malaysia",
   "languageJawi": "جاوي (Jawi)",
@@ -233,19 +210,16 @@
   "languageMadurese": "Basa Madhura",
   "languageBalinese": "Basa Bali",
   "languageMinangkabau": "Baso Minang",
-
   "onboardingWelcome": "स्वागत छ",
   "onboardingPayslip": "जुनसुकै बेला आफ्नो तलब स्लिप हेर्नुहोस्",
   "onboardingLeave": "सजिलैसँग बिदाको लागि आवेदन दिनुहोस्",
   "onboardingNotifications": "सूचनाहरूमार्फत अद्यावधिक रहनुहोस्",
   "onboardingGetStarted": "सुरु गर्नुहोस्",
-
   "confirmDialogTitle": "कार्य पुष्टि",
   "deleteConfirmTitle": "मेटाउने?",
   "deleteConfirmMessage": "यो कार्य पूर्ववत गर्न सकिँदैन।",
   "cancelLeaveConfirmTitle": "बिदा आवेदन रद्द गर्ने?",
   "cancelLeaveConfirmMessage": "के तपाईं यो बिदा आवेदन रद्द गर्न चाहनुहुन्छ?",
-
   "dateToday": "आज",
   "dateYesterday": "हिजो",
   "dateTomorrow": "भोलि",
@@ -253,10 +227,8 @@
   "dateMinutesAgo": "{count, plural, =1{१ मिनेट अघि} other{{count} मिनेट अघि}}",
   "dateHoursAgo": "{count, plural, =1{१ घण्टा अघि} other{{count} घण्टा अघि}}",
   "dateDaysAgo": "{count, plural, =1{१ दिन अघि} other{{count} दिन अघि}}",
-
   "currencyFormat": "RM {amount}",
   "percentFormat": "{value}%",
-
   "statutoryContributions": "वैधानिक योगदान",
   "statutoryEpf": "EPF",
   "statutoryEpfDescription": "कर्मचारी भविष्य निधि",
@@ -292,11 +264,9 @@
   "statutoryTapDescription": "कर्मचारी ट्रस्ट कोष",
   "statutoryLsso": "LSSO",
   "statutoryLssoDescription": "लाओस सामाजिक सुरक्षा संगठन",
-
   "contributionEmployee": "कर्मचारी",
   "contributionEmployer": "रोजगारदाता",
   "contributionTotal": "जम्मा",
-
   "currencyMyr": "RM",
   "currencySgd": "S$",
   "currencyIdr": "Rp",
@@ -307,7 +277,6 @@
   "currencyMmk": "K",
   "currencyBnd": "B$",
   "currencyLak": "₭",
-
   "halfDayAm": "बिहान",
   "halfDayPm": "दिउँसो",
   "leaveHalfDay": "आधा दिन",

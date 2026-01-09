@@ -9,3 +9,4 @@ library theme;
 export 'design_tokens.dart';
 export 'app_theme.dart';
 export 'fonts.dart';
+export 'font_config.dart';

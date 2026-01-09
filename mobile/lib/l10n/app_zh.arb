@@ -2,14 +2,12 @@
   "@@locale": "zh_Hans",
   "@@last_modified": "2025-12-27T00:00:00.000Z",
   "@@context": "Chinese Simplified - 简体中文",
-
   "appName": "KerjaFlow",
   "navHome": "首页",
   "navPayslip": "工资单",
   "navLeave": "休假",
   "navInbox": "收件箱",
   "navProfile": "个人资料",
-
   "loginTitle": "欢迎使用 KerjaFlow",
   "loginSubtitle": "登录以继续",
   "loginEmail": "电子邮件或员工编号",
@@ -19,11 +17,9 @@
   "loginRememberMe": "记住我",
   "loginInvalidCredentials": "电子邮件或密码无效",
   "loginAccountLocked": "账户已锁定。请在15分钟后重试。",
-
   "logoutButton": "退出登录",
   "logoutConfirmTitle": "退出登录",
   "logoutConfirmMessage": "您确定要退出登录吗？",
-
   "pinSetupTitle": "创建您的PIN码",
   "pinSetupSubtitle": "输入6位数字PIN码以保护您的账户",
   "pinConfirmTitle": "确认您的PIN码",
@@ -37,18 +33,15 @@
   "pinInvalid": "PIN码无效",
   "pinSetupLater": "稍后设置",
   "pinRequired": "需要PIN码",
-
   "biometricPrompt": "验证您的身份",
   "biometricUseFingerprint": "使用指纹",
   "biometricUsePinInstead": "使用PIN码",
-
   "dashboardGreeting": "{name}，{timeOfDay}好",
   "dashboardMorning": "早上",
   "dashboardAfternoon": "下午",
   "dashboardEvening": "晚上",
   "dashboardQuickActions": "快捷操作",
   "dashboardUpcoming": "即将到来",
-
   "leaveBalanceTitle": "休假余额",
   "leaveAnnual": "年假",
   "leaveMedical": "病假",
@@ -72,9 +65,7 @@
   "leaveInsufficientBalance": "休假余额不足",
   "leaveOverlapping": "休假日期与现有申请重叠",
   "leaveMinimumNotice": "未满足最低通知期限",
-
   "publicHolidays": "公共假期",
-
   "payslipMonthYear": "{year}年{month}",
   "payslipGrossEarnings": "税前收入",
   "payslipDeductions": "扣款",
@@ -91,19 +82,16 @@
   "payslipPinProtected": "PIN码保护",
   "payslipViewBreakdown": "查看明细",
   "payslipYouKeep": "您的实得",
-
   "approvalPending": "待审批",
   "approvalApprove": "批准",
   "approvalReject": "拒绝",
   "approvalRejectReason": "拒绝原因",
   "approvalRejectReasonPlaceholder": "请提供拒绝原因",
   "approvalNoItems": "无待审批项目",
-
   "notificationTitle": "通知",
   "notificationMarkAllRead": "全部标记为已读",
   "notificationEmpty": "暂无通知",
   "notificationUnreadCount": "{count, plural, =0{无未读} =1{1条未读} other{{count}条未读}}",
-
   "profileTitle": "个人资料",
   "profileEmployeeId": "员工编号",
   "profileDepartment": "部门",
@@ -114,20 +102,17 @@
   "profileEmergencyContact": "紧急联系人",
   "profileChangePhoto": "更换照片",
   "profileEditProfile": "编辑资料",
-
   "documentTitle": "文档",
   "documentUpload": "上传文档",
   "documentDownload": "下载",
   "documentDelete": "删除",
   "documentEmpty": "暂无文档",
-
   "statusPending": "待处理",
   "statusApproved": "已批准",
   "statusRejected": "已拒绝",
   "statusCancelled": "已取消",
   "statusProcessing": "处理中",
   "statusCompleted": "已完成",
-
   "actionSubmit": "提交",
   "actionCancel": "取消",
   "actionSave": "保存",
@@ -145,7 +130,6 @@
   "actionOk": "确定",
   "actionSeeMore": "查看更多",
   "actionSeeLess": "收起",
-
   "errorGeneric": "出现错误。请重试。",
   "errorNetwork": "无网络连接",
   "errorSessionExpired": "您的会话已过期。请重新登录。",
@@ -154,19 +138,16 @@
   "errorFieldRequired": "此字段为必填项",
   "errorInvalidEmail": "请输入有效的电子邮件地址",
   "errorPasswordTooShort": "密码至少需要8个字符",
-
   "cannotConnectNow": "当前无法连接",
   "checkConnectionAndRetry": "请检查您的连接后重试",
   "offlineDataAvailable": "您仍可查看已保存的数据",
   "offlineModeActive": "离线模式 - 更改已保存",
-
   "successLeaveSubmitted": "休假申请已成功提交",
   "successProfileUpdated": "个人资料已成功更新",
   "successPinChanged": "PIN码已成功更改",
   "successDocumentUploaded": "文档已成功上传",
   "successApproved": "申请已批准",
   "successRejected": "申请已拒绝",
-
   "settingsTitle": "设置",
   "settingsLanguage": "语言",
   "settingsAccessibility": "无障碍",
@@ -193,7 +174,6 @@
   "settingsTerms": "条款与条件",
   "settingsAbout": "关于",
   "settingsVersion": "版本 {version}",
-
   "accessibilityPinDot": "PIN码第{position}位（共6位）",
   "accessibilityPinDotFilled": "PIN码第{position}位（共6位），已输入",
   "accessibilityPinDotEmpty": "PIN码第{position}位（共6位），未输入",
@@ -206,14 +186,11 @@
   "accessibilityCancelledIcon": "灰色禁止图标",
   "accessibilityPayslipCard": "{period}工资单，实发工资{amount}。点击查看详情。需要PIN码。",
   "accessibilityLeaveCard": "休假申请从{startDate}到{endDate}，{days}天。状态：{status}。",
-
   "loadingPleaseWait": "请稍候...",
   "loadingSubmitting": "正在提交...",
   "loadingProcessing": "正在处理...",
-
   "emptyNoData": "暂无数据",
   "emptyNoResults": "未找到结果",
-
   "languageEnglish": "English",
   "languageMalay": "Bahasa Malaysia",
   "languageJawi": "جاوي (Jawi)",
@@ -233,19 +210,16 @@
   "languageMadurese": "Basa Madhura",
   "languageBalinese": "Basa Bali",
   "languageMinangkabau": "Baso Minang",
-
   "onboardingWelcome": "欢迎",
   "onboardingPayslip": "随时查看您的工资单",
   "onboardingLeave": "轻松申请休假",
   "onboardingNotifications": "通过通知保持更新",
   "onboardingGetStarted": "开始使用",
-
   "confirmDialogTitle": "确认操作",
   "deleteConfirmTitle": "删除？",
   "deleteConfirmMessage": "此操作无法撤销。",
   "cancelLeaveConfirmTitle": "取消休假申请？",
   "cancelLeaveConfirmMessage": "您确定要取消此休假申请吗？",
-
   "dateToday": "今天",
   "dateYesterday": "昨天",
   "dateTomorrow": "明天",
@@ -253,10 +227,8 @@
   "dateMinutesAgo": "{count, plural, =1{1分钟前} other{{count}分钟前}}",
   "dateHoursAgo": "{count, plural, =1{1小时前} other{{count}小时前}}",
   "dateDaysAgo": "{count, plural, =1{1天前} other{{count}天前}}",
-
   "currencyFormat": "RM {amount}",
   "percentFormat": "{value}%",
-
   "statutoryContributions": "法定缴款",
   "statutoryEpf": "EPF",
   "statutoryEpfDescription": "雇员公积金",
@@ -292,11 +264,9 @@
   "statutoryTapDescription": "雇员信托基金",
   "statutoryLsso": "LSSO",
   "statutoryLssoDescription": "老挝社会保障组织",
-
   "contributionEmployee": "员工",
   "contributionEmployer": "雇主",
   "contributionTotal": "总计",
-
   "currencyMyr": "RM",
   "currencySgd": "S$",
   "currencyIdr": "Rp",
@@ -307,7 +277,6 @@
   "currencyMmk": "K",
   "currencyBnd": "B$",
   "currencyLak": "₭",
-
   "halfDayAm": "上午",
   "halfDayPm": "下午",
   "leaveHalfDay": "半天",

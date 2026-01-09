@@ -2,14 +2,12 @@
   "@@locale": "bn",
   "@@last_modified": "2025-12-27T00:00:00.000Z",
   "@@context": "Bengali - বাংলা (Bangladesh migrant workers)",
-
   "appName": "KerjaFlow",
   "navHome": "হোম",
   "navPayslip": "বেতন স্লিপ",
   "navLeave": "ছুটি",
   "navInbox": "ইনবক্স",
   "navProfile": "প্রোফাইল",
-
   "loginTitle": "KerjaFlow-এ স্বাগতম",
   "loginSubtitle": "চালিয়ে যেতে লগইন করুন",
   "loginEmail": "ইমেইল বা কর্মচারী আইডি",
@@ -19,11 +17,9 @@
   "loginRememberMe": "মনে রাখুন",
   "loginInvalidCredentials": "ভুল ইমেইল বা পাসওয়ার্ড",
   "loginAccountLocked": "অ্যাকাউন্ট লক হয়েছে। ১৫ মিনিট পরে চেষ্টা করুন।",
-
   "logoutButton": "লগআউট",
   "logoutConfirmTitle": "লগআউট",
   "logoutConfirmMessage": "আপনি কি নিশ্চিত যে লগআউট করতে চান?",
-
   "pinSetupTitle": "আপনার পিন তৈরি করুন",
   "pinSetupSubtitle": "আপনার অ্যাকাউন্ট সুরক্ষিত করতে ৬ সংখ্যার পিন দিন",
   "pinConfirmTitle": "পিন নিশ্চিত করুন",
@@ -37,18 +33,15 @@
   "pinInvalid": "ভুল পিন",
   "pinSetupLater": "পরে সেট করুন",
   "pinRequired": "পিন প্রয়োজন",
-
   "biometricPrompt": "আপনার পরিচয় যাচাই করুন",
   "biometricUseFingerprint": "আঙ্গুলের ছাপ ব্যবহার করুন",
   "biometricUsePinInstead": "পিন ব্যবহার করুন",
-
   "dashboardGreeting": "শুভ {timeOfDay}, {name}",
   "dashboardMorning": "সকাল",
   "dashboardAfternoon": "দুপুর",
   "dashboardEvening": "সন্ধ্যা",
   "dashboardQuickActions": "দ্রুত কার্যক্রম",
   "dashboardUpcoming": "আসন্ন",
-
   "leaveBalanceTitle": "ছুটির ব্যালেন্স",
   "leaveAnnual": "বার্ষিক ছুটি",
   "leaveMedical": "অসুস্থতার ছুটি",
@@ -72,9 +65,7 @@
   "leaveInsufficientBalance": "ছুটির ব্যালেন্স অপর্যাপ্ত",
   "leaveOverlapping": "ছুটির তারিখ বিদ্যমান আবেদনের সাথে ওভারল্যাপ করছে",
   "leaveMinimumNotice": "ন্যূনতম নোটিশ সময় পূরণ হয়নি",
-
   "publicHolidays": "সরকারি ছুটি",
-
   "payslipMonthYear": "{month} {year}",
   "payslipGrossEarnings": "মোট আয়",
   "payslipDeductions": "কর্তন",
@@ -91,19 +82,16 @@
   "payslipPinProtected": "পিন সুরক্ষিত",
   "payslipViewBreakdown": "বিস্তারিত দেখুন",
   "payslipYouKeep": "আপনি যা পাবেন",
-
   "approvalPending": "অনুমোদনের অপেক্ষায়",
   "approvalApprove": "অনুমোদন করুন",
   "approvalReject": "প্রত্যাখ্যান",
   "approvalRejectReason": "প্রত্যাখ্যানের কারণ",
   "approvalRejectReasonPlaceholder": "প্রত্যাখ্যানের কারণ দিন",
   "approvalNoItems": "কোনো অনুমোদন মুলতুবি নেই",
-
   "notificationTitle": "বিজ্ঞপ্তি",
   "notificationMarkAllRead": "সব পড়া হিসেবে চিহ্নিত করুন",
   "notificationEmpty": "কোনো বিজ্ঞপ্তি নেই",
   "notificationUnreadCount": "{count, plural, =0{কোনো অপঠিত নেই} =1{১টি অপঠিত} other{{count}টি অপঠিত}}",
-
   "profileTitle": "প্রোফাইল",
   "profileEmployeeId": "কর্মচারী আইডি",
   "profileDepartment": "বিভাগ",
@@ -114,20 +102,17 @@
   "profileEmergencyContact": "জরুরি যোগাযোগ",
   "profileChangePhoto": "ফটো পরিবর্তন করুন",
   "profileEditProfile": "প্রোফাইল সম্পাদনা করুন",
-
   "documentTitle": "নথি",
   "documentUpload": "নথি আপলোড করুন",
   "documentDownload": "ডাউনলোড",
   "documentDelete": "মুছে ফেলুন",
   "documentEmpty": "কোনো নথি নেই",
-
   "statusPending": "মুলতুবি",
   "statusApproved": "অনুমোদিত",
   "statusRejected": "প্রত্যাখ্যাত",
   "statusCancelled": "বাতিল",
   "statusProcessing": "প্রক্রিয়াধীন",
   "statusCompleted": "সম্পন্ন",
-
   "actionSubmit": "জমা দিন",
   "actionCancel": "বাতিল",
   "actionSave": "সংরক্ষণ করুন",
@@ -145,7 +130,6 @@
   "actionOk": "ঠিক আছে",
   "actionSeeMore": "আরো দেখুন",
   "actionSeeLess": "কম দেখুন",
-
   "errorGeneric": "কিছু ভুল হয়েছে। আবার চেষ্টা করুন।",
   "errorNetwork": "ইন্টারনেট সংযোগ নেই",
   "errorSessionExpired": "আপনার সেশন শেষ হয়ে গেছে। আবার লগইন করুন।",
@@ -154,19 +138,16 @@
   "errorFieldRequired": "এই ক্ষেত্রটি প্রয়োজন",
   "errorInvalidEmail": "সঠিক ইমেইল ঠিকানা দিন",
   "errorPasswordTooShort": "পাসওয়ার্ড কমপক্ষে ৮ অক্ষর হতে হবে",
-
   "cannotConnectNow": "এখন সংযোগ করা যাচ্ছে না",
   "checkConnectionAndRetry": "আপনার সংযোগ চেক করে আবার চেষ্টা করুন",
   "offlineDataAvailable": "আপনি সংরক্ষিত ডেটা দেখতে পারেন",
   "offlineModeActive": "অফলাইনে কাজ করছে - পরিবর্তন সংরক্ষিত",
-
   "successLeaveSubmitted": "ছুটির আবেদন সফলভাবে জমা হয়েছে",
   "successProfileUpdated": "প্রোফাইল সফলভাবে আপডেট হয়েছে",
   "successPinChanged": "পিন সফলভাবে পরিবর্তন হয়েছে",
   "successDocumentUploaded": "নথি সফলভাবে আপলোড হয়েছে",
   "successApproved": "আবেদন অনুমোদিত",
   "successRejected": "আবেদন প্রত্যাখ্যাত",
-
   "settingsTitle": "সেটিংস",
   "settingsLanguage": "ভাষা",
   "settingsAccessibility": "প্রবেশযোগ্যতা",
@@ -193,7 +174,6 @@
   "settingsTerms": "শর্তাবলী",
   "settingsAbout": "সম্পর্কে",
   "settingsVersion": "ভার্সন {version}",
-
   "accessibilityPinDot": "পিন সংখ্যা {position} / ৬",
   "accessibilityPinDotFilled": "পিন সংখ্যা {position} / ৬, প্রবেশ করা হয়েছে",
   "accessibilityPinDotEmpty": "পিন সংখ্যা {position} / ৬, খালি",
@@ -206,14 +186,11 @@
   "accessibilityCancelledIcon": "ধূসর ব্লক আইকন",
   "accessibilityPayslipCard": "{period} এর বেতন স্লিপ, নীট বেতন {amount}। বিস্তারিত দেখতে ট্যাপ করুন। পিন প্রয়োজন।",
   "accessibilityLeaveCard": "{startDate} থেকে {endDate} পর্যন্ত ছুটির আবেদন, {days} দিন। স্ট্যাটাস: {status}।",
-
   "loadingPleaseWait": "অপেক্ষা করুন...",
   "loadingSubmitting": "জমা দেওয়া হচ্ছে...",
   "loadingProcessing": "প্রক্রিয়া করা হচ্ছে...",
-
   "emptyNoData": "কোনো ডেটা নেই",
   "emptyNoResults": "কোনো ফলাফল পাওয়া যায়নি",
-
   "languageEnglish": "English",
   "languageMalay": "Bahasa Malaysia",
   "languageJawi": "جاوي (Jawi)",
@@ -233,19 +210,16 @@
   "languageMadurese": "Basa Madhura",
   "languageBalinese": "Basa Bali",
   "languageMinangkabau": "Baso Minang",
-
   "onboardingWelcome": "স্বাগতম",
   "onboardingPayslip": "যেকোনো সময় আপনার বেতন স্লিপ দেখুন",
   "onboardingLeave": "সহজে ছুটির জন্য আবেদন করুন",
   "onboardingNotifications": "বিজ্ঞপ্তি দিয়ে আপডেট থাকুন",
   "onboardingGetStarted": "শুরু করুন",
-
   "confirmDialogTitle": "অ্যাকশন নিশ্চিত করুন",
   "deleteConfirmTitle": "মুছে ফেলবেন?",
   "deleteConfirmMessage": "এই অ্যাকশন পূর্বাবস্থায় ফেরানো যাবে না।",
   "cancelLeaveConfirmTitle": "ছুটির আবেদন বাতিল করবেন?",
   "cancelLeaveConfirmMessage": "আপনি কি নিশ্চিত যে এই ছুটির আবেদন বাতিল করতে চান?",
-
   "dateToday": "আজ",
   "dateYesterday": "গতকাল",
   "dateTomorrow": "আগামীকাল",
@@ -253,10 +227,8 @@
   "dateMinutesAgo": "{count, plural, =1{১ মিনিট আগে} other{{count} মিনিট আগে}}",
   "dateHoursAgo": "{count, plural, =1{১ ঘণ্টা আগে} other{{count} ঘণ্টা আগে}}",
   "dateDaysAgo": "{count, plural, =1{১ দিন আগে} other{{count} দিন আগে}}",
-
   "currencyFormat": "RM {amount}",
   "percentFormat": "{value}%",
-
   "statutoryContributions": "বিধিবদ্ধ অবদান",
   "statutoryEpf": "EPF",
   "statutoryEpfDescription": "কর্মচারী ভবিষ্য তহবিল",
@@ -292,11 +264,9 @@
   "statutoryTapDescription": "কর্মচারী ট্রাস্ট তহবিল",
   "statutoryLsso": "LSSO",
   "statutoryLssoDescription": "লাওস সামাজিক নিরাপত্তা সংস্থা",
-
   "contributionEmployee": "কর্মচারী",
   "contributionEmployer": "নিয়োগকর্তা",
   "contributionTotal": "মোট",
-
   "currencyMyr": "RM",
   "currencySgd": "S$",
   "currencyIdr": "Rp",
@@ -307,7 +277,6 @@
   "currencyMmk": "K",
   "currencyBnd": "B$",
   "currencyLak": "₭",
-
   "halfDayAm": "সকাল",
   "halfDayPm": "বিকাল",
   "leaveHalfDay": "অর্ধ দিন",

@@ -2,14 +2,12 @@
   "@@locale": "ms",
   "@@last_modified": "2025-12-27T00:00:00.000Z",
   "@@context": "Bahasa Malaysia - Malaysian Malay",
-
   "appName": "KerjaFlow",
   "navHome": "Utama",
   "navPayslip": "Slip Gaji",
   "navLeave": "Cuti",
   "navInbox": "Peti Masuk",
   "navProfile": "Profil",
-
   "loginTitle": "Selamat Datang ke KerjaFlow",
   "loginSubtitle": "Log masuk untuk teruskan",
   "loginEmail": "E-mel atau ID Pekerja",
@@ -19,11 +17,9 @@
   "loginRememberMe": "Ingat saya",
   "loginInvalidCredentials": "E-mel atau kata laluan tidak sah",
   "loginAccountLocked": "Akaun dikunci. Cuba lagi dalam 15 minit.",
-
   "logoutButton": "Log Keluar",
   "logoutConfirmTitle": "Log Keluar",
   "logoutConfirmMessage": "Adakah anda pasti mahu log keluar?",
-
   "pinSetupTitle": "Cipta PIN Anda",
   "pinSetupSubtitle": "Masukkan PIN 6 digit untuk melindungi akaun anda",
   "pinConfirmTitle": "Sahkan PIN Anda",
@@ -37,18 +33,15 @@
   "pinInvalid": "PIN tidak sah",
   "pinSetupLater": "Tetapkan kemudian",
   "pinRequired": "PIN diperlukan",
-
   "biometricPrompt": "Sahkan identiti anda",
   "biometricUseFingerprint": "Guna Cap Jari",
   "biometricUsePinInstead": "Guna PIN",
-
   "dashboardGreeting": "Selamat {timeOfDay}, {name}",
   "dashboardMorning": "pagi",
   "dashboardAfternoon": "petang",
   "dashboardEvening": "malam",
   "dashboardQuickActions": "Tindakan Pantas",
   "dashboardUpcoming": "Akan Datang",
-
   "leaveBalanceTitle": "Baki Cuti",
   "leaveAnnual": "Cuti Tahunan",
   "leaveMedical": "Cuti Sakit",
@@ -72,9 +65,7 @@
   "leaveInsufficientBalance": "Baki cuti tidak mencukupi",
   "leaveOverlapping": "Tarikh cuti bertindih dengan permohonan sedia ada",
   "leaveMinimumNotice": "Tempoh notis minimum tidak dipenuhi",
-
   "publicHolidays": "Cuti Umum",
-
   "payslipMonthYear": "{month} {year}",
   "payslipGrossEarnings": "Pendapatan Kasar",
   "payslipDeductions": "Potongan",
@@ -91,19 +82,16 @@
   "payslipPinProtected": "Dilindungi PIN",
   "payslipViewBreakdown": "Lihat Pecahan",
   "payslipYouKeep": "Yang Anda Dapat",
-
   "approvalPending": "Menunggu Kelulusan",
   "approvalApprove": "Luluskan",
   "approvalReject": "Tolak",
   "approvalRejectReason": "Sebab Penolakan",
   "approvalRejectReasonPlaceholder": "Sila berikan sebab penolakan",
   "approvalNoItems": "Tiada kelulusan menunggu",
-
   "notificationTitle": "Pemberitahuan",
   "notificationMarkAllRead": "Tandai semua sebagai dibaca",
   "notificationEmpty": "Tiada pemberitahuan",
   "notificationUnreadCount": "{count, plural, =0{Tiada belum dibaca} =1{1 belum dibaca} other{{count} belum dibaca}}",
-
   "profileTitle": "Profil",
   "profileEmployeeId": "ID Pekerja",
   "profileDepartment": "Jabatan",
@@ -114,20 +102,17 @@
   "profileEmergencyContact": "Hubungan Kecemasan",
   "profileChangePhoto": "Tukar Foto",
   "profileEditProfile": "Sunting Profil",
-
   "documentTitle": "Dokumen",
   "documentUpload": "Muat Naik Dokumen",
   "documentDownload": "Muat Turun",
   "documentDelete": "Padam",
   "documentEmpty": "Tiada dokumen",
-
   "statusPending": "Menunggu",
   "statusApproved": "Diluluskan",
   "statusRejected": "Ditolak",
   "statusCancelled": "Dibatalkan",
   "statusProcessing": "Memproses",
   "statusCompleted": "Selesai",
-
   "actionSubmit": "Hantar",
   "actionCancel": "Batal",
   "actionSave": "Simpan",
@@ -145,7 +130,6 @@
   "actionOk": "OK",
   "actionSeeMore": "Lihat Lagi",
   "actionSeeLess": "Lihat Kurang",
-
   "errorGeneric": "Sesuatu tidak kena. Sila cuba lagi.",
   "errorNetwork": "Tiada sambungan internet",
   "errorSessionExpired": "Sesi anda telah tamat. Sila log masuk semula.",
@@ -154,19 +138,16 @@
   "errorFieldRequired": "Medan ini diperlukan",
   "errorInvalidEmail": "Sila masukkan alamat e-mel yang sah",
   "errorPasswordTooShort": "Kata laluan mesti sekurang-kurangnya 8 aksara",
-
   "cannotConnectNow": "Tidak dapat menyambung sekarang",
   "checkConnectionAndRetry": "Semak sambungan anda dan cuba lagi",
   "offlineDataAvailable": "Anda masih boleh melihat data yang disimpan",
   "offlineModeActive": "Bekerja luar talian - perubahan disimpan",
-
   "successLeaveSubmitted": "Permohonan cuti berjaya dihantar",
   "successProfileUpdated": "Profil berjaya dikemas kini",
   "successPinChanged": "PIN berjaya ditukar",
   "successDocumentUploaded": "Dokumen berjaya dimuat naik",
   "successApproved": "Permohonan diluluskan",
   "successRejected": "Permohonan ditolak",
-
   "settingsTitle": "Tetapan",
   "settingsLanguage": "Bahasa",
   "settingsAccessibility": "Kebolehcapaian",
@@ -193,7 +174,6 @@
   "settingsTerms": "Terma & Syarat",
   "settingsAbout": "Mengenai",
   "settingsVersion": "Versi {version}",
-
   "accessibilityPinDot": "Digit PIN {position} daripada 6",
   "accessibilityPinDotFilled": "Digit PIN {position} daripada 6, dimasukkan",
   "accessibilityPinDotEmpty": "Digit PIN {position} daripada 6, kosong",
@@ -206,14 +186,11 @@
   "accessibilityCancelledIcon": "Ikon blok kelabu",
   "accessibilityPayslipCard": "Slip gaji untuk {period}, Gaji bersih {amount}. Ketik untuk melihat butiran. PIN diperlukan.",
   "accessibilityLeaveCard": "Permohonan cuti dari {startDate} hingga {endDate}, {days} hari. Status: {status}.",
-
   "loadingPleaseWait": "Sila tunggu...",
   "loadingSubmitting": "Menghantar...",
   "loadingProcessing": "Memproses...",
-
   "emptyNoData": "Tiada data tersedia",
   "emptyNoResults": "Tiada hasil ditemui",
-
   "languageEnglish": "English",
   "languageMalay": "Bahasa Malaysia",
   "languageJawi": "جاوي (Jawi)",
@@ -233,19 +210,16 @@
   "languageMadurese": "Basa Madhura",
   "languageBalinese": "Basa Bali",
   "languageMinangkabau": "Baso Minang",
-
   "onboardingWelcome": "Selamat Datang",
   "onboardingPayslip": "Lihat slip gaji anda bila-bila masa",
   "onboardingLeave": "Mohon cuti dengan mudah",
   "onboardingNotifications": "Kekal dikemas kini dengan pemberitahuan",
   "onboardingGetStarted": "Mulakan",
-
   "confirmDialogTitle": "Sahkan Tindakan",
   "deleteConfirmTitle": "Padam?",
   "deleteConfirmMessage": "Tindakan ini tidak boleh dibatalkan.",
   "cancelLeaveConfirmTitle": "Batalkan Permohonan Cuti?",
   "cancelLeaveConfirmMessage": "Adakah anda pasti mahu membatalkan permohonan cuti ini?",
-
   "dateToday": "Hari Ini",
   "dateYesterday": "Semalam",
   "dateTomorrow": "Esok",
@@ -253,10 +227,8 @@
   "dateMinutesAgo": "{count, plural, =1{1 minit lalu} other{{count} minit lalu}}",
   "dateHoursAgo": "{count, plural, =1{1 jam lalu} other{{count} jam lalu}}",
   "dateDaysAgo": "{count, plural, =1{1 hari lalu} other{{count} hari lalu}}",
-
   "currencyFormat": "RM {amount}",
   "percentFormat": "{value}%",
-
   "statutoryContributions": "Caruman Berkanun",
   "statutoryEpf": "EPF",
   "statutoryEpfDescription": "Kumpulan Wang Simpanan Pekerja (KWSP)",
@@ -292,11 +264,9 @@
   "statutoryTapDescription": "Tabung Amanah Pekerja",
   "statutoryLsso": "LSSO",
   "statutoryLssoDescription": "Organisasi Keselamatan Sosial Laos",
-
   "contributionEmployee": "Pekerja",
   "contributionEmployer": "Majikan",
   "contributionTotal": "Jumlah",
-
   "currencyMyr": "RM",
   "currencySgd": "S$",
   "currencyIdr": "Rp",
@@ -307,7 +277,6 @@
   "currencyMmk": "K",
   "currencyBnd": "B$",
   "currencyLak": "₭",
-
   "halfDayAm": "Pagi",
   "halfDayPm": "Petang",
   "leaveHalfDay": "Separuh Hari",
