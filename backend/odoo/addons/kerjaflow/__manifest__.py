@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'KerjaFlow',
-    'version': '1.0.0',
-    'category': 'Human Resources',
-    'summary': 'Enterprise Workforce Management Platform for Malaysian Industries',
-    'description': """
+    "name": "KerjaFlow",
+    "version": "1.0.0",
+    "category": "Human Resources",
+    "summary": "Enterprise Workforce Management Platform for Malaysian Industries",
+    "description": """
 KerjaFlow - Enterprise Workforce Management Platform
 =====================================================
 
@@ -47,31 +47,30 @@ Technical Specifications
 - 5 RBAC roles (ADMIN, HR_MANAGER, HR_EXEC, SUPERVISOR, EMPLOYEE)
 - Dual-layer authentication (JWT + PIN)
     """,
-    'author': 'KerjaFlow',
-    'website': 'https://kerjaflow.my',
-    'license': 'LGPL-3',
-    'depends': [
-        'base',
-        'mail',
+    "author": "KerjaFlow",
+    "website": "https://kerjaflow.my",
+    "license": "LGPL-3",
+    "depends": [
+        "base",
+        "mail",
     ],
-    'data': [
+    "data": [
         # Security - Groups must load FIRST, then CSV, then rules
-        'security/kerjaflow_groups.xml',
-        'security/ir.model.access.csv',
-        'security/kerjaflow_security.xml',
-
+        "security/kerjaflow_groups.xml",
+        "security/ir.model.access.csv",
+        "security/kerjaflow_security.xml",
         # Data
-        'data/kf_leave_type_data.xml',
-        'data/kf_public_holiday_data.xml',
+        "data/kf_leave_type_data.xml",
+        "data/kf_public_holiday_data.xml",
     ],
-    'demo': [
+    "demo": [
         # Demo data requires field validation - disabled for initial install
         # 'data/demo/kf_company_demo.xml',
         # 'data/demo/kf_employee_demo.xml',
     ],
-    'assets': {},
-    'installable': True,
-    'application': True,
-    'auto_install': False,
-    'sequence': 1,
+    "assets": {},
+    "installable": True,
+    "application": True,
+    "auto_install": False,
+    "sequence": 1,
 }

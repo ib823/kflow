@@ -4,9 +4,10 @@ Test Suite: All ASEAN Countries Integration Tests
 Tests for Indonesia, Thailand, Philippines, Vietnam, Cambodia, Myanmar, Brunei
 """
 
-import pytest
-from decimal import Decimal
 from datetime import date
+from decimal import Decimal
+
+import pytest
 
 from ..models.statutory import EmployeeContext, NationalityType, RiskCategory
 
@@ -50,10 +51,7 @@ class TestIndonesia:
         """
         result = calculator.calculate_all(id_employee_medium_risk)
 
-        bpjs_kes = next(
-            (c for c in result.contributions if c.scheme_code == "BPJS_KES"),
-            None
-        )
+        bpjs_kes = next((c for c in result.contributions if c.scheme_code == "BPJS_KES"), None)
         if bpjs_kes:
             # IDR 8,000,000
             # Employee: 8M * 0.01 = IDR 80,000
@@ -75,7 +73,7 @@ class TestThailand:
             nationality=NationalityType.CITIZEN,
             age=30,
             gross_salary=Decimal("12000.00"),
-            calculation_date=date(2025, 6, 1)
+            calculation_date=date(2025, 6, 1),
         )
 
         result = calculator.calculate_all(employee)
@@ -141,10 +139,7 @@ class TestPhilippines:
         Test Pag-IBIG for salary > PHP 1,500 (2% each)
         """
         result = calculator.calculate_all(ph_employee)
-        pagibig = next(
-            (c for c in result.contributions if c.scheme_code == "PAGIBIG"),
-            None
-        )
+        pagibig = next((c for c in result.contributions if c.scheme_code == "PAGIBIG"), None)
 
         if pagibig:
             # PHP 25,000 but capped at PHP 5,000
@@ -196,10 +191,7 @@ class TestVietnam:
         Test Trade Union fee reduced to 0.5% (July 2025)
         """
         result = calculator.calculate_all(vn_employee_local)
-        tu = next(
-            (c for c in result.contributions if c.scheme_code == "TRADE_UNION"),
-            None
-        )
+        tu = next((c for c in result.contributions if c.scheme_code == "TRADE_UNION"), None)
 
         if tu:
             # VND 15,000,000
@@ -217,10 +209,7 @@ class TestCambodia:
         Test Cambodia NSSF Pension Phase 1 (2022-2027: 4% total)
         """
         result = calculator.calculate_all(kh_employee_phase1)
-        pension = next(
-            (c for c in result.contributions if c.scheme_code == "NSSF_PENSION"),
-            None
-        )
+        pension = next((c for c in result.contributions if c.scheme_code == "NSSF_PENSION"), None)
 
         if pension:
             # KHR 800,000 (under ceiling KHR 1,200,000)
@@ -235,10 +224,7 @@ class TestCambodia:
         Test Cambodia NSSF Pension Phase 2 (2027-2032: 6% total)
         """
         result = calculator.calculate_all(kh_employee_phase2)
-        pension = next(
-            (c for c in result.contributions if c.scheme_code == "NSSF_PENSION"),
-            None
-        )
+        pension = next((c for c in result.contributions if c.scheme_code == "NSSF_PENSION"), None)
 
         if pension:
             # KHR 900,000
@@ -254,10 +240,7 @@ class TestCambodia:
         Test Cambodia NSSF Health (employer only: 2.6%)
         """
         result = calculator.calculate_all(kh_employee_phase1)
-        health = next(
-            (c for c in result.contributions if c.scheme_code == "NSSF_HEALTH"),
-            None
-        )
+        health = next((c for c in result.contributions if c.scheme_code == "NSSF_HEALTH"), None)
 
         if health:
             # KHR 800,000
@@ -279,7 +262,7 @@ class TestMyanmar:
             nationality=NationalityType.CITIZEN,
             age=30,
             gross_salary=Decimal("250000.00"),  # MMK 250K
-            calculation_date=date(2025, 6, 1)
+            calculation_date=date(2025, 6, 1),
         )
 
         result = calculator.calculate_all(employee)
@@ -321,7 +304,7 @@ class TestBrunei:
             nationality=NationalityType.CITIZEN,
             age=30,
             gross_salary=Decimal("5000.00"),  # High salary
-            calculation_date=date(2025, 6, 1)
+            calculation_date=date(2025, 6, 1),
         )
 
         result = calculator.calculate_all(employee)

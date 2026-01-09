@@ -7,128 +7,130 @@ Table: kf_user
 Handles JWT + PIN authentication
 """
 
-from odoo import models, fields
-from odoo.exceptions import ValidationError
-import bcrypt
 import secrets
 from datetime import datetime, timedelta
 
+import bcrypt
+from odoo.exceptions import ValidationError
+
+from odoo import fields, models
+
 
 class KfUser(models.Model):
-    _name = 'kf.user'
-    _description = 'KerjaFlow User'
-    _order = 'username'
+    _name = "kf.user"
+    _description = "KerjaFlow User"
+    _order = "username"
 
     # Authentication
     username = fields.Char(
-        string='Username',
+        string="Username",
         required=True,
         index=True,
-        help='Unique login username',
+        help="Unique login username",
     )
     password_hash = fields.Char(
-        string='Password Hash',
-        help='Bcrypt hashed password',
+        string="Password Hash",
+        help="Bcrypt hashed password",
     )
     pin_hash = fields.Char(
-        string='PIN Hash',
-        help='Bcrypt hashed 6-digit PIN',
+        string="PIN Hash",
+        help="Bcrypt hashed 6-digit PIN",
     )
     has_pin = fields.Boolean(
-        string='Has PIN Setup',
+        string="Has PIN Setup",
         default=False,
-        help='Whether user has set up PIN',
+        help="Whether user has set up PIN",
     )
 
     # Token Management
     refresh_token = fields.Char(
-        string='Refresh Token',
-        help='JWT refresh token',
+        string="Refresh Token",
+        help="JWT refresh token",
     )
     refresh_token_expiry = fields.Datetime(
-        string='Refresh Token Expiry',
+        string="Refresh Token Expiry",
     )
     fcm_token = fields.Char(
-        string='FCM Token',
-        help='Firebase Cloud Messaging token',
+        string="FCM Token",
+        help="Firebase Cloud Messaging token",
     )
     hms_token = fields.Char(
-        string='HMS Token',
-        help='Huawei Mobile Services token',
+        string="HMS Token",
+        help="Huawei Mobile Services token",
     )
 
     # Security
     failed_login_count = fields.Integer(
-        string='Failed Login Count',
+        string="Failed Login Count",
         default=0,
     )
     locked_until = fields.Datetime(
-        string='Locked Until',
-        help='Account lockout time',
+        string="Locked Until",
+        help="Account lockout time",
     )
     failed_pin_count = fields.Integer(
-        string='Failed PIN Count',
+        string="Failed PIN Count",
         default=0,
     )
     last_login = fields.Datetime(
-        string='Last Login',
+        string="Last Login",
     )
     last_activity = fields.Datetime(
-        string='Last Activity',
+        string="Last Activity",
     )
     password_changed_at = fields.Datetime(
-        string='Password Changed At',
+        string="Password Changed At",
     )
 
     # Device Information
     device_id = fields.Char(
-        string='Device ID',
-        help='Last logged in device ID',
+        string="Device ID",
+        help="Last logged in device ID",
     )
     device_info = fields.Char(
-        string='Device Info',
-        help='Device model/OS info',
+        string="Device Info",
+        help="Device model/OS info",
     )
 
     # Role & Access
     role = fields.Selection(
         selection=[
-            ('ADMIN', 'Administrator'),
-            ('HR_MANAGER', 'HR Manager'),
-            ('HR_EXEC', 'HR Executive'),
-            ('SUPERVISOR', 'Supervisor'),
-            ('EMPLOYEE', 'Employee'),
+            ("ADMIN", "Administrator"),
+            ("HR_MANAGER", "HR Manager"),
+            ("HR_EXEC", "HR Executive"),
+            ("SUPERVISOR", "Supervisor"),
+            ("EMPLOYEE", "Employee"),
         ],
-        string='Role',
+        string="Role",
         required=True,
-        default='EMPLOYEE',
+        default="EMPLOYEE",
     )
 
     # Status
     is_active = fields.Boolean(
-        string='Active',
+        string="Active",
         default=True,
     )
 
     # Relationships
     employee_id = fields.Many2one(
-        comodel_name='kf.employee',
-        string='Employee',
+        comodel_name="kf.employee",
+        string="Employee",
         required=True,
-        ondelete='cascade',
+        ondelete="cascade",
         index=True,
     )
     company_id = fields.Many2one(
-        related='employee_id.company_id',
-        string='Company',
+        related="employee_id.company_id",
+        string="Company",
         store=True,
         index=True,
     )
 
     # SQL Constraints
     _sql_constraints = [
-        ('username_unique', 'UNIQUE(username)', 'Username must be unique!'),
-        ('employee_unique', 'UNIQUE(employee_id)', 'Employee can only have one user account!'),
+        ("username_unique", "UNIQUE(username)", "Username must be unique!"),
+        ("employee_unique", "UNIQUE(employee_id)", "Employee can only have one user account!"),
     ]
 
     # Password Methods
@@ -136,7 +138,7 @@ class KfUser(models.Model):
         """Hash and store password."""
         self.ensure_one()
         if len(password) < 8:
-            raise ValidationError('Password must be at least 8 characters.')
+            raise ValidationError("Password must be at least 8 characters.")
 
         # Check complexity
         has_upper = any(c.isupper() for c in password)
@@ -144,15 +146,10 @@ class KfUser(models.Model):
         has_digit = any(c.isdigit() for c in password)
 
         if not (has_upper and has_lower and has_digit):
-            raise ValidationError(
-                'Password must contain uppercase, lowercase and number.'
-            )
+            raise ValidationError("Password must contain uppercase, lowercase and number.")
 
         salt = bcrypt.gensalt(rounds=12)
-        self.password_hash = bcrypt.hashpw(
-            password.encode('utf-8'),
-            salt
-        ).decode('utf-8')
+        self.password_hash = bcrypt.hashpw(password.encode("utf-8"), salt).decode("utf-8")
         self.password_changed_at = datetime.now()
 
     def verify_password(self, password):
@@ -160,27 +157,21 @@ class KfUser(models.Model):
         self.ensure_one()
         if not self.password_hash:
             return False
-        return bcrypt.checkpw(
-            password.encode('utf-8'),
-            self.password_hash.encode('utf-8')
-        )
+        return bcrypt.checkpw(password.encode("utf-8"), self.password_hash.encode("utf-8"))
 
     # PIN Methods
     def set_pin(self, pin):
         """Hash and store PIN."""
         self.ensure_one()
         if not pin or len(pin) != 6 or not pin.isdigit():
-            raise ValidationError('PIN must be exactly 6 digits.')
+            raise ValidationError("PIN must be exactly 6 digits.")
 
         # Disallow weak PINs
         if self._is_weak_pin(pin):
-            raise ValidationError('PIN is too weak. Avoid sequential or repeated digits.')
+            raise ValidationError("PIN is too weak. Avoid sequential or repeated digits.")
 
         salt = bcrypt.gensalt(rounds=10)
-        self.pin_hash = bcrypt.hashpw(
-            pin.encode('utf-8'),
-            salt
-        ).decode('utf-8')
+        self.pin_hash = bcrypt.hashpw(pin.encode("utf-8"), salt).decode("utf-8")
         self.has_pin = True
         self.failed_pin_count = 0
 
@@ -189,16 +180,23 @@ class KfUser(models.Model):
         self.ensure_one()
         if not self.pin_hash:
             return False
-        return bcrypt.checkpw(
-            pin.encode('utf-8'),
-            self.pin_hash.encode('utf-8')
-        )
+        return bcrypt.checkpw(pin.encode("utf-8"), self.pin_hash.encode("utf-8"))
 
     def _is_weak_pin(self, pin):
         """Check if PIN is too weak."""
         # Sequential
-        sequential = ['012345', '123456', '234567', '345678', '456789',
-                      '567890', '987654', '876543', '765432', '654321']
+        sequential = [
+            "012345",
+            "123456",
+            "234567",
+            "345678",
+            "456789",
+            "567890",
+            "987654",
+            "876543",
+            "765432",
+            "654321",
+        ]
         if pin in sequential:
             return True
 

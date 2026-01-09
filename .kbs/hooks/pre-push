@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# KBS Pre-Push Hook
+# Runs full quality gates before every push
+#
+
+echo ""
+echo "╔══════════════════════════════════════════════════════════════╗"
+echo "║  KBS PRE-PUSH: Running Full Quality Gates                    ║"
+echo "╚══════════════════════════════════════════════════════════════╝"
+
+cd "$(git rev-parse --show-toplevel)"
+
+# Run full pipeline
+if ./.kbs/kbs.sh full; then
+    echo ""
+    echo "✅ Pre-push checks PASSED"
+    exit 0
+else
+    echo ""
+    echo "❌ Pre-push checks FAILED"
+    echo "Fix the issues above before pushing."
+    exit 1
+fi

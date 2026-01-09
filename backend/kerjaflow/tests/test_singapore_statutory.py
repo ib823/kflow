@@ -4,9 +4,10 @@ Test Suite: Singapore Statutory Contributions
 Tests for CPF and SDL
 """
 
-import pytest
-from decimal import Decimal
 from datetime import date
+from decimal import Decimal
+
+import pytest
 
 from ..models.statutory import EmployeeContext, NationalityType
 
@@ -59,7 +60,7 @@ class TestSingaporeCPF:
             age=30,
             gross_salary=Decimal("10000.00"),  # Above ceiling
             ordinary_wages=Decimal("10000.00"),
-            calculation_date=date(2025, 6, 1)
+            calculation_date=date(2025, 6, 1),
         )
 
         result = calculator.calculate_all(employee)
@@ -84,7 +85,7 @@ class TestSingaporeCPF:
             age=30,
             gross_salary=Decimal("10000.00"),
             ordinary_wages=Decimal("10000.00"),
-            calculation_date=date(2026, 6, 1)
+            calculation_date=date(2026, 6, 1),
         )
 
         result = calculator.calculate_all(employee)
@@ -113,7 +114,7 @@ class TestSingaporeSDL:
             nationality=NationalityType.CITIZEN,
             age=30,
             gross_salary=Decimal("4000.00"),
-            calculation_date=date(2025, 6, 1)
+            calculation_date=date(2025, 6, 1),
         )
 
         result = calculator.calculate_all(employee)

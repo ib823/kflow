@@ -6,12 +6,12 @@ Handles:
 3. Brunei PDPO grace period tracking
 """
 
+import logging
+from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 from decimal import Decimal
 from enum import Enum
-from typing import Optional, List, Dict, Any
-from dataclasses import dataclass
-import logging
+from typing import Any, Dict, List, Optional
 
 # ============================================================================
 # PART 1: DATABASE MODELS (Odoo-style)
@@ -199,9 +199,11 @@ INSERT INTO kf_regulatory_monitor (
 # PART 2: STATUTORY RATE SERVICE
 # ============================================================================
 
+
 @dataclass
 class StatutoryRate:
     """Represents a statutory contribution rate"""
+
     country_code: str
     contribution_type: str
     employee_rate: Decimal
@@ -219,29 +221,26 @@ class StatutoryRateService:
     Service for retrieving statutory rates with automatic date-based selection.
     Handles scheduled future rates (like Cambodia NSSF Oct 2027 increase).
     """
-    
+
     def __init__(self, db_connection):
         self.db = db_connection
-        self.logger = logging.getLogger('kerjaflow.statutory')
-    
+        self.logger = logging.getLogger("kerjaflow.statutory")
+
     def get_rate(
-        self, 
-        country_code: str, 
-        contribution_type: str, 
-        effective_date: date = None
+        self, country_code: str, contribution_type: str, effective_date: date = None
     ) -> Optional[StatutoryRate]:
         """
         Get the applicable statutory rate for a given date.
         Automatically selects the correct rate based on effective_from/effective_to.
-        
+
         Args:
             country_code: ISO 2-letter country code (e.g., 'KH' for Cambodia)
             contribution_type: Type of contribution (e.g., 'NSSF_PENSION')
             effective_date: Date for which to get rate (defaults to today)
-        
+
         Returns:
             StatutoryRate object or None if not found
-        
+
         Example:
             # Get Cambodia pension rate for October 2027 payroll
             rate = service.get_rate('KH', 'NSSF_PENSION', date(2027, 10, 15))
@@ -249,7 +248,7 @@ class StatutoryRateService:
         """
         if effective_date is None:
             effective_date = date.today()
-        
+
         query = """
             SELECT 
                 country_code, contribution_type,
@@ -263,11 +262,11 @@ class StatutoryRateService:
             ORDER BY effective_from DESC
             LIMIT 1
         """
-        
-        result = self.db.execute(query, (
-            country_code, contribution_type, effective_date, effective_date
-        )).fetchone()
-        
+
+        result = self.db.execute(
+            query, (country_code, contribution_type, effective_date, effective_date)
+        ).fetchone()
+
         if result:
             return StatutoryRate(
                 country_code=result[0],
@@ -279,30 +278,27 @@ class StatutoryRateService:
                 effective_from=result[6],
                 effective_to=result[7],
                 is_scheduled=result[8],
-                notes=result[9]
+                notes=result[9],
             )
         return None
-    
+
     def get_all_rates_for_country(
-        self, 
-        country_code: str, 
-        effective_date: date = None,
-        include_future: bool = False
+        self, country_code: str, effective_date: date = None, include_future: bool = False
     ) -> List[StatutoryRate]:
         """
         Get all statutory rates for a country.
-        
+
         Args:
             country_code: ISO 2-letter country code
             effective_date: Date for rate selection (defaults to today)
             include_future: If True, also return scheduled future rates
-        
+
         Returns:
             List of StatutoryRate objects
         """
         if effective_date is None:
             effective_date = date.today()
-        
+
         if include_future:
             query = """
                 SELECT DISTINCT ON (contribution_type)
@@ -326,32 +322,45 @@ class StatutoryRateService:
                   AND (effective_to IS NULL OR effective_to >= %s)
                 ORDER BY contribution_type
             """
-        
-        results = self.db.execute(query, (
-            country_code, effective_date, effective_date
-        ) if not include_future else (country_code, effective_date)).fetchall()
-        
-        return [StatutoryRate(
-            country_code=r[0], contribution_type=r[1],
-            employee_rate=Decimal(str(r[2])), employer_rate=Decimal(str(r[3])),
-            salary_cap=Decimal(str(r[4])) if r[4] else None,
-            currency_code=r[5], effective_from=r[6], effective_to=r[7],
-            is_scheduled=r[8], notes=r[9]
-        ) for r in results]
-    
+
+        results = self.db.execute(
+            query,
+            (
+                (country_code, effective_date, effective_date)
+                if not include_future
+                else (country_code, effective_date)
+            ),
+        ).fetchall()
+
+        return [
+            StatutoryRate(
+                country_code=r[0],
+                contribution_type=r[1],
+                employee_rate=Decimal(str(r[2])),
+                employer_rate=Decimal(str(r[3])),
+                salary_cap=Decimal(str(r[4])) if r[4] else None,
+                currency_code=r[5],
+                effective_from=r[6],
+                effective_to=r[7],
+                is_scheduled=r[8],
+                notes=r[9],
+            )
+            for r in results
+        ]
+
     def get_upcoming_rate_changes(self, days_ahead: int = 90) -> List[Dict[str, Any]]:
         """
         Get all scheduled rate changes in the next N days.
         Used for admin dashboard alerts.
-        
+
         Args:
             days_ahead: Number of days to look ahead
-        
+
         Returns:
             List of upcoming rate changes with details
         """
         future_date = date.today() + timedelta(days=days_ahead)
-        
+
         query = """
             SELECT 
                 r.country_code, c.country_name, r.contribution_type,
@@ -377,37 +386,42 @@ class StatutoryRateService:
               AND r.effective_from <= %s
             ORDER BY r.effective_from
         """
-        
+
         results = self.db.execute(query, (future_date,)).fetchall()
-        
-        return [{
-            'country_code': r[0],
-            'country_name': r[1],
-            'contribution_type': r[2],
-            'new_employee_rate': float(r[3]),
-            'new_employer_rate': float(r[4]),
-            'effective_from': r[5],
-            'notes': r[6],
-            'current_employee_rate': float(r[7]) if r[7] else None,
-            'current_employer_rate': float(r[8]) if r[8] else None,
-            'days_until_effective': (r[5] - date.today()).days
-        } for r in results]
+
+        return [
+            {
+                "country_code": r[0],
+                "country_name": r[1],
+                "contribution_type": r[2],
+                "new_employee_rate": float(r[3]),
+                "new_employer_rate": float(r[4]),
+                "effective_from": r[5],
+                "notes": r[6],
+                "current_employee_rate": float(r[7]) if r[7] else None,
+                "current_employer_rate": float(r[8]) if r[8] else None,
+                "days_until_effective": (r[5] - date.today()).days,
+            }
+            for r in results
+        ]
 
 
 # ============================================================================
 # PART 3: REGULATORY MONITORING SERVICE
 # ============================================================================
 
+
 class RegulatoryStatus(Enum):
-    MONITORING = 'monitoring'      # Draft announced, watching for enactment
-    ENACTED = 'enacted'            # Law passed, not yet effective
-    EFFECTIVE = 'effective'        # Law is now in force
-    SUPERSEDED = 'superseded'      # Replaced by newer regulation
+    MONITORING = "monitoring"  # Draft announced, watching for enactment
+    ENACTED = "enacted"  # Law passed, not yet effective
+    EFFECTIVE = "effective"  # Law is now in force
+    SUPERSEDED = "superseded"  # Replaced by newer regulation
 
 
 @dataclass
 class RegulatoryUpdate:
     """Represents a regulatory change being monitored"""
+
     id: int
     country_code: str
     regulation_name: str
@@ -427,30 +441,28 @@ class RegulatoryMonitorService:
     Service for monitoring regulatory changes.
     Handles Cambodia LPDP tracking and similar pending legislation.
     """
-    
+
     def __init__(self, db_connection):
         self.db = db_connection
-        self.logger = logging.getLogger('kerjaflow.regulatory')
-    
+        self.logger = logging.getLogger("kerjaflow.regulatory")
+
     def get_pending_regulations(
-        self, 
-        country_code: str = None,
-        include_enacted: bool = True
+        self, country_code: str = None, include_enacted: bool = True
     ) -> List[RegulatoryUpdate]:
         """
         Get all regulations being monitored or recently enacted.
-        
+
         Args:
             country_code: Filter by country (None for all)
             include_enacted: Include enacted regulations in grace period
-        
+
         Returns:
             List of RegulatoryUpdate objects
         """
-        statuses = ['monitoring']
+        statuses = ["monitoring"]
         if include_enacted:
-            statuses.append('enacted')
-        
+            statuses.append("enacted")
+
         query = """
             SELECT 
                 id, country_code, regulation_name, regulation_type,
@@ -460,43 +472,51 @@ class RegulatoryMonitorService:
             WHERE status = ANY(%s)
         """
         params = [statuses]
-        
+
         if country_code:
             query += " AND country_code = %s"
             params.append(country_code)
-        
+
         query += " ORDER BY impact_level DESC, action_deadline ASC NULLS LAST"
-        
+
         results = self.db.execute(query, params).fetchall()
-        
+
         updates = []
         for r in results:
             days_until = None
             if r[9]:  # action_deadline
                 days_until = (r[9] - date.today()).days
-            
-            updates.append(RegulatoryUpdate(
-                id=r[0], country_code=r[1], regulation_name=r[2],
-                regulation_type=r[3], status=RegulatoryStatus(r[4]),
-                impact_level=r[5], requires_data_migration=r[6],
-                requires_infra_change=r[7], action_required=r[8],
-                action_deadline=r[9], next_check_date=r[10],
-                days_until_action=days_until
-            ))
-        
+
+            updates.append(
+                RegulatoryUpdate(
+                    id=r[0],
+                    country_code=r[1],
+                    regulation_name=r[2],
+                    regulation_type=r[3],
+                    status=RegulatoryStatus(r[4]),
+                    impact_level=r[5],
+                    requires_data_migration=r[6],
+                    requires_infra_change=r[7],
+                    action_required=r[8],
+                    action_deadline=r[9],
+                    next_check_date=r[10],
+                    days_until_action=days_until,
+                )
+            )
+
         return updates
-    
+
     def update_regulation_status(
         self,
         regulation_id: int,
         new_status: RegulatoryStatus,
         effective_date: date = None,
         grace_period_end: date = None,
-        notes: str = None
+        notes: str = None,
     ) -> bool:
         """
         Update regulation status when law is enacted.
-        
+
         Example: When Cambodia LPDP is enacted:
             service.update_regulation_status(
                 regulation_id=123,
@@ -517,25 +537,26 @@ class RegulatoryMonitorService:
             WHERE id = %s
             RETURNING id
         """
-        
-        result = self.db.execute(query, (
-            new_status.value,
-            date.today() if new_status == RegulatoryStatus.ENACTED else None,
-            effective_date,
-            grace_period_end,
-            notes,
-            regulation_id
-        )).fetchone()
-        
+
+        result = self.db.execute(
+            query,
+            (
+                new_status.value,
+                date.today() if new_status == RegulatoryStatus.ENACTED else None,
+                effective_date,
+                grace_period_end,
+                notes,
+                regulation_id,
+            ),
+        ).fetchone()
+
         if result:
-            self.logger.info(
-                f"Regulatory status updated: {regulation_id} -> {new_status.value}"
-            )
+            self.logger.info(f"Regulatory status updated: {regulation_id} -> {new_status.value}")
             # Trigger alert generation
             self._create_status_change_alert(regulation_id, new_status)
             return True
         return False
-    
+
     def check_due_for_review(self) -> List[RegulatoryUpdate]:
         """
         Get regulations that are due for review.
@@ -551,16 +572,25 @@ class RegulatoryMonitorService:
               AND next_check_date <= CURRENT_DATE
             ORDER BY impact_level DESC
         """
-        
+
         results = self.db.execute(query).fetchall()
-        return [RegulatoryUpdate(
-            id=r[0], country_code=r[1], regulation_name=r[2],
-            regulation_type=r[3], status=RegulatoryStatus(r[4]),
-            impact_level=r[5], requires_data_migration=r[6],
-            requires_infra_change=r[7], action_required=r[8],
-            action_deadline=r[9], next_check_date=r[10]
-        ) for r in results]
-    
+        return [
+            RegulatoryUpdate(
+                id=r[0],
+                country_code=r[1],
+                regulation_name=r[2],
+                regulation_type=r[3],
+                status=RegulatoryStatus(r[4]),
+                impact_level=r[5],
+                requires_data_migration=r[6],
+                requires_infra_change=r[7],
+                action_required=r[8],
+                action_deadline=r[9],
+                next_check_date=r[10],
+            )
+            for r in results
+        ]
+
     def mark_checked(self, regulation_id: int, notes: str = None) -> bool:
         """
         Mark regulation as checked and schedule next review.
@@ -578,12 +608,8 @@ class RegulatoryMonitorService:
         """
         result = self.db.execute(query, (notes, notes, regulation_id)).fetchone()
         return result is not None
-    
-    def _create_status_change_alert(
-        self, 
-        regulation_id: int, 
-        new_status: RegulatoryStatus
-    ):
+
+    def _create_status_change_alert(self, regulation_id: int, new_status: RegulatoryStatus):
         """Create alert when regulation status changes"""
         query = """
             INSERT INTO kf_compliance_alert (
@@ -608,20 +634,18 @@ class RegulatoryMonitorService:
 # PART 4: COMPLIANCE ALERT SERVICE
 # ============================================================================
 
+
 class ComplianceAlertService:
     """
     Service for managing compliance alerts displayed on admin dashboard.
     """
-    
+
     def __init__(self, db_connection):
         self.db = db_connection
-        self.logger = logging.getLogger('kerjaflow.alerts')
-    
+        self.logger = logging.getLogger("kerjaflow.alerts")
+
     def get_active_alerts(
-        self, 
-        country_code: str = None,
-        severity: str = None,
-        unread_only: bool = False
+        self, country_code: str = None, severity: str = None, unread_only: bool = False
     ) -> List[Dict[str, Any]]:
         """Get active compliance alerts for dashboard"""
         query = """
@@ -633,7 +657,7 @@ class ComplianceAlertService:
             WHERE (expiry_date IS NULL OR expiry_date >= CURRENT_DATE)
         """
         params = []
-        
+
         if country_code:
             query += " AND country_code = %s"
             params.append(country_code)
@@ -642,19 +666,28 @@ class ComplianceAlertService:
             params.append(severity)
         if unread_only:
             query += " AND is_read = FALSE"
-        
+
         query += " ORDER BY severity DESC, trigger_date DESC"
-        
+
         results = self.db.execute(query, params).fetchall()
-        
-        return [{
-            'id': r[0], 'alert_type': r[1], 'severity': r[2],
-            'country_code': r[3], 'title': r[4], 'message': r[5],
-            'regulatory_monitor_id': r[6], 'is_read': r[7],
-            'is_acknowledged': r[8], 'trigger_date': r[9],
-            'created_at': r[10]
-        } for r in results]
-    
+
+        return [
+            {
+                "id": r[0],
+                "alert_type": r[1],
+                "severity": r[2],
+                "country_code": r[3],
+                "title": r[4],
+                "message": r[5],
+                "regulatory_monitor_id": r[6],
+                "is_read": r[7],
+                "is_acknowledged": r[8],
+                "trigger_date": r[9],
+                "created_at": r[10],
+            }
+            for r in results
+        ]
+
     def generate_rate_change_alerts(self, days_ahead: int = 90):
         """
         Generate alerts for upcoming statutory rate changes.
@@ -662,40 +695,46 @@ class ComplianceAlertService:
         """
         rate_service = StatutoryRateService(self.db)
         upcoming = rate_service.get_upcoming_rate_changes(days_ahead)
-        
+
         for change in upcoming:
             # Check if alert already exists
-            existing = self.db.execute("""
+            existing = self.db.execute(
+                """
                 SELECT id FROM kf_compliance_alert
                 WHERE alert_type = 'rate_change'
                   AND country_code = %s
                   AND title LIKE %s
                   AND trigger_date = %s
-            """, (
-                change['country_code'],
-                f"%{change['contribution_type']}%",
-                change['effective_from']
-            )).fetchone()
-            
+            """,
+                (
+                    change["country_code"],
+                    f"%{change['contribution_type']}%",
+                    change["effective_from"],
+                ),
+            ).fetchone()
+
             if not existing:
-                severity = 'warning' if change['days_until_effective'] > 30 else 'critical'
-                
-                self.db.execute("""
+                severity = "warning" if change["days_until_effective"] > 30 else "critical"
+
+                self.db.execute(
+                    """
                     INSERT INTO kf_compliance_alert (
                         alert_type, severity, country_code, title, message, trigger_date
                     ) VALUES (%s, %s, %s, %s, %s, %s)
-                """, (
-                    'rate_change',
-                    severity,
-                    change['country_code'],
-                    f"{change['country_name']} {change['contribution_type']} Rate Change",
-                    f"Rate change effective {change['effective_from']}: "
-                    f"Employee {change['current_employee_rate']}% → {change['new_employee_rate']}%, "
-                    f"Employer {change['current_employer_rate']}% → {change['new_employer_rate']}%. "
-                    f"{change['notes'] or ''}",
-                    change['effective_from']
-                ))
-                
+                """,
+                    (
+                        "rate_change",
+                        severity,
+                        change["country_code"],
+                        f"{change['country_name']} {change['contribution_type']} Rate Change",
+                        f"Rate change effective {change['effective_from']}: "
+                        f"Employee {change['current_employee_rate']}% → {change['new_employee_rate']}%, "
+                        f"Employer {change['current_employer_rate']}% → {change['new_employer_rate']}%. "
+                        f"{change['notes'] or ''}",
+                        change["effective_from"],
+                    ),
+                )
+
                 self.logger.info(
                     f"Created rate change alert for {change['country_code']} "
                     f"{change['contribution_type']}"
@@ -706,34 +745,32 @@ class ComplianceAlertService:
 # PART 5: PAYROLL CALCULATION WITH AUTOMATIC RATE SELECTION
 # ============================================================================
 
+
 class PayrollCalculator:
     """
     Payroll calculator that automatically uses correct statutory rates
     based on payslip date.
     """
-    
+
     def __init__(self, db_connection):
         self.rate_service = StatutoryRateService(db_connection)
-        self.logger = logging.getLogger('kerjaflow.payroll')
-    
+        self.logger = logging.getLogger("kerjaflow.payroll")
+
     def calculate_statutory_deductions(
-        self,
-        country_code: str,
-        gross_salary: Decimal,
-        payslip_date: date
+        self, country_code: str, gross_salary: Decimal, payslip_date: date
     ) -> Dict[str, Any]:
         """
         Calculate all statutory deductions for an employee.
         Automatically selects correct rates based on payslip date.
-        
+
         Args:
             country_code: Employee's country code
             gross_salary: Gross monthly salary
             payslip_date: Date of the payslip (determines which rates apply)
-        
+
         Returns:
             Dictionary with all deductions and contributions
-        
+
         Example:
             # Cambodia payslip for October 2027 (after rate increase)
             result = calculator.calculate_statutory_deductions(
@@ -744,55 +781,56 @@ class PayrollCalculator:
             # Uses 4% pension rate (not 2%) because payslip_date is after Oct 2027
         """
         rates = self.rate_service.get_all_rates_for_country(
-            country_code, 
-            effective_date=payslip_date
+            country_code, effective_date=payslip_date
         )
-        
+
         deductions = {
-            'country_code': country_code,
-            'payslip_date': payslip_date,
-            'gross_salary': float(gross_salary),
-            'employee_deductions': {},
-            'employer_contributions': {},
-            'total_employee_deduction': Decimal('0'),
-            'total_employer_contribution': Decimal('0'),
-            'rates_used': []
+            "country_code": country_code,
+            "payslip_date": payslip_date,
+            "gross_salary": float(gross_salary),
+            "employee_deductions": {},
+            "employer_contributions": {},
+            "total_employee_deduction": Decimal("0"),
+            "total_employer_contribution": Decimal("0"),
+            "rates_used": [],
         }
-        
+
         for rate in rates:
             # Apply salary cap if exists
             applicable_salary = gross_salary
             if rate.salary_cap and gross_salary > rate.salary_cap:
                 applicable_salary = rate.salary_cap
-            
+
             employee_amount = applicable_salary * (rate.employee_rate / 100)
             employer_amount = applicable_salary * (rate.employer_rate / 100)
-            
-            deductions['employee_deductions'][rate.contribution_type] = {
-                'rate': float(rate.employee_rate),
-                'amount': float(employee_amount),
-                'capped_at': float(rate.salary_cap) if rate.salary_cap else None
+
+            deductions["employee_deductions"][rate.contribution_type] = {
+                "rate": float(rate.employee_rate),
+                "amount": float(employee_amount),
+                "capped_at": float(rate.salary_cap) if rate.salary_cap else None,
             }
-            
-            deductions['employer_contributions'][rate.contribution_type] = {
-                'rate': float(rate.employer_rate),
-                'amount': float(employer_amount),
-                'capped_at': float(rate.salary_cap) if rate.salary_cap else None
+
+            deductions["employer_contributions"][rate.contribution_type] = {
+                "rate": float(rate.employer_rate),
+                "amount": float(employer_amount),
+                "capped_at": float(rate.salary_cap) if rate.salary_cap else None,
             }
-            
-            deductions['total_employee_deduction'] += employee_amount
-            deductions['total_employer_contribution'] += employer_amount
-            
-            deductions['rates_used'].append({
-                'type': rate.contribution_type,
-                'effective_from': rate.effective_from.isoformat(),
-                'is_scheduled': rate.is_scheduled
-            })
-        
-        deductions['total_employee_deduction'] = float(deductions['total_employee_deduction'])
-        deductions['total_employer_contribution'] = float(deductions['total_employer_contribution'])
-        deductions['net_salary'] = float(gross_salary) - deductions['total_employee_deduction']
-        
+
+            deductions["total_employee_deduction"] += employee_amount
+            deductions["total_employer_contribution"] += employer_amount
+
+            deductions["rates_used"].append(
+                {
+                    "type": rate.contribution_type,
+                    "effective_from": rate.effective_from.isoformat(),
+                    "is_scheduled": rate.is_scheduled,
+                }
+            )
+
+        deductions["total_employee_deduction"] = float(deductions["total_employee_deduction"])
+        deductions["total_employer_contribution"] = float(deductions["total_employer_contribution"])
+        deductions["net_salary"] = float(gross_salary) - deductions["total_employee_deduction"]
+
         return deductions
 
 
@@ -804,6 +842,7 @@ class PayrollCalculator:
 Add these to your cron scheduler (e.g., Odoo ir.cron or Celery beat)
 """
 
+
 def daily_compliance_check(db_connection):
     """
     Daily job to check for:
@@ -811,23 +850,21 @@ def daily_compliance_check(db_connection):
     2. Upcoming rate changes
     3. Approaching deadlines
     """
-    logger = logging.getLogger('kerjaflow.cron')
-    
+    logger = logging.getLogger("kerjaflow.cron")
+
     # Check regulations due for review
     reg_service = RegulatoryMonitorService(db_connection)
     due_for_review = reg_service.check_due_for_review()
-    
+
     for reg in due_for_review:
-        logger.warning(
-            f"COMPLIANCE CHECK DUE: {reg.country_code} - {reg.regulation_name}"
-        )
+        logger.warning(f"COMPLIANCE CHECK DUE: {reg.country_code} - {reg.regulation_name}")
         # Send notification to compliance team
         # notify_compliance_team(reg)
-    
+
     # Generate rate change alerts
     alert_service = ComplianceAlertService(db_connection)
     alert_service.generate_rate_change_alerts(days_ahead=90)
-    
+
     logger.info("Daily compliance check completed")
 
 
@@ -837,26 +874,29 @@ def weekly_regulatory_report(db_connection):
     """
     reg_service = RegulatoryMonitorService(db_connection)
     pending = reg_service.get_pending_regulations()
-    
+
     report = {
-        'generated_at': datetime.now().isoformat(),
-        'summary': {
-            'monitoring': len([r for r in pending if r.status == RegulatoryStatus.MONITORING]),
-            'enacted': len([r for r in pending if r.status == RegulatoryStatus.ENACTED]),
-            'critical': len([r for r in pending if r.impact_level == 'critical']),
-            'with_deadlines': len([r for r in pending if r.action_deadline])
+        "generated_at": datetime.now().isoformat(),
+        "summary": {
+            "monitoring": len([r for r in pending if r.status == RegulatoryStatus.MONITORING]),
+            "enacted": len([r for r in pending if r.status == RegulatoryStatus.ENACTED]),
+            "critical": len([r for r in pending if r.impact_level == "critical"]),
+            "with_deadlines": len([r for r in pending if r.action_deadline]),
         },
-        'items': [{
-            'country': r.country_code,
-            'name': r.regulation_name,
-            'status': r.status.value,
-            'impact': r.impact_level,
-            'days_until_action': r.days_until_action,
-            'requires_migration': r.requires_data_migration,
-            'requires_infra': r.requires_infra_change
-        } for r in pending]
+        "items": [
+            {
+                "country": r.country_code,
+                "name": r.regulation_name,
+                "status": r.status.value,
+                "impact": r.impact_level,
+                "days_until_action": r.days_until_action,
+                "requires_migration": r.requires_data_migration,
+                "requires_infra": r.requires_infra_change,
+            }
+            for r in pending
+        ],
     }
-    
+
     # Send report to management
     # send_weekly_report(report)
     return report
@@ -866,34 +906,41 @@ def weekly_regulatory_report(db_connection):
 # PART 7: DATA MIGRATION READINESS (Cambodia LPDP)
 # ============================================================================
 
+
 class DataMigrationService:
     """
     Service to handle data migration when new data residency laws are enacted.
     Pre-built for Cambodia LPDP scenario.
     """
-    
+
     def __init__(self, db_connection):
         self.db = db_connection
-        self.logger = logging.getLogger('kerjaflow.migration')
-    
+        self.logger = logging.getLogger("kerjaflow.migration")
+
     def estimate_migration_scope(self, country_code: str) -> Dict[str, Any]:
         """
         Estimate the scope of data migration if local storage becomes required.
         """
         tables_to_migrate = [
-            'kf_employee', 'kf_user', 'kf_foreign_worker_detail',
-            'kf_document', 'kf_payslip', 'kf_payslip_line',
-            'kf_leave_balance', 'kf_leave_request', 
-            'kf_notification', 'kf_audit_log'
+            "kf_employee",
+            "kf_user",
+            "kf_foreign_worker_detail",
+            "kf_document",
+            "kf_payslip",
+            "kf_payslip_line",
+            "kf_leave_balance",
+            "kf_leave_request",
+            "kf_notification",
+            "kf_audit_log",
         ]
-        
+
         scope = {
-            'country_code': country_code,
-            'tables': {},
-            'total_records': 0,
-            'estimated_size_mb': 0
+            "country_code": country_code,
+            "tables": {},
+            "total_records": 0,
+            "estimated_size_mb": 0,
         }
-        
+
         for table in tables_to_migrate:
             count_query = f"""
                 SELECT COUNT(*) FROM {table} 
@@ -904,68 +951,68 @@ class DataMigrationService:
             """
             try:
                 count = self.db.execute(count_query, (country_code, country_code)).fetchone()[0]
-                scope['tables'][table] = count
-                scope['total_records'] += count
+                scope["tables"][table] = count
+                scope["total_records"] += count
             except Exception as e:
                 self.logger.warning(f"Could not count {table}: {e}")
-                scope['tables'][table] = 'unknown'
-        
+                scope["tables"][table] = "unknown"
+
         # Rough estimate: 1KB per record average
-        scope['estimated_size_mb'] = scope['total_records'] / 1024
-        
+        scope["estimated_size_mb"] = scope["total_records"] / 1024
+
         return scope
-    
+
     def generate_migration_plan(self, country_code: str) -> Dict[str, Any]:
         """
         Generate a migration plan for moving data to new regional VPS.
         """
         scope = self.estimate_migration_scope(country_code)
-        
+
         return {
-            'country_code': country_code,
-            'scope': scope,
-            'steps': [
+            "country_code": country_code,
+            "scope": scope,
+            "steps": [
                 {
-                    'step': 1,
-                    'action': 'Provision new regional VPS',
-                    'details': f'Provision Cambodia VPS (recommend: DPDC or GDMS, ~$15-20/mo)',
-                    'estimated_time': '1-2 hours'
+                    "step": 1,
+                    "action": "Provision new regional VPS",
+                    "details": f"Provision Cambodia VPS (recommend: DPDC or GDMS, ~$15-20/mo)",
+                    "estimated_time": "1-2 hours",
                 },
                 {
-                    'step': 2,
-                    'action': 'Configure WireGuard peer',
-                    'details': 'Add new peer to VPN mesh (10.10.5.0/24 suggested)',
-                    'estimated_time': '30 minutes'
+                    "step": 2,
+                    "action": "Configure WireGuard peer",
+                    "details": "Add new peer to VPN mesh (10.10.5.0/24 suggested)",
+                    "estimated_time": "30 minutes",
                 },
                 {
-                    'step': 3,
-                    'action': 'Initialize PostgreSQL',
-                    'details': 'Create regional database with KerjaFlow schema',
-                    'estimated_time': '1 hour'
+                    "step": 3,
+                    "action": "Initialize PostgreSQL",
+                    "details": "Create regional database with KerjaFlow schema",
+                    "estimated_time": "1 hour",
                 },
                 {
-                    'step': 4,
-                    'action': 'Migrate data',
-                    'details': f'Export {scope["total_records"]} records from Vietnam VPS, '
-                              f'import to Cambodia VPS (~{scope["estimated_size_mb"]:.1f} MB)',
-                    'estimated_time': '2-4 hours'
+                    "step": 4,
+                    "action": "Migrate data",
+                    "details": f'Export {scope["total_records"]} records from Vietnam VPS, '
+                    f'import to Cambodia VPS (~{scope["estimated_size_mb"]:.1f} MB)',
+                    "estimated_time": "2-4 hours",
                 },
                 {
-                    'step': 5,
-                    'action': 'Update database router',
-                    'details': 'Change KH routing from Vietnam (10.10.4.1) to Cambodia (10.10.5.1)',
-                    'estimated_time': '15 minutes'
+                    "step": 5,
+                    "action": "Update database router",
+                    "details": "Change KH routing from Vietnam (10.10.4.1) to Cambodia (10.10.5.1)",
+                    "estimated_time": "15 minutes",
                 },
                 {
-                    'step': 6,
-                    'action': 'Verify and cutover',
-                    'details': 'Test all Cambodia operations, enable production traffic',
-                    'estimated_time': '2 hours'
-                }
+                    "step": 6,
+                    "action": "Verify and cutover",
+                    "details": "Test all Cambodia operations, enable production traffic",
+                    "estimated_time": "2 hours",
+                },
             ],
-            'total_estimated_time': '8-12 hours',
-            'estimated_additional_cost': '$15-20/month',
-            'rollback_plan': 'Revert router to Vietnam VPS, data remains on both'
+            "total_estimated_time": "8-12 hours",
+            "estimated_additional_cost": "$15-20/month",
+            "rollback_plan": "Revert router to Vietnam VPS, data remains on both",
         }
 
 
@@ -977,45 +1024,47 @@ if __name__ == "__main__":
     """
     Example usage demonstrating the compliance monitoring system.
     """
-    
+
     # Mock database connection for demonstration
     class MockDB:
         def execute(self, query, params=None):
             print(f"SQL: {query[:100]}...")
             return self
+
         def fetchone(self):
             return None
+
         def fetchall(self):
             return []
-    
+
     db = MockDB()
-    
+
     # Example 1: Get Cambodia pension rate for different dates
     print("\n=== Example 1: Automatic Rate Selection ===")
     rate_service = StatutoryRateService(db)
-    
+
     # October 2025 - uses 2% rate
     print("Oct 2025 payslip: Would use 2% pension rate")
-    
+
     # October 2027 - uses 4% rate (automatic!)
     print("Oct 2027 payslip: Would use 4% pension rate (auto-selected)")
-    
+
     # Example 2: Check pending regulations
     print("\n=== Example 2: Regulatory Monitoring ===")
     reg_service = RegulatoryMonitorService(db)
-    
+
     print("Monitoring: Cambodia LPDP (draft)")
     print("Action: Check every 14 days for enactment news")
-    
+
     # Example 3: Generate migration plan
     print("\n=== Example 3: Migration Readiness ===")
     migration_service = DataMigrationService(db)
-    
+
     print("If Cambodia LPDP requires local storage:")
     print("- Provision Cambodia VPS: $15-20/mo")
     print("- Migrate data from Vietnam VPS")
     print("- Update router: KH → Cambodia (10.10.5.1)")
     print("- Total additional cost: $15-20/mo")
-    
+
     print("\n=== SQL Migration Script ===")
     print("Run the MIGRATION_SQL constant to create all tables")

@@ -16,5 +16,5 @@ Copyright (c) 2025 KerjaFlow
 """
 
 # Odoo module loading requires these imports
-from . import models  # noqa: F401
 from . import controllers  # noqa: F401
+from . import models  # noqa: F401

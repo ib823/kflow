@@ -12,342 +12,340 @@ CRITICAL per CLAUDE.md:
 - ID and VN have MANDATORY local data storage requirements
 """
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError, UserError
+import logging
+import re
 from datetime import date
 from decimal import Decimal
+
 from dateutil.relativedelta import relativedelta
-import re
-import logging
+from odoo.exceptions import UserError, ValidationError
+
+from odoo import _, api, fields, models
 
 _logger = logging.getLogger(__name__)
 
 
 class KfEmployee(models.Model):
-    _name = 'kf.employee'
-    _description = 'KerjaFlow Employee'
-    _order = 'full_name'
-    _rec_name = 'full_name'
+    _name = "kf.employee"
+    _description = "KerjaFlow Employee"
+    _order = "full_name"
+    _rec_name = "full_name"
 
     # Identification
     employee_no = fields.Char(
-        string='Employee ID',
+        string="Employee ID",
         required=True,
         index=True,
-        help='Employee ID (unique per company)',
+        help="Employee ID (unique per company)",
     )
     badge_id = fields.Char(
-        string='Badge ID',
+        string="Badge ID",
         index=True,
-        help='Badge/access card ID',
+        help="Badge/access card ID",
     )
 
     # Country Configuration (CRITICAL for data routing per CLAUDE.md)
     country_id = fields.Many2one(
-        comodel_name='kf.country.config',
-        string='Country',
+        comodel_name="kf.country.config",
+        string="Country",
         required=True,
         index=True,
         tracking=True,
-        help='Employee country - determines data storage location',
+        help="Employee country - determines data storage location",
     )
     country_code = fields.Char(
-        string='Country Code',
-        related='country_id.country_code',
+        string="Country Code",
+        related="country_id.country_code",
         store=True,
         index=True,
-        help='ISO country code for data routing (MY, SG, ID, TH, VN, PH, LA, KH, BN)',
+        help="ISO country code for data routing (MY, SG, ID, TH, VN, PH, LA, KH, BN)",
     )
 
     # Currency for monetary fields
     currency_id = fields.Many2one(
-        comodel_name='res.currency',
-        string='Currency',
-        related='country_id.currency_id',
+        comodel_name="res.currency",
+        string="Currency",
+        related="country_id.currency_id",
         store=True,
-        help='Currency based on employee country',
+        help="Currency based on employee country",
     )
 
     # Personal Information
     full_name = fields.Char(
-        string='Full Name',
+        string="Full Name",
         required=True,
         index=True,
-        help='Full name as per IC',
+        help="Full name as per IC",
     )
     preferred_name = fields.Char(
-        string='Preferred Name',
-        help='Preferred/call name',
+        string="Preferred Name",
+        help="Preferred/call name",
     )
     ic_no = fields.Char(
-        string='IC Number',
+        string="IC Number",
         index=True,
-        help='MyKad IC number',
+        help="MyKad IC number",
     )
     passport_no = fields.Char(
-        string='Passport Number',
+        string="Passport Number",
         index=True,
     )
     date_of_birth = fields.Date(
-        string='Date of Birth',
+        string="Date of Birth",
     )
     gender = fields.Selection(
         selection=[
-            ('M', 'Male'),
-            ('F', 'Female'),
-            ('O', 'Other'),
+            ("M", "Male"),
+            ("F", "Female"),
+            ("O", "Other"),
         ],
-        string='Gender',
+        string="Gender",
     )
     marital_status = fields.Selection(
         selection=[
-            ('single', 'Single'),
-            ('married', 'Married'),
-            ('divorced', 'Divorced'),
-            ('widowed', 'Widowed'),
+            ("single", "Single"),
+            ("married", "Married"),
+            ("divorced", "Divorced"),
+            ("widowed", "Widowed"),
         ],
-        string='Marital Status',
+        string="Marital Status",
     )
     nationality = fields.Char(
-        string='Nationality',
-        default='Malaysian',
+        string="Nationality",
+        default="Malaysian",
     )
     race = fields.Selection(
         selection=[
-            ('malay', 'Malay'),
-            ('chinese', 'Chinese'),
-            ('indian', 'Indian'),
-            ('other', 'Other'),
+            ("malay", "Malay"),
+            ("chinese", "Chinese"),
+            ("indian", "Indian"),
+            ("other", "Other"),
         ],
-        string='Race',
+        string="Race",
     )
-    religion = fields.Char(string='Religion')
+    religion = fields.Char(string="Religion")
 
     # Contact Information
     email = fields.Char(
-        string='Personal Email',
+        string="Personal Email",
         index=True,
     )
     work_email = fields.Char(
-        string='Work Email',
+        string="Work Email",
         index=True,
     )
     mobile_phone = fields.Char(
-        string='Mobile Phone',
+        string="Mobile Phone",
         index=True,
-        help='Mobile number (for OTP)',
+        help="Mobile number (for OTP)",
     )
 
     # Address
-    address_line1 = fields.Char(string='Address Line 1')
-    address_line2 = fields.Char(string='Address Line 2')
-    city = fields.Char(string='City')
-    state = fields.Char(string='State')
-    postcode = fields.Char(string='Postcode')
+    address_line1 = fields.Char(string="Address Line 1")
+    address_line2 = fields.Char(string="Address Line 2")
+    city = fields.Char(string="City")
+    state = fields.Char(string="State")
+    postcode = fields.Char(string="Postcode")
 
     # Emergency Contact
-    emergency_name = fields.Char(string='Emergency Contact Name')
-    emergency_phone = fields.Char(string='Emergency Contact Phone')
+    emergency_name = fields.Char(string="Emergency Contact Name")
+    emergency_phone = fields.Char(string="Emergency Contact Phone")
     emergency_relation = fields.Char(
-        string='Emergency Contact Relationship',
-        help='Spouse/Parent/Sibling etc',
+        string="Emergency Contact Relationship",
+        help="Spouse/Parent/Sibling etc",
     )
 
     # Employment Information
     employment_type = fields.Selection(
         selection=[
-            ('PERMANENT', 'Permanent'),
-            ('CONTRACT', 'Contract'),
-            ('PARTTIME', 'Part-time'),
-            ('INTERN', 'Intern'),
+            ("PERMANENT", "Permanent"),
+            ("CONTRACT", "Contract"),
+            ("PARTTIME", "Part-time"),
+            ("INTERN", "Intern"),
         ],
-        string='Employment Type',
-        default='PERMANENT',
+        string="Employment Type",
+        default="PERMANENT",
         required=True,
     )
     join_date = fields.Date(
-        string='Join Date',
+        string="Join Date",
         required=True,
         default=fields.Date.today,
-        help='First day of employment',
+        help="First day of employment",
     )
     confirm_date = fields.Date(
-        string='Confirmation Date',
-        help='Confirmation date (if confirmed)',
+        string="Confirmation Date",
+        help="Confirmation date (if confirmed)",
     )
     resign_date = fields.Date(
-        string='Resignation Date',
+        string="Resignation Date",
         index=True,
-        help='Last working day (if resigned)',
+        help="Last working day (if resigned)",
     )
     probation_months = fields.Integer(
-        string='Probation Period (Months)',
+        string="Probation Period (Months)",
         default=3,
     )
     work_location = fields.Char(
-        string='Work Location',
-        help='Work location/site name',
+        string="Work Location",
+        help="Work location/site name",
     )
 
     # Statutory Information (Malaysian)
-    epf_no = fields.Char(string='EPF Member No')
-    socso_no = fields.Char(string='SOCSO Member No')
-    eis_no = fields.Char(string='EIS Number')
-    tax_no = fields.Char(string='Tax Number (LHDN)')
+    epf_no = fields.Char(string="EPF Member No")
+    socso_no = fields.Char(string="SOCSO Member No")
+    eis_no = fields.Char(string="EIS Number")
+    tax_no = fields.Char(string="Tax Number (LHDN)")
     tax_category = fields.Selection(
         selection=[
-            ('1', 'Category 1'),
-            ('2', 'Category 2'),
-            ('3', 'Category 3'),
+            ("1", "Category 1"),
+            ("2", "Category 2"),
+            ("3", "Category 3"),
         ],
-        string='PCB Category',
+        string="PCB Category",
     )
     tax_resident = fields.Boolean(
-        string='Malaysian Tax Resident',
+        string="Malaysian Tax Resident",
         default=True,
     )
     epf_rate_employee = fields.Float(
-        string='Employee EPF Rate (%)',
+        string="Employee EPF Rate (%)",
         default=11.0,
     )
     epf_rate_employer = fields.Float(
-        string='Employer EPF Rate (%)',
-        help='Age-based calculation',
+        string="Employer EPF Rate (%)",
+        help="Age-based calculation",
     )
 
     # Salary Information
     basic_salary = fields.Monetary(
-        string='Basic Salary',
-        currency_field='currency_id',
+        string="Basic Salary",
+        currency_field="currency_id",
         tracking=True,
-        help='Monthly basic salary in local currency',
+        help="Monthly basic salary in local currency",
     )
 
     # Banking Information
-    bank_name = fields.Char(string='Bank Name')
-    bank_account_no = fields.Char(string='Bank Account No')
-    bank_account_name = fields.Char(string='Account Holder Name')
+    bank_name = fields.Char(string="Bank Name")
+    bank_account_no = fields.Char(string="Bank Account No")
+    bank_account_name = fields.Char(string="Account Holder Name")
 
     # Profile
     photo_url = fields.Char(
-        string='Photo URL',
-        help='Profile photo URL',
+        string="Photo URL",
+        help="Profile photo URL",
     )
     preferred_lang = fields.Selection(
         selection=[
-            ('en', 'English'),
-            ('ms', 'Bahasa Malaysia'),
-            ('id', 'Bahasa Indonesia'),
+            ("en", "English"),
+            ("ms", "Bahasa Malaysia"),
+            ("id", "Bahasa Indonesia"),
         ],
-        string='Preferred Language',
-        default='en',
+        string="Preferred Language",
+        default="en",
     )
 
     # Status
     status = fields.Selection(
         selection=[
-            ('ACTIVE', 'Active'),
-            ('INACTIVE', 'Inactive'),
-            ('RESIGNED', 'Resigned'),
-            ('TERMINATED', 'Terminated'),
+            ("ACTIVE", "Active"),
+            ("INACTIVE", "Inactive"),
+            ("RESIGNED", "Resigned"),
+            ("TERMINATED", "Terminated"),
         ],
-        string='Status',
-        default='ACTIVE',
+        string="Status",
+        default="ACTIVE",
         required=True,
     )
 
     # Relationships
     company_id = fields.Many2one(
-        comodel_name='kf.company',
-        string='Company',
+        comodel_name="kf.company",
+        string="Company",
         required=True,
-        ondelete='cascade',
+        ondelete="cascade",
         index=True,
     )
     department_id = fields.Many2one(
-        comodel_name='kf.department',
-        string='Department',
+        comodel_name="kf.department",
+        string="Department",
         domain="[('company_id', '=', company_id)]",
     )
     job_position_id = fields.Many2one(
-        comodel_name='kf.job.position',
-        string='Job Position',
+        comodel_name="kf.job.position",
+        string="Job Position",
         domain="[('company_id', '=', company_id)]",
     )
     manager_id = fields.Many2one(
-        comodel_name='kf.employee',
-        string='Reporting Manager',
+        comodel_name="kf.employee",
+        string="Reporting Manager",
         domain="[('company_id', '=', company_id), ('id', '!=', id)]",
     )
     user_id = fields.One2many(
-        comodel_name='kf.user',
-        inverse_name='employee_id',
-        string='User Account',
+        comodel_name="kf.user",
+        inverse_name="employee_id",
+        string="User Account",
     )
     foreign_worker_detail_id = fields.One2many(
-        comodel_name='kf.foreign.worker.detail',
-        inverse_name='employee_id',
-        string='Foreign Worker Details',
+        comodel_name="kf.foreign.worker.detail",
+        inverse_name="employee_id",
+        string="Foreign Worker Details",
     )
     document_ids = fields.One2many(
-        comodel_name='kf.document',
-        inverse_name='employee_id',
-        string='Documents',
+        comodel_name="kf.document",
+        inverse_name="employee_id",
+        string="Documents",
     )
     leave_balance_ids = fields.One2many(
-        comodel_name='kf.leave.balance',
-        inverse_name='employee_id',
-        string='Leave Balances',
+        comodel_name="kf.leave.balance",
+        inverse_name="employee_id",
+        string="Leave Balances",
     )
     leave_request_ids = fields.One2many(
-        comodel_name='kf.leave.request',
-        inverse_name='employee_id',
-        string='Leave Requests',
+        comodel_name="kf.leave.request",
+        inverse_name="employee_id",
+        string="Leave Requests",
     )
     payslip_ids = fields.One2many(
-        comodel_name='kf.payslip',
-        inverse_name='employee_id',
-        string='Payslips',
+        comodel_name="kf.payslip",
+        inverse_name="employee_id",
+        string="Payslips",
     )
     subordinate_ids = fields.One2many(
-        comodel_name='kf.employee',
-        inverse_name='manager_id',
-        string='Direct Reports',
+        comodel_name="kf.employee",
+        inverse_name="manager_id",
+        string="Direct Reports",
     )
 
     # Computed Fields
     age = fields.Integer(
-        string='Age',
-        compute='_compute_age',
+        string="Age",
+        compute="_compute_age",
     )
     years_of_service = fields.Float(
-        string='Years of Service',
-        compute='_compute_years_of_service',
+        string="Years of Service",
+        compute="_compute_years_of_service",
     )
     is_confirmed = fields.Boolean(
-        string='Is Confirmed',
-        compute='_compute_is_confirmed',
+        string="Is Confirmed",
+        compute="_compute_is_confirmed",
     )
     is_foreign_worker = fields.Boolean(
-        string='Is Foreign Worker',
-        compute='_compute_is_foreign_worker',
+        string="Is Foreign Worker",
+        compute="_compute_is_foreign_worker",
     )
 
     # SQL Constraints
     _sql_constraints = [
         (
-            'company_employee_no_unique',
-            'UNIQUE(company_id, employee_no)',
-            'Employee ID must be unique within company!'
+            "company_employee_no_unique",
+            "UNIQUE(company_id, employee_no)",
+            "Employee ID must be unique within company!",
         ),
-        (
-            'ic_no_unique',
-            'UNIQUE(ic_no)',
-            'IC number must be unique!'
-        ),
+        ("ic_no_unique", "UNIQUE(ic_no)", "IC number must be unique!"),
     ]
 
-    @api.depends('date_of_birth')
+    @api.depends("date_of_birth")
     def _compute_age(self):
         today = date.today()
         for employee in self:
@@ -356,7 +354,7 @@ class KfEmployee(models.Model):
             else:
                 employee.age = 0
 
-    @api.depends('join_date')
+    @api.depends("join_date")
     def _compute_years_of_service(self):
         today = date.today()
         for employee in self:
@@ -366,54 +364,51 @@ class KfEmployee(models.Model):
             else:
                 employee.years_of_service = 0
 
-    @api.depends('confirm_date', 'join_date', 'probation_months')
+    @api.depends("confirm_date", "join_date", "probation_months")
     def _compute_is_confirmed(self):
         today = date.today()
         for employee in self:
             if employee.confirm_date:
                 employee.is_confirmed = employee.confirm_date <= today
             elif employee.join_date and employee.probation_months:
-                probation_end = employee.join_date + relativedelta(
-                    months=employee.probation_months
-                )
+                probation_end = employee.join_date + relativedelta(months=employee.probation_months)
                 employee.is_confirmed = probation_end <= today
             else:
                 employee.is_confirmed = False
 
-    @api.depends('nationality')
+    @api.depends("nationality")
     def _compute_is_foreign_worker(self):
         for employee in self:
             employee.is_foreign_worker = (
-                employee.nationality and
-                employee.nationality.lower() != 'malaysian'
+                employee.nationality and employee.nationality.lower() != "malaysian"
             )
 
-    @api.constrains('manager_id')
+    @api.constrains("manager_id")
     def _check_manager_recursion(self):
         for employee in self:
             manager = employee.manager_id
             seen = {employee.id}
             while manager:
                 if manager.id in seen:
-                    raise ValidationError(_('Circular manager hierarchy is not allowed.'))
+                    raise ValidationError(_("Circular manager hierarchy is not allowed."))
                 seen.add(manager.id)
                 manager = manager.manager_id
 
     # IC Format patterns per country (per CLAUDE.md)
     IC_FORMAT_PATTERNS = {
-        'MY': (r'^\d{6}-\d{2}-\d{4}$', 'XXXXXX-XX-XXXX (e.g., 900101-01-1234)'),
-        'SG': (r'^[STFGM]\d{7}[A-Z]$', 'XNNNNNNNX (e.g., S1234567D)'),
-        'ID': (r'^\d{16}$', '16 digits (NIK)'),
-        'TH': (r'^\d{13}$', '13 digits'),
-        'VN': (r'^\d{9}|\d{12}$', '9 or 12 digits (CCCD)'),
-        'PH': (r'^\d{4}-\d{7}-\d{1}$', 'NNNN-NNNNNNN-N (PhilSys)'),
-        'BN': (r'^\d{2}-\d{6}$', 'NN-NNNNNN'),
+        "MY": (r"^\d{6}-\d{2}-\d{4}$", "XXXXXX-XX-XXXX (e.g., 900101-01-1234)"),
+        "SG": (r"^[STFGM]\d{7}[A-Z]$", "XNNNNNNNX (e.g., S1234567D)"),
+        "ID": (r"^\d{16}$", "16 digits (NIK)"),
+        "TH": (r"^\d{13}$", "13 digits"),
+        "VN": (r"^\d{9}|\d{12}$", "9 or 12 digits (CCCD)"),
+        "PH": (r"^\d{4}-\d{7}-\d{1}$", "NNNN-NNNNNNN-N (PhilSys)"),
+        "BN": (r"^\d{2}-\d{6}$", "NN-NNNNNN"),
         # LA and KH have variable formats, validated loosely
-        'LA': (r'^.{6,20}$', '6-20 characters'),
-        'KH': (r'^.{6,20}$', '6-20 characters'),
+        "LA": (r"^.{6,20}$", "6-20 characters"),
+        "KH": (r"^.{6,20}$", "6-20 characters"),
     }
 
-    @api.constrains('country_code', 'ic_no')
+    @api.constrains("country_code", "ic_no")
     def _check_ic_format(self):
         """Validate IC number format based on country"""
         for record in self:
@@ -424,16 +419,23 @@ class KfEmployee(models.Model):
             if pattern_info:
                 pattern, example = pattern_info
                 if not re.match(pattern, record.ic_no):
-                    raise ValidationError(_(
-                        'Invalid %(country)s IC format. Expected: %(example)s',
-                        country=record.country_code,
-                        example=example
-                    ))
+                    raise ValidationError(
+                        _(
+                            "Invalid %(country)s IC format. Expected: %(example)s",
+                            country=record.country_code,
+                            example=example,
+                        )
+                    )
 
     # Sensitive fields that require audit logging (per CLAUDE.md)
     SENSITIVE_FIELDS = [
-        'ic_no', 'passport_no', 'bank_account_no',
-        'basic_salary', 'epf_no', 'socso_no', 'tax_no'
+        "ic_no",
+        "passport_no",
+        "bank_account_no",
+        "basic_salary",
+        "epf_no",
+        "socso_no",
+        "tax_no",
     ]
 
     def write(self, vals):
@@ -442,20 +444,22 @@ class KfEmployee(models.Model):
         if sensitive_changed:
             for record in self:
                 _logger.info(
-                    'Sensitive field(s) updated for employee %s (ID: %s) by user %s: %s',
+                    "Sensitive field(s) updated for employee %s (ID: %s) by user %s: %s",
                     record.full_name,
                     record.id,
                     self.env.uid,
-                    ', '.join(sensitive_changed)
+                    ", ".join(sensitive_changed),
                 )
         return super().write(vals)
 
     def get_direct_reports(self):
         """Get all direct reports for this employee."""
-        return self.search([
-            ('manager_id', '=', self.id),
-            ('status', '=', 'ACTIVE'),
-        ])
+        return self.search(
+            [
+                ("manager_id", "=", self.id),
+                ("status", "=", "ACTIVE"),
+            ]
+        )
 
     def get_statutory_rate(self, contribution_type, effective_date):
         """
@@ -475,14 +479,19 @@ class KfEmployee(models.Model):
             rate = employee.get_statutory_rate('NSSF_PENSION', date(2027, 10, 15))
         """
         self.ensure_one()
-        StatutoryRate = self.env['kf.statutory.rate']
-        return StatutoryRate.search([
-            ('country_code', '=', self.country_code),
-            ('contribution_type', '=', contribution_type),
-            ('effective_from', '<=', effective_date),
-            '|', ('effective_to', '=', False),
-                 ('effective_to', '>=', effective_date),
-        ], order='effective_from desc', limit=1)
+        StatutoryRate = self.env["kf.statutory.rate"]
+        return StatutoryRate.search(
+            [
+                ("country_code", "=", self.country_code),
+                ("contribution_type", "=", contribution_type),
+                ("effective_from", "<=", effective_date),
+                "|",
+                ("effective_to", "=", False),
+                ("effective_to", ">=", effective_date),
+            ],
+            order="effective_from desc",
+            limit=1,
+        )
 
     def calculate_statutory_deductions(self, payslip_date):
         """
@@ -496,19 +505,22 @@ class KfEmployee(models.Model):
         """
         self.ensure_one()
         if not self.basic_salary:
-            return {'employee': Decimal('0'), 'employer': Decimal('0'), 'details': []}
+            return {"employee": Decimal("0"), "employer": Decimal("0"), "details": []}
 
         # Get all applicable rates for this country
-        StatutoryRate = self.env['kf.statutory.rate']
-        rates = StatutoryRate.search([
-            ('country_code', '=', self.country_code),
-            ('effective_from', '<=', payslip_date),
-            '|', ('effective_to', '=', False),
-                 ('effective_to', '>=', payslip_date),
-        ])
+        StatutoryRate = self.env["kf.statutory.rate"]
+        rates = StatutoryRate.search(
+            [
+                ("country_code", "=", self.country_code),
+                ("effective_from", "<=", payslip_date),
+                "|",
+                ("effective_to", "=", False),
+                ("effective_to", ">=", payslip_date),
+            ]
+        )
 
-        employee_total = Decimal('0')
-        employer_total = Decimal('0')
+        employee_total = Decimal("0")
+        employer_total = Decimal("0")
         details = []
 
         for rate in rates:
@@ -522,16 +534,18 @@ class KfEmployee(models.Model):
             employee_total += employee_amount
             employer_total += employer_amount
 
-            details.append({
-                'type': rate.contribution_type,
-                'employee_rate': rate.employee_rate,
-                'employer_rate': rate.employer_rate,
-                'employee_amount': float(employee_amount),
-                'employer_amount': float(employer_amount),
-            })
+            details.append(
+                {
+                    "type": rate.contribution_type,
+                    "employee_rate": rate.employee_rate,
+                    "employer_rate": rate.employer_rate,
+                    "employee_amount": float(employee_amount),
+                    "employer_amount": float(employer_amount),
+                }
+            )
 
         return {
-            'employee': float(employee_total),
-            'employer': float(employer_total),
-            'details': details,
+            "employee": float(employee_total),
+            "employer": float(employer_total),
+            "details": details,
         }

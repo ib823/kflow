@@ -7,64 +7,64 @@ Table: kf_public_holiday
 Federal and state-specific holidays
 """
 
-from odoo import models, fields
+from odoo import fields, models
 
 
 class KfPublicHoliday(models.Model):
-    _name = 'kf.public.holiday'
-    _description = 'KerjaFlow Public Holiday'
-    _order = 'date'
+    _name = "kf.public.holiday"
+    _description = "KerjaFlow Public Holiday"
+    _order = "date"
 
     # Holiday Details
     name = fields.Char(
-        string='Holiday Name',
+        string="Holiday Name",
         required=True,
-        help='Holiday name in English',
+        help="Holiday name in English",
     )
     name_ms = fields.Char(
-        string='Name (Malay)',
-        help='Holiday name in Bahasa Malaysia',
+        string="Name (Malay)",
+        help="Holiday name in Bahasa Malaysia",
     )
     date = fields.Date(
-        string='Date',
+        string="Date",
         required=True,
         index=True,
     )
     state = fields.Char(
-        string='State',
-        help='State code (null = federal/all states)',
+        string="State",
+        help="State code (null = federal/all states)",
         index=True,
     )
     is_recurring = fields.Boolean(
-        string='Recurring',
+        string="Recurring",
         default=False,
-        help='Whether holiday recurs annually (fixed date)',
+        help="Whether holiday recurs annually (fixed date)",
     )
     holiday_type = fields.Selection(
         selection=[
-            ('federal', 'Federal Holiday'),
-            ('state', 'State Holiday'),
-            ('company', 'Company Holiday'),
+            ("federal", "Federal Holiday"),
+            ("state", "State Holiday"),
+            ("company", "Company Holiday"),
         ],
-        string='Holiday Type',
-        default='federal',
+        string="Holiday Type",
+        default="federal",
     )
 
     # Relationships
     company_id = fields.Many2one(
-        comodel_name='kf.company',
-        string='Company',
+        comodel_name="kf.company",
+        string="Company",
         required=True,
-        ondelete='cascade',
+        ondelete="cascade",
         index=True,
     )
 
     # SQL Constraints
     _sql_constraints = [
         (
-            'company_date_state_unique',
-            'UNIQUE(company_id, date, state)',
-            'Holiday must be unique per date/state!'
+            "company_date_state_unique",
+            "UNIQUE(company_id, date, state)",
+            "Holiday must be unique per date/state!",
         ),
     ]
 

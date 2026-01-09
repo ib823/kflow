@@ -4,23 +4,16 @@ Statutory Calculator Service
 Core calculation engine for ASEAN statutory contributions
 """
 
-from datetime import date
-from decimal import Decimal, ROUND_HALF_UP, ROUND_DOWN, ROUND_UP
-from typing import List, Optional, Dict, Any
 import logging
+from datetime import date
+from decimal import ROUND_DOWN, ROUND_HALF_UP, ROUND_UP, Decimal
+from typing import Any, Dict, List, Optional
 
-from ..models.statutory import (
-    StatutoryScheme,
-    StatutoryRate,
-    StatutoryCeiling,
-    StatutoryContribution,
-    ContributionSummary,
-    EmployeeContext,
-    NationalityType,
-    CalculationMethod,
-    RoundingMethod,
-    RiskCategory,
-)
+from ..models.statutory import (CalculationMethod, ContributionSummary,
+                                EmployeeContext, NationalityType, RiskCategory,
+                                RoundingMethod, StatutoryCeiling,
+                                StatutoryContribution, StatutoryRate,
+                                StatutoryScheme)
 
 logger = logging.getLogger(__name__)
 
@@ -47,9 +40,7 @@ class StatutoryCalculator:
         self.db = db_connection
 
     def calculate_all(
-        self,
-        employee: EmployeeContext,
-        calculation_date: Optional[date] = None
+        self, employee: EmployeeContext, calculation_date: Optional[date] = None
     ) -> ContributionSummary:
         """
         Calculate ALL statutory contributions for an employee
@@ -66,9 +57,7 @@ class StatutoryCalculator:
 
         # Get all applicable schemes for this country
         schemes = self._get_applicable_schemes(
-            employee.country_code,
-            employee.nationality,
-            calculation_date
+            employee.country_code, employee.nationality, calculation_date
         )
 
         contributions = []
@@ -78,23 +67,18 @@ class StatutoryCalculator:
                 if contribution:
                     contributions.append(contribution)
             except Exception as e:
-                logger.error(
-                    f"Failed to calculate {scheme.code} for {employee.country_code}: {e}"
-                )
+                logger.error(f"Failed to calculate {scheme.code} for {employee.country_code}: {e}")
                 continue
 
         return ContributionSummary(
             country_code=employee.country_code,
             employee_context=employee,
             contributions=contributions,
-            calculation_date=calculation_date
+            calculation_date=calculation_date,
         )
 
     def calculate_scheme(
-        self,
-        employee: EmployeeContext,
-        scheme: StatutoryScheme,
-        calculation_date: date
+        self, employee: EmployeeContext, scheme: StatutoryScheme, calculation_date: date
     ) -> Optional[StatutoryContribution]:
         """
         Calculate contribution for a single scheme
@@ -121,11 +105,7 @@ class StatutoryCalculator:
                 capped = True
 
         # Find matching rate tier
-        rate = self._find_matching_rate(
-            scheme.id,
-            employee,
-            calculation_date
-        )
+        rate = self._find_matching_rate(scheme.id, employee, calculation_date)
 
         if not rate:
             logger.warning(
@@ -136,9 +116,7 @@ class StatutoryCalculator:
 
         # Calculate amounts based on method
         if scheme.calculation_method == CalculationMethod.PERCENTAGE:
-            employee_amount, employer_amount = self._calculate_percentage(
-                applied_salary, rate
-            )
+            employee_amount, employer_amount = self._calculate_percentage(applied_salary, rate)
         elif scheme.calculation_method == CalculationMethod.TIERED_PERCENTAGE:
             employee_amount, employer_amount = self._calculate_tiered_percentage(
                 applied_salary, rate, employee, scheme
@@ -153,14 +131,10 @@ class StatutoryCalculator:
 
         # Apply rounding
         employee_amount = self._apply_rounding(
-            employee_amount,
-            scheme.rounding_method,
-            scheme.rounding_precision
+            employee_amount, scheme.rounding_method, scheme.rounding_precision
         )
         employer_amount = self._apply_rounding(
-            employer_amount,
-            scheme.rounding_method,
-            scheme.rounding_precision
+            employer_amount, scheme.rounding_method, scheme.rounding_precision
         )
 
         return StatutoryContribution(
@@ -177,14 +151,11 @@ class StatutoryCalculator:
             tier_code=rate.tier_code,
             tier_description=rate.tier_description,
             calculation_method=scheme.calculation_method,
-            rounding_applied=True
+            rounding_applied=True,
         )
 
     def _get_applicable_schemes(
-        self,
-        country_code: str,
-        nationality: NationalityType,
-        calculation_date: date
+        self, country_code: str, nationality: NationalityType, calculation_date: date
     ) -> List[StatutoryScheme]:
         """Get all applicable schemes for country and nationality"""
         cursor = self.db.cursor()
@@ -229,10 +200,7 @@ class StatutoryCalculator:
         return schemes
 
     def _find_matching_rate(
-        self,
-        scheme_id: int,
-        employee: EmployeeContext,
-        calculation_date: date
+        self, scheme_id: int, employee: EmployeeContext, calculation_date: date
     ) -> Optional[StatutoryRate]:
         """
         Find the matching rate tier for an employee
@@ -276,19 +244,22 @@ class StatutoryCalculator:
             LIMIT 1
         """
 
-        cursor.execute(query, (
-            scheme_id,
-            calculation_date,
-            calculation_date,
-            employee.age,
-            employee.age,
-            employee.gross_salary,
-            employee.gross_salary,
-            employee.nationality.value if employee.nationality else 'ALL',
-            employee.risk_category.value if employee.risk_category else None,
-            employee.company_employee_count or 0,
-            employee.company_employee_count or 999999
-        ))
+        cursor.execute(
+            query,
+            (
+                scheme_id,
+                calculation_date,
+                calculation_date,
+                employee.age,
+                employee.age,
+                employee.gross_salary,
+                employee.gross_salary,
+                employee.nationality.value if employee.nationality else "ALL",
+                employee.risk_category.value if employee.risk_category else None,
+                employee.company_employee_count or 0,
+                employee.company_employee_count or 999999,
+            ),
+        )
 
         row = cursor.fetchone()
         cursor.close()
@@ -299,10 +270,7 @@ class StatutoryCalculator:
         return self._parse_rate_row(row)
 
     def _get_ceiling(
-        self,
-        scheme_id: int,
-        calculation_date: date,
-        ceiling_type: str = "MONTHLY"
+        self, scheme_id: int, calculation_date: date, ceiling_type: str = "MONTHLY"
     ) -> Optional[StatutoryCeiling]:
         """Get wage ceiling for a scheme"""
         cursor = self.db.cursor()
@@ -333,14 +301,10 @@ class StatutoryCalculator:
             ceiling_amount=Decimal(str(row[3])),
             min_amount=Decimal(str(row[4])) if row[4] else None,
             effective_from=row[5],
-            effective_until=row[6]
+            effective_until=row[6],
         )
 
-    def _get_calculation_base(
-        self,
-        employee: EmployeeContext,
-        scheme: StatutoryScheme
-    ) -> Decimal:
+    def _get_calculation_base(self, employee: EmployeeContext, scheme: StatutoryScheme) -> Decimal:
         """Get the wage amount to use as calculation base"""
         if scheme.calculation_base.value == "GROSS":
             return employee.gross_salary
@@ -354,9 +318,7 @@ class StatutoryCalculator:
             return employee.gross_salary
 
     def _calculate_percentage(
-        self,
-        salary: Decimal,
-        rate: StatutoryRate
+        self, salary: Decimal, rate: StatutoryRate
     ) -> tuple[Decimal, Decimal]:
         """Calculate using simple percentage rates"""
         employee_amount = Decimal("0.00")
@@ -382,7 +344,7 @@ class StatutoryCalculator:
         salary: Decimal,
         rate: StatutoryRate,
         employee: EmployeeContext,
-        scheme: StatutoryScheme
+        scheme: StatutoryScheme,
     ) -> tuple[Decimal, Decimal]:
         """Calculate using tiered percentage (same as percentage for most cases)"""
         # For most countries, tiered percentage works the same as percentage
@@ -390,10 +352,7 @@ class StatutoryCalculator:
         return self._calculate_percentage(salary, rate)
 
     def _calculate_table_lookup(
-        self,
-        salary: Decimal,
-        scheme: StatutoryScheme,
-        calculation_date: date
+        self, salary: Decimal, scheme: StatutoryScheme, calculation_date: date
     ) -> tuple[Decimal, Decimal]:
         """Calculate using SOCSO-style table lookup"""
         cursor = self.db.cursor()
@@ -410,13 +369,7 @@ class StatutoryCalculator:
             LIMIT 1
         """
 
-        cursor.execute(query, (
-            scheme.id,
-            salary,
-            salary,
-            calculation_date,
-            calculation_date
-        ))
+        cursor.execute(query, (scheme.id, salary, salary, calculation_date, calculation_date))
 
         row = cursor.fetchone()
         cursor.close()
@@ -427,28 +380,14 @@ class StatutoryCalculator:
 
         return Decimal(str(row[0])), Decimal(str(row[1]))
 
-    def _apply_rounding(
-        self,
-        amount: Decimal,
-        method: RoundingMethod,
-        precision: int
-    ) -> Decimal:
+    def _apply_rounding(self, amount: Decimal, method: RoundingMethod, precision: int) -> Decimal:
         """Apply rounding based on method"""
         if method == RoundingMethod.NEAREST:
-            return amount.quantize(
-                Decimal(10) ** -precision,
-                rounding=ROUND_HALF_UP
-            )
+            return amount.quantize(Decimal(10) ** -precision, rounding=ROUND_HALF_UP)
         elif method == RoundingMethod.FLOOR:
-            return amount.quantize(
-                Decimal(10) ** -precision,
-                rounding=ROUND_DOWN
-            )
+            return amount.quantize(Decimal(10) ** -precision, rounding=ROUND_DOWN)
         elif method == RoundingMethod.CEILING:
-            return amount.quantize(
-                Decimal(10) ** -precision,
-                rounding=ROUND_UP
-            )
+            return amount.quantize(Decimal(10) ** -precision, rounding=ROUND_UP)
         elif method == RoundingMethod.NEAREST_RINGGIT:
             # Round to nearest whole number (for Malaysia)
             return amount.quantize(Decimal("1"), rounding=ROUND_HALF_UP)
@@ -481,7 +420,7 @@ class StatutoryCalculator:
             effective_from=row[19],
             effective_until=row[20],
             legal_reference=row[21],
-            notes=row[22]
+            notes=row[22],
         )
 
     def _parse_rate_row(self, row: tuple) -> StatutoryRate:
@@ -509,5 +448,5 @@ class StatutoryCalculator:
             effective_until=row[19],
             source_reference=row[20],
             verified_date=row[21],
-            notes=row[22]
+            notes=row[22],
         )

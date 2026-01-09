@@ -18,11 +18,11 @@ Total: 32 endpoints
 """
 
 # Odoo controller discovery requires these imports
-from . import main  # noqa: F401
-from . import auth_controller  # noqa: F401
-from . import profile_controller  # noqa: F401
-from . import payslip_controller  # noqa: F401
-from . import leave_controller  # noqa: F401
 from . import approval_controller  # noqa: F401
-from . import notification_controller  # noqa: F401
+from . import auth_controller  # noqa: F401
 from . import document_controller  # noqa: F401
+from . import leave_controller  # noqa: F401
+from . import main  # noqa: F401
+from . import notification_controller  # noqa: F401
+from . import payslip_controller  # noqa: F401
+from . import profile_controller  # noqa: F401

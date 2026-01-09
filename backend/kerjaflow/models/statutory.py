@@ -8,11 +8,12 @@ from dataclasses import dataclass, field
 from datetime import date
 from decimal import Decimal
 from enum import Enum
-from typing import Optional, List, Dict, Any
+from typing import Any, Dict, List, Optional
 
 
 class NationalityType(str, Enum):
     """Employee nationality classification"""
+
     CITIZEN = "CITIZEN"
     PR = "PR"
     FOREIGN = "FOREIGN"
@@ -21,6 +22,7 @@ class NationalityType(str, Enum):
 
 class SchemeType(str, Enum):
     """Type of statutory scheme"""
+
     RETIREMENT = "RETIREMENT"
     SOCIAL_SECURITY = "SOCIAL_SECURITY"
     HEALTH = "HEALTH"
@@ -32,6 +34,7 @@ class SchemeType(str, Enum):
 
 class CalculationMethod(str, Enum):
     """Method used to calculate contributions"""
+
     PERCENTAGE = "PERCENTAGE"
     TIERED_PERCENTAGE = "TIERED_PERCENTAGE"
     TABLE_LOOKUP = "TABLE_LOOKUP"
@@ -41,6 +44,7 @@ class CalculationMethod(str, Enum):
 
 class CalculationBase(str, Enum):
     """Wage component used as calculation base"""
+
     GROSS = "GROSS"
     BASIC = "BASIC"
     BASIC_FIXED_ALLOWANCES = "BASIC_FIXED_ALLOWANCES"
@@ -52,6 +56,7 @@ class CalculationBase(str, Enum):
 
 class RoundingMethod(str, Enum):
     """Method for rounding calculated amounts"""
+
     NEAREST = "NEAREST"
     NEAREST_RINGGIT = "NEAREST_RINGGIT"
     FLOOR = "FLOOR"
@@ -60,6 +65,7 @@ class RoundingMethod(str, Enum):
 
 class RiskCategory(str, Enum):
     """Risk categories for Indonesian JKK"""
+
     VERY_LOW = "VERY_LOW"
     LOW = "LOW"
     MEDIUM = "MEDIUM"
@@ -70,6 +76,7 @@ class RiskCategory(str, Enum):
 @dataclass
 class Country:
     """Country master data"""
+
     code: str
     name_en: str
     name_local: Optional[str] = None
@@ -84,6 +91,7 @@ class Country:
 @dataclass
 class StatutoryAuthority:
     """Government agency administering statutory contributions"""
+
     id: int
     country_code: str
     code: str
@@ -96,6 +104,7 @@ class StatutoryAuthority:
 @dataclass
 class StatutoryScheme:
     """Statutory contribution scheme definition"""
+
     id: int
     country_code: str
     authority_id: Optional[int]
@@ -136,6 +145,7 @@ class StatutoryScheme:
 @dataclass
 class StatutoryRate:
     """Contribution rate with tier conditions"""
+
     id: int
     scheme_id: int
     tier_code: str
@@ -178,6 +188,7 @@ class StatutoryRate:
 @dataclass
 class StatutoryCeiling:
     """Wage ceiling for contribution calculations"""
+
     id: int
     scheme_id: int
     ceiling_type: str  # MONTHLY, ANNUAL, OW_MONTHLY, AW_ANNUAL, DAILY
@@ -190,6 +201,7 @@ class StatutoryCeiling:
 @dataclass
 class EmployeeContext:
     """Employee context for statutory calculations"""
+
     country_code: str
     nationality: NationalityType
     age: int
@@ -210,6 +222,7 @@ class EmployeeContext:
 @dataclass
 class StatutoryContribution:
     """Calculated statutory contribution result"""
+
     scheme_code: str
     scheme_name: str
 
@@ -238,6 +251,7 @@ class StatutoryContribution:
 @dataclass
 class ContributionSummary:
     """Summary of all statutory contributions for an employee"""
+
     country_code: str
     employee_context: EmployeeContext
     contributions: List[StatutoryContribution]
@@ -254,11 +268,9 @@ class ContributionSummary:
     def __post_init__(self):
         """Calculate totals"""
         self.total_employee_amount = sum(
-            (c.employee_amount for c in self.contributions),
-            Decimal("0.00")
+            (c.employee_amount for c in self.contributions), Decimal("0.00")
         )
         self.total_employer_amount = sum(
-            (c.employer_amount for c in self.contributions),
-            Decimal("0.00")
+            (c.employer_amount for c in self.contributions), Decimal("0.00")
         )
         self.total_combined_amount = self.total_employee_amount + self.total_employer_amount

@@ -4,17 +4,14 @@ Pytest Configuration and Fixtures
 Shared fixtures for all test modules
 """
 
-import pytest
-import psycopg2
 from datetime import date
 from decimal import Decimal
 from typing import Generator
 
-from ..models.statutory import (
-    EmployeeContext,
-    NationalityType,
-    RiskCategory
-)
+import psycopg2
+import pytest
+
+from ..models.statutory import EmployeeContext, NationalityType, RiskCategory
 from ..services.statutory_calculator import StatutoryCalculator
 
 
@@ -35,7 +32,7 @@ def db_connection():
         host=os.getenv("KFLOW_DB_HOST", "localhost"),
         database=os.getenv("KFLOW_DB_NAME", "kerjaflow_test"),
         user=os.getenv("KFLOW_DB_USER", "postgres"),
-        password=os.getenv("KFLOW_DB_PASSWORD", "postgres")
+        password=os.getenv("KFLOW_DB_PASSWORD", "postgres"),
     )
 
     yield conn
@@ -53,6 +50,7 @@ def calculator(db_connection) -> StatutoryCalculator:
 # MALAYSIA FIXTURES
 # ============================================================================
 
+
 @pytest.fixture
 def my_employee_young_under5k() -> EmployeeContext:
     """Malaysian employee, age 30, salary RM4,500 (EPF 13%)"""
@@ -62,7 +60,7 @@ def my_employee_young_under5k() -> EmployeeContext:
         age=30,
         gross_salary=Decimal("4500.00"),
         basic_salary=Decimal("4500.00"),
-        calculation_date=date(2025, 6, 1)
+        calculation_date=date(2025, 6, 1),
     )
 
 
@@ -75,7 +73,7 @@ def my_employee_young_over5k() -> EmployeeContext:
         age=35,
         gross_salary=Decimal("8000.00"),
         basic_salary=Decimal("8000.00"),
-        calculation_date=date(2025, 6, 1)
+        calculation_date=date(2025, 6, 1),
     )
 
 
@@ -88,7 +86,7 @@ def my_employee_senior() -> EmployeeContext:
         age=62,
         gross_salary=Decimal("5000.00"),
         basic_salary=Decimal("5000.00"),
-        calculation_date=date(2025, 6, 1)
+        calculation_date=date(2025, 6, 1),
     )
 
 
@@ -101,13 +99,14 @@ def my_foreign_worker_post_oct2025() -> EmployeeContext:
         age=28,
         gross_salary=Decimal("3000.00"),
         basic_salary=Decimal("3000.00"),
-        calculation_date=date(2025, 11, 1)
+        calculation_date=date(2025, 11, 1),
     )
 
 
 # ============================================================================
 # SINGAPORE FIXTURES
 # ============================================================================
+
 
 @pytest.fixture
 def sg_employee_young_2025() -> EmployeeContext:
@@ -118,7 +117,7 @@ def sg_employee_young_2025() -> EmployeeContext:
         age=30,
         gross_salary=Decimal("5000.00"),
         ordinary_wages=Decimal("5000.00"),
-        calculation_date=date(2025, 6, 1)
+        calculation_date=date(2025, 6, 1),
     )
 
 
@@ -131,13 +130,14 @@ def sg_employee_senior_2026() -> EmployeeContext:
         age=63,
         gross_salary=Decimal("6000.00"),
         ordinary_wages=Decimal("6000.00"),
-        calculation_date=date(2026, 6, 1)
+        calculation_date=date(2026, 6, 1),
     )
 
 
 # ============================================================================
 # INDONESIA FIXTURES
 # ============================================================================
+
 
 @pytest.fixture
 def id_employee_medium_risk() -> EmployeeContext:
@@ -148,13 +148,14 @@ def id_employee_medium_risk() -> EmployeeContext:
         age=30,
         gross_salary=Decimal("8000000.00"),  # IDR 8M
         risk_category=RiskCategory.MEDIUM,
-        calculation_date=date(2025, 6, 1)
+        calculation_date=date(2025, 6, 1),
     )
 
 
 # ============================================================================
 # THAILAND FIXTURES
 # ============================================================================
+
 
 @pytest.fixture
 def th_employee_2026() -> EmployeeContext:
@@ -164,13 +165,14 @@ def th_employee_2026() -> EmployeeContext:
         nationality=NationalityType.CITIZEN,
         age=30,
         gross_salary=Decimal("18000.00"),  # Above new ceiling
-        calculation_date=date(2026, 6, 1)
+        calculation_date=date(2026, 6, 1),
     )
 
 
 # ============================================================================
 # PHILIPPINES FIXTURES
 # ============================================================================
+
 
 @pytest.fixture
 def ph_employee() -> EmployeeContext:
@@ -180,13 +182,14 @@ def ph_employee() -> EmployeeContext:
         nationality=NationalityType.CITIZEN,
         age=30,
         gross_salary=Decimal("25000.00"),
-        calculation_date=date(2025, 6, 1)
+        calculation_date=date(2025, 6, 1),
     )
 
 
 # ============================================================================
 # VIETNAM FIXTURES
 # ============================================================================
+
 
 @pytest.fixture
 def vn_employee_local() -> EmployeeContext:
@@ -196,7 +199,7 @@ def vn_employee_local() -> EmployeeContext:
         nationality=NationalityType.CITIZEN,
         age=30,
         gross_salary=Decimal("15000000.00"),  # VND 15M
-        calculation_date=date(2025, 8, 1)
+        calculation_date=date(2025, 8, 1),
     )
 
 
@@ -208,13 +211,14 @@ def vn_employee_foreign() -> EmployeeContext:
         nationality=NationalityType.FOREIGN,
         age=30,
         gross_salary=Decimal("20000000.00"),  # VND 20M
-        calculation_date=date(2025, 8, 1)
+        calculation_date=date(2025, 8, 1),
     )
 
 
 # ============================================================================
 # CAMBODIA FIXTURES
 # ============================================================================
+
 
 @pytest.fixture
 def kh_employee_phase1() -> EmployeeContext:
@@ -224,7 +228,7 @@ def kh_employee_phase1() -> EmployeeContext:
         nationality=NationalityType.CITIZEN,
         age=30,
         gross_salary=Decimal("800000.00"),  # KHR 800K
-        calculation_date=date(2025, 6, 1)
+        calculation_date=date(2025, 6, 1),
     )
 
 
@@ -236,13 +240,14 @@ def kh_employee_phase2() -> EmployeeContext:
         nationality=NationalityType.CITIZEN,
         age=30,
         gross_salary=Decimal("900000.00"),
-        calculation_date=date(2028, 6, 1)
+        calculation_date=date(2028, 6, 1),
     )
 
 
 # ============================================================================
 # BRUNEI FIXTURES
 # ============================================================================
+
 
 @pytest.fixture
 def bn_employee_tier2() -> EmployeeContext:
@@ -252,5 +257,5 @@ def bn_employee_tier2() -> EmployeeContext:
         nationality=NationalityType.CITIZEN,
         age=30,
         gross_salary=Decimal("1000.00"),
-        calculation_date=date(2025, 6, 1)
+        calculation_date=date(2025, 6, 1),
     )

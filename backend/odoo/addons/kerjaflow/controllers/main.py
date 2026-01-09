@@ -6,60 +6,66 @@ KerjaFlow API Main Controller
 Base controller with health check and common utilities.
 """
 
-from odoo import http
-from odoo.http import request, Response
 import json
 from datetime import datetime
+
+from odoo.http import Response, request
+
+from odoo import http
 
 
 class KerjaFlowController(http.Controller):
     """Base controller for KerjaFlow API."""
 
     # API versioning
-    API_VERSION = 'v1'
-    API_PREFIX = f'/api/{API_VERSION}'
+    API_VERSION = "v1"
+    API_PREFIX = f"/api/{API_VERSION}"
 
-    @http.route('/health', type='http', auth='none', methods=['GET'], csrf=False)
+    @http.route("/health", type="http", auth="none", methods=["GET"], csrf=False)
     def health_check(self):
         """
         Basic health check endpoint.
         Returns: { status: "healthy", version: "1.0.0", timestamp: "..." }
         """
-        return self._json_response({
-            'status': 'healthy',
-            'version': '1.0.0',
-            'timestamp': datetime.utcnow().isoformat() + 'Z',
-        })
+        return self._json_response(
+            {
+                "status": "healthy",
+                "version": "1.0.0",
+                "timestamp": datetime.utcnow().isoformat() + "Z",
+            }
+        )
 
-    @http.route('/health/ready', type='http', auth='none', methods=['GET'], csrf=False)
+    @http.route("/health/ready", type="http", auth="none", methods=["GET"], csrf=False)
     def readiness_check(self):
         """
         Readiness check with dependency verification.
         """
         components = {}
-        overall_status = 'healthy'
+        overall_status = "healthy"
 
         # Check database
         try:
-            request.env.cr.execute('SELECT 1')
-            components['database'] = {'status': 'up'}
+            request.env.cr.execute("SELECT 1")
+            components["database"] = {"status": "up"}
         except Exception as e:
-            components['database'] = {'status': 'down', 'error': str(e)}
-            overall_status = 'unhealthy'
+            components["database"] = {"status": "down", "error": str(e)}
+            overall_status = "unhealthy"
 
-        return self._json_response({
-            'status': overall_status,
-            'version': '1.0.0',
-            'timestamp': datetime.utcnow().isoformat() + 'Z',
-            'components': components,
-        })
+        return self._json_response(
+            {
+                "status": overall_status,
+                "version": "1.0.0",
+                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "components": components,
+            }
+        )
 
     # Helper Methods
 
     def _json_response(self, data, status=200, headers=None):
         """Return JSON response."""
         response_headers = headers or {}
-        response_headers['Content-Type'] = 'application/json'
+        response_headers["Content-Type"] = "application/json"
 
         return Response(
             json.dumps(data),
@@ -70,11 +76,11 @@ class KerjaFlowController(http.Controller):
     def _error_response(self, code, message, details=None, status=400):
         """Return error response."""
         error = {
-            'code': code,
-            'message': message,
+            "code": code,
+            "message": message,
         }
         if details:
-            error['details'] = details
+            error["details"] = details
 
         return self._json_response(error, status=status)
 
@@ -92,17 +98,17 @@ class KerjaFlowController(http.Controller):
         """Require authentication. Returns user or raises error."""
         user = self._get_current_user()
         if not user:
-            raise Exception('Unauthorized')
+            raise Exception("Unauthorized")
         return user
 
     def _require_pin(self):
         """Require PIN verification for sensitive operations."""
         # Check X-Verification-Token header
-        token = request.httprequest.headers.get('X-Verification-Token')
+        token = request.httprequest.headers.get("X-Verification-Token")
         if not token:
             return self._error_response(
-                'PIN_REQUIRED',
-                'Please enter your PIN to continue',
+                "PIN_REQUIRED",
+                "Please enter your PIN to continue",
                 status=403,
             )
         # Validate token
@@ -112,13 +118,13 @@ class KerjaFlowController(http.Controller):
     def _paginate(self, records, offset=0, limit=20):
         """Paginate records."""
         total = len(records)
-        items = records[offset:offset + limit]
+        items = records[offset : offset + limit]
         return {
-            'items': items,
-            'pagination': {
-                'offset': offset,
-                'limit': limit,
-                'total': total,
-                'has_more': offset + limit < total,
-            }
+            "items": items,
+            "pagination": {
+                "offset": offset,
+                "limit": limit,
+                "total": total,
+                "has_more": offset + limit < total,
+            },
         }

@@ -4,9 +4,10 @@ Test Suite: Malaysia Statutory Contributions
 Tests for EPF, SOCSO, EIS, HRDF
 """
 
-import pytest
-from decimal import Decimal
 from datetime import date
+from decimal import Decimal
+
+import pytest
 
 from ..models.statutory import EmployeeContext, NationalityType
 
@@ -71,10 +72,7 @@ class TestMalaysiaEPF:
         """
         result = calculator.calculate_all(my_foreign_worker_post_oct2025)
 
-        epf_foreign = next(
-            (c for c in result.contributions if "EPF" in c.scheme_code),
-            None
-        )
+        epf_foreign = next((c for c in result.contributions if "EPF" in c.scheme_code), None)
         assert epf_foreign is not None, "Foreign worker EPF should apply after Oct 2025"
 
         # Salary RM3,000
@@ -151,7 +149,7 @@ class TestMalaysiaEIS:
             nationality=NationalityType.CITIZEN,
             age=30,
             gross_salary=Decimal("7000.00"),  # Above RM6,000 ceiling
-            calculation_date=date(2025, 6, 1)
+            calculation_date=date(2025, 6, 1),
         )
 
         result = calculator.calculate_all(employee)
@@ -178,7 +176,7 @@ class TestMalaysiaHRDF:
             age=30,
             gross_salary=Decimal("5000.00"),
             company_employee_count=15,  # 10+ employees
-            calculation_date=date(2025, 6, 1)
+            calculation_date=date(2025, 6, 1),
         )
 
         result = calculator.calculate_all(employee)
@@ -221,12 +219,8 @@ class TestMalaysiaIntegration:
         result = calculator.calculate_all(my_employee_young_over5k)
 
         # Verify totals match sum of individual contributions
-        calculated_employee = sum(
-            c.employee_amount for c in result.contributions
-        )
-        calculated_employer = sum(
-            c.employer_amount for c in result.contributions
-        )
+        calculated_employee = sum(c.employee_amount for c in result.contributions)
+        calculated_employer = sum(c.employer_amount for c in result.contributions)
 
         assert result.total_employee_amount == calculated_employee
         assert result.total_employer_amount == calculated_employer
