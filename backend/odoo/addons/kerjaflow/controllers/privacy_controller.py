@@ -321,7 +321,8 @@ class PrivacyController(http.Controller):
                     "completed_at": delete_request.completed_at.isoformat(),
                     "deletion_summary": deletion_summary,
                     "message": _(
-                        "Your data has been deleted. Some data may be retained for legal compliance as described in our Privacy Policy."
+                        "Your data has been deleted. Some data may be retained "
+                        "for legal compliance as described in our Privacy Policy."
                     ),
                 },
             }
@@ -520,7 +521,10 @@ class PrivacyController(http.Controller):
                     "user_id": hr_user.id,
                     "type": "privacy_request",
                     "title": f"Privacy {request_type.title()} Request",
-                    "message": f"Employee {privacy_request.employee_id.full_name} has submitted a data {request_type} request. Reference: {privacy_request.reference}",
+                    "message": (
+                        f"Employee {privacy_request.employee_id.full_name} has submitted a data "
+                        f"{request_type} request. Reference: {privacy_request.reference}"
+                    ),
                     "reference_model": "kf.privacy.request",
                     "reference_id": privacy_request.id,
                     "priority": "high",
