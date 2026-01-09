@@ -17,3 +17,6 @@ export 'domain/models/models.dart';
 export 'presentation/providers/providers.dart';
 export 'presentation/screens/screens.dart';
 export 'presentation/widgets/widgets.dart';
+
+// Pages (using design tokens)
+export 'presentation/pages/pages.dart';
