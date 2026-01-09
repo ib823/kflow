@@ -1,0 +1,234 @@
+name: Quality Gates
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  PYTHON_VERSION: "3.11"
+  FLUTTER_VERSION: "3.19.0"
+
+jobs:
+  # ===========================================
+  # Backend Linting
+  # ===========================================
+  lint-backend:
+    name: Lint Backend (Python)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: "pip"
+
+      - name: Install linting tools
+        run: |
+          pip install black flake8 isort
+
+      - name: Check formatting with Black
+        run: |
+          black --check --diff backend/
+
+      - name: Check imports with isort
+        run: |
+          isort --check-only --diff backend/
+
+      - name: Lint with flake8
+        run: |
+          flake8 backend/ --max-line-length=120 --statistics
+
+  # ===========================================
+  # Backend Security Scan
+  # ===========================================
+  security-scan:
+    name: Security Scan (Backend)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: "pip"
+
+      - name: Install security tools
+        run: |
+          pip install bandit safety pip-audit
+
+      - name: Run Bandit security scan
+        run: |
+          bandit -r backend/ -ll -ii -x backend/tests
+
+      - name: Check dependencies with Safety
+        run: |
+          safety check -r backend/requirements.txt || true
+
+      - name: Audit dependencies with pip-audit
+        run: |
+          pip-audit -r backend/requirements.txt || true
+
+  # ===========================================
+  # Backend Tests
+  # ===========================================
+  test-backend:
+    name: Test Backend
+    runs-on: ubuntu-latest
+    needs: [lint-backend]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install -r backend/requirements.txt
+          pip install -r backend/requirements-dev.txt
+
+      - name: Run tests with coverage
+        run: |
+          pytest backend/tests/ -v --cov=backend --cov-report=xml --cov-report=term-missing
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage.xml
+          fail_ci_if_error: false
+
+  # ===========================================
+  # Mobile Linting
+  # ===========================================
+  lint-mobile:
+    name: Lint Mobile (Flutter)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+
+      - name: Get dependencies
+        working-directory: mobile
+        run: flutter pub get
+
+      - name: Analyze code
+        working-directory: mobile
+        run: flutter analyze --no-fatal-infos
+
+      - name: Check formatting
+        working-directory: mobile
+        run: dart format --set-exit-if-changed lib/
+
+  # ===========================================
+  # Mobile Tests
+  # ===========================================
+  test-mobile:
+    name: Test Mobile
+    runs-on: ubuntu-latest
+    needs: [lint-mobile]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+
+      - name: Get dependencies
+        working-directory: mobile
+        run: flutter pub get
+
+      - name: Run tests with coverage
+        working-directory: mobile
+        run: flutter test --coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: mobile/coverage/lcov.info
+          fail_ci_if_error: false
+
+  # ===========================================
+  # Mobile Build
+  # ===========================================
+  build-mobile:
+    name: Build Mobile (APK)
+    runs-on: ubuntu-latest
+    needs: [test-mobile]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+
+      - name: Get dependencies
+        working-directory: mobile
+        run: flutter pub get
+
+      - name: Build APK
+        working-directory: mobile
+        run: flutter build apk --debug
+
+      - name: Check APK size
+        run: |
+          APK_SIZE=$(stat -f%z mobile/build/app/outputs/flutter-apk/app-debug.apk 2>/dev/null || stat -c%s mobile/build/app/outputs/flutter-apk/app-debug.apk)
+          APK_SIZE_MB=$((APK_SIZE / 1048576))
+          echo "APK Size: ${APK_SIZE_MB}MB"
+          if [ $APK_SIZE_MB -gt 50 ]; then
+            echo "ERROR: APK size exceeds 50MB limit"
+            exit 1
+          fi
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-apk
+          path: mobile/build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 7
+
+  # ===========================================
+  # All Gates Summary
+  # ===========================================
+  quality-summary:
+    name: Quality Gates Summary
+    runs-on: ubuntu-latest
+    needs: [lint-backend, security-scan, test-backend, lint-mobile, test-mobile, build-mobile]
+    if: always()
+    steps:
+      - name: Check all gates passed
+        run: |
+          echo "Quality Gates Results:"
+          echo "======================"
+          echo "Backend Lint: ${{ needs.lint-backend.result }}"
+          echo "Security Scan: ${{ needs.security-scan.result }}"
+          echo "Backend Tests: ${{ needs.test-backend.result }}"
+          echo "Mobile Lint: ${{ needs.lint-mobile.result }}"
+          echo "Mobile Tests: ${{ needs.test-mobile.result }}"
+          echo "Mobile Build: ${{ needs.build-mobile.result }}"
+
+          if [ "${{ needs.lint-backend.result }}" != "success" ] || \
+             [ "${{ needs.security-scan.result }}" != "success" ] || \
+             [ "${{ needs.test-backend.result }}" != "success" ] || \
+             [ "${{ needs.lint-mobile.result }}" != "success" ] || \
+             [ "${{ needs.test-mobile.result }}" != "success" ] || \
+             [ "${{ needs.build-mobile.result }}" != "success" ]; then
+            echo "ERROR: One or more quality gates failed"
+            exit 1
+          fi
+          echo "All quality gates passed!"
