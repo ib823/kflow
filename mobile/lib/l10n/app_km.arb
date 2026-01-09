@@ -1,127 +1,920 @@
 {
   "@@locale": "km",
-  "@@last_modified": "2025-12-27T00:00:00.000Z",
   "@@context": "Khmer - ភាសាខ្មែរ",
-
+  "@@last_modified": "2025-12-27T00:00:00.000Z",
+  "@accessibilityApprovedIcon": {
+    "description": "Approved status icon description"
+  },
+  "@accessibilityCancelledIcon": {
+    "description": "Cancelled status icon description"
+  },
+  "@accessibilityDeleteDigit": {
+    "description": "Delete digit button label"
+  },
+  "@accessibilityDigitButton": {
+    "description": "Number pad digit button label",
+    "placeholders": {
+      "digit": {
+        "type": "String",
+        "example": "5"
+      }
+    }
+  },
+  "@accessibilityLeaveCard": {
+    "description": "Leave card accessibility label",
+    "placeholders": {
+      "startDate": {
+        "type": "String",
+        "example": "1 Jan"
+      },
+      "endDate": {
+        "type": "String",
+        "example": "5 Jan"
+      },
+      "days": {
+        "type": "int",
+        "example": "5"
+      },
+      "status": {
+        "type": "String",
+        "example": "Pending"
+      }
+    }
+  },
+  "@accessibilityPayslipCard": {
+    "description": "Payslip card accessibility label",
+    "placeholders": {
+      "period": {
+        "type": "String",
+        "example": "December 2025"
+      },
+      "amount": {
+        "type": "String",
+        "example": "RM 3,500.00"
+      }
+    }
+  },
+  "@accessibilityPendingIcon": {
+    "description": "Pending status icon description"
+  },
+  "@accessibilityPinDot": {
+    "description": "Screen reader label for PIN dots",
+    "placeholders": {
+      "position": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@accessibilityPinDotEmpty": {
+    "description": "Screen reader label for empty PIN dots",
+    "placeholders": {
+      "position": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@accessibilityPinDotFilled": {
+    "description": "Screen reader label for filled PIN dots",
+    "placeholders": {
+      "position": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@accessibilityRejectedIcon": {
+    "description": "Rejected status icon description"
+  },
+  "@accessibilityStatusIndicator": {
+    "description": "Combined status with icon for screen readers",
+    "placeholders": {
+      "status": {
+        "type": "String",
+        "example": "Approved"
+      },
+      "iconDescription": {
+        "type": "String",
+        "example": "Green checkmark icon"
+      }
+    }
+  },
+  "@actionBack": {
+    "description": "Back button text"
+  },
+  "@actionClose": {
+    "description": "Close button text"
+  },
+  "@actionContinue": {
+    "description": "Continue button text"
+  },
+  "@actionDelete": {
+    "description": "Delete button text"
+  },
+  "@actionDone": {
+    "description": "Done button text"
+  },
+  "@actionEdit": {
+    "description": "Edit button text"
+  },
+  "@actionOk": {
+    "description": "OK button text"
+  },
+  "@actionSeeLess": {
+    "description": "See less button text"
+  },
+  "@actionSeeMore": {
+    "description": "See more button text"
+  },
+  "@actionSkip": {
+    "description": "Skip button text"
+  },
+  "@approvalApprove": {
+    "description": "Approve button"
+  },
+  "@approvalNoItems": {
+    "description": "Empty approvals message"
+  },
+  "@approvalPending": {
+    "description": "Pending approval section header"
+  },
+  "@approvalReject": {
+    "description": "Reject button"
+  },
+  "@approvalRejectReason": {
+    "description": "Rejection reason field"
+  },
+  "@approvalRejectReasonPlaceholder": {
+    "description": "Rejection reason placeholder"
+  },
+  "@biometricPrompt": {
+    "description": "Biometric prompt message"
+  },
+  "@biometricUseFingerprint": {
+    "description": "Use fingerprint button"
+  },
+  "@biometricUsePinInstead": {
+    "description": "Fall back to PIN option"
+  },
+  "@cancelLeaveConfirmMessage": {
+    "description": "Cancel leave confirmation message"
+  },
+  "@cancelLeaveConfirmTitle": {
+    "description": "Cancel leave confirmation title"
+  },
+  "@cannotConnectNow": {
+    "description": "Connection error heading"
+  },
+  "@checkConnectionAndRetry": {
+    "description": "Connection error instruction"
+  },
+  "@confirmDialogTitle": {
+    "description": "Confirm dialog title"
+  },
+  "@dashboardQuickActions": {
+    "description": "Quick actions section header"
+  },
+  "@dashboardUpcoming": {
+    "description": "Upcoming events section header"
+  },
+  "@dateDaysAgo": {
+    "description": "Days ago",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "7"
+      }
+    }
+  },
+  "@dateHoursAgo": {
+    "description": "Hours ago",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@dateJustNow": {
+    "description": "Just now label"
+  },
+  "@dateMinutesAgo": {
+    "description": "Minutes ago",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "@dateTomorrow": {
+    "description": "Tomorrow label"
+  },
+  "@dateYesterday": {
+    "description": "Yesterday label"
+  },
+  "@deleteConfirmMessage": {
+    "description": "Delete confirmation message"
+  },
+  "@deleteConfirmTitle": {
+    "description": "Delete confirmation title"
+  },
+  "@documentDelete": {
+    "description": "Delete document button"
+  },
+  "@documentDownload": {
+    "description": "Download button"
+  },
+  "@documentEmpty": {
+    "description": "Empty documents message"
+  },
+  "@documentTitle": {
+    "description": "Documents screen title"
+  },
+  "@documentUpload": {
+    "description": "Upload document button"
+  },
+  "@emptyNoResults": {
+    "description": "No search results message"
+  },
+  "@errorFieldRequired": {
+    "description": "Required field error"
+  },
+  "@errorInvalidEmail": {
+    "description": "Invalid email error"
+  },
+  "@errorPasswordTooShort": {
+    "description": "Password too short error"
+  },
+  "@errorServerError": {
+    "description": "Server error message"
+  },
+  "@errorSessionExpired": {
+    "description": "Session expired message"
+  },
+  "@errorValidation": {
+    "description": "Validation error message"
+  },
+  "@languageBalinese": {
+    "description": "Balinese language name"
+  },
+  "@languageBengali": {
+    "description": "Bengali language name"
+  },
+  "@languageChinese": {
+    "description": "Chinese Simplified language name"
+  },
+  "@languageEnglish": {
+    "description": "English language name"
+  },
+  "@languageIndonesian": {
+    "description": "Indonesian language name"
+  },
+  "@languageJavanese": {
+    "description": "Javanese language name"
+  },
+  "@languageJawi": {
+    "description": "Jawi language name"
+  },
+  "@languageLao": {
+    "description": "Lao language name"
+  },
+  "@languageMadurese": {
+    "description": "Madurese language name"
+  },
+  "@languageMalay": {
+    "description": "Malay language name"
+  },
+  "@languageMinangkabau": {
+    "description": "Minangkabau language name"
+  },
+  "@languageMyanmar": {
+    "description": "Myanmar language name"
+  },
+  "@languageNepali": {
+    "description": "Nepali language name"
+  },
+  "@languageSundanese": {
+    "description": "Sundanese language name"
+  },
+  "@languageTagalog": {
+    "description": "Tagalog/Filipino language name"
+  },
+  "@languageTamil": {
+    "description": "Tamil language name"
+  },
+  "@languageThai": {
+    "description": "Thai language name"
+  },
+  "@languageVietnamese": {
+    "description": "Vietnamese language name"
+  },
+  "@leaveAttachment": {
+    "description": "Leave attachment label"
+  },
+  "@leaveAttachmentUpload": {
+    "description": "Upload attachment button"
+  },
+  "@leaveCompassionate": {
+    "description": "Compassionate leave type label"
+  },
+  "@leaveDaysCount": {
+    "description": "Day count with pluralization",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@leaveEmergency": {
+    "description": "Emergency leave type label"
+  },
+  "@leaveEndDate": {
+    "description": "Leave end date label"
+  },
+  "@leaveHistory": {
+    "description": "Leave history section header"
+  },
+  "@leaveInsufficientBalance": {
+    "description": "Insufficient balance error"
+  },
+  "@leaveMaternity": {
+    "description": "Maternity leave type label"
+  },
+  "@leaveMinimumNotice": {
+    "description": "Minimum notice error"
+  },
+  "@leaveOverlapping": {
+    "description": "Overlapping leave error"
+  },
+  "@leavePaternity": {
+    "description": "Paternity leave type label"
+  },
+  "@leaveReason": {
+    "description": "Leave reason field label"
+  },
+  "@leaveReasonPlaceholder": {
+    "description": "Leave reason placeholder text"
+  },
+  "@leaveSelectType": {
+    "description": "Leave type selection label"
+  },
+  "@leaveStartDate": {
+    "description": "Leave start date label"
+  },
+  "@leaveUnpaid": {
+    "description": "Unpaid leave type label"
+  },
+  "@leaveWorkingDays": {
+    "description": "Working days count label"
+  },
+  "@loadingProcessing": {
+    "description": "Processing indicator message"
+  },
+  "@loadingSubmitting": {
+    "description": "Submitting indicator message"
+  },
+  "@loginAccountLocked": {
+    "description": "Account lockout message"
+  },
+  "@loginInvalidCredentials": {
+    "description": "Login error message"
+  },
+  "@loginRememberMe": {
+    "description": "Remember me checkbox"
+  },
+  "@logoutButton": {
+    "description": "Logout button text"
+  },
+  "@logoutConfirmMessage": {
+    "description": "Logout confirmation message"
+  },
+  "@logoutConfirmTitle": {
+    "description": "Logout confirmation dialog title"
+  },
+  "@notificationEmpty": {
+    "description": "Empty notifications message"
+  },
+  "@notificationMarkAllRead": {
+    "description": "Mark all read button"
+  },
+  "@notificationTitle": {
+    "description": "Notifications screen title"
+  },
+  "@notificationUnreadCount": {
+    "description": "Unread notification count",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "@offlineDataAvailable": {
+    "description": "Offline data available message"
+  },
+  "@offlineModeActive": {
+    "description": "Offline mode banner message"
+  },
+  "@onboardingGetStarted": {
+    "description": "Onboarding get started button"
+  },
+  "@onboardingLeave": {
+    "description": "Onboarding leave feature"
+  },
+  "@onboardingNotifications": {
+    "description": "Onboarding notifications feature"
+  },
+  "@onboardingPayslip": {
+    "description": "Onboarding payslip feature"
+  },
+  "@onboardingWelcome": {
+    "description": "Onboarding welcome screen"
+  },
+  "@payslipAllowances": {
+    "description": "Allowances label"
+  },
+  "@payslipBonus": {
+    "description": "Bonus label"
+  },
+  "@payslipEmployeeContribution": {
+    "description": "Employee contribution column"
+  },
+  "@payslipEmployerContribution": {
+    "description": "Employer contribution column"
+  },
+  "@payslipMonthYear": {
+    "description": "Payslip month/year header",
+    "placeholders": {
+      "month": {
+        "type": "String",
+        "example": "December"
+      },
+      "year": {
+        "type": "String",
+        "example": "2025"
+      }
+    }
+  },
+  "@payslipOvertime": {
+    "description": "Overtime label"
+  },
+  "@payslipPinProtected": {
+    "description": "PIN protection indicator"
+  },
+  "@payslipShare": {
+    "description": "Share payslip button"
+  },
+  "@payslipStatutory": {
+    "description": "Statutory contributions section"
+  },
+  "@payslipViewBreakdown": {
+    "description": "View breakdown button"
+  },
+  "@payslipYouKeep": {
+    "description": "Net pay visual label"
+  },
+  "@pinAttemptsRemaining": {
+    "description": "Remaining PIN attempts",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@pinConfirmSubtitle": {
+    "description": "PIN confirmation instruction"
+  },
+  "@pinConfirmTitle": {
+    "description": "PIN confirmation screen title"
+  },
+  "@pinEntrySubtitle": {
+    "description": "PIN entry instruction"
+  },
+  "@pinMismatch": {
+    "description": "PIN mismatch error"
+  },
+  "@pinRequired": {
+    "description": "PIN required indicator"
+  },
+  "@pinSetupLater": {
+    "description": "Skip PIN setup option"
+  },
+  "@profileChangePhoto": {
+    "description": "Change photo button"
+  },
+  "@profileDepartment": {
+    "description": "Department label"
+  },
+  "@profileEditProfile": {
+    "description": "Edit profile button"
+  },
+  "@profileEmail": {
+    "description": "Email label"
+  },
+  "@profileEmergencyContact": {
+    "description": "Emergency contact label"
+  },
+  "@profileEmployeeId": {
+    "description": "Employee ID label"
+  },
+  "@profileJoinDate": {
+    "description": "Join date label"
+  },
+  "@profilePhone": {
+    "description": "Phone label"
+  },
+  "@profilePosition": {
+    "description": "Position label"
+  },
+  "@profileTitle": {
+    "description": "Profile screen title"
+  },
+  "@publicHolidays": {
+    "description": "Public holidays section header"
+  },
+  "@settingsAbout": {
+    "description": "About section"
+  },
+  "@settingsAccessibility": {
+    "description": "Accessibility section"
+  },
+  "@settingsAudio": {
+    "description": "Audio settings section header"
+  },
+  "@settingsAudioFeedback": {
+    "description": "Audio feedback setting"
+  },
+  "@settingsAudioFeedbackDesc": {
+    "description": "Audio feedback description"
+  },
+  "@settingsBiometricFirst": {
+    "description": "Biometric first setting"
+  },
+  "@settingsBiometricFirstDesc": {
+    "description": "Biometric first description"
+  },
+  "@settingsGloveMode": {
+    "description": "Glove mode setting"
+  },
+  "@settingsGloveModeDesc": {
+    "description": "Glove mode description"
+  },
+  "@settingsHapticFeedback": {
+    "description": "Haptic feedback setting"
+  },
+  "@settingsHapticFeedbackDesc": {
+    "description": "Haptic feedback description"
+  },
+  "@settingsHighContrast": {
+    "description": "High contrast mode setting"
+  },
+  "@settingsHighContrastDesc": {
+    "description": "High contrast description"
+  },
+  "@settingsInteraction": {
+    "description": "Interaction settings section header"
+  },
+  "@settingsLargeText": {
+    "description": "Large text mode setting"
+  },
+  "@settingsLargeTextDesc": {
+    "description": "Large text description"
+  },
+  "@settingsPrivacy": {
+    "description": "Privacy policy link"
+  },
+  "@settingsSimpleMode": {
+    "description": "Simple mode setting"
+  },
+  "@settingsSimpleModeDesc": {
+    "description": "Simple mode description"
+  },
+  "@settingsTTS": {
+    "description": "Text-to-speech setting"
+  },
+  "@settingsTTSDesc": {
+    "description": "TTS description"
+  },
+  "@settingsTerms": {
+    "description": "Terms link"
+  },
+  "@settingsVersion": {
+    "description": "App version display",
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.0.0"
+      }
+    }
+  },
+  "@settingsVisual": {
+    "description": "Visual settings section header"
+  },
+  "@statusCompleted": {
+    "description": "Status: Completed"
+  },
+  "@statusProcessing": {
+    "description": "Status: Processing"
+  },
+  "@successApproved": {
+    "description": "Approval success message"
+  },
+  "@successDocumentUploaded": {
+    "description": "Document upload success"
+  },
+  "@successLeaveSubmitted": {
+    "description": "Leave submission success"
+  },
+  "@successPinChanged": {
+    "description": "PIN change success"
+  },
+  "@successProfileUpdated": {
+    "description": "Profile update success"
+  },
+  "@successRejected": {
+    "description": "Rejection success message"
+  },
+  "accessibilityApprovedIcon": "[TRANSLATE] Green checkmark icon",
+  "accessibilityCancelledIcon": "[TRANSLATE] Grey block icon",
+  "accessibilityDeleteDigit": "[TRANSLATE] Delete last digit",
+  "accessibilityDigitButton": "[TRANSLATE] Digit {digit}",
+  "accessibilityLeaveCard": "[TRANSLATE] Leave request from {startDate} to {endDate}, {days} days. Status: {status}.",
+  "accessibilityPayslipCard": "[TRANSLATE] Payslip for {period}, Net salary {amount}. Tap to view details. PIN required.",
+  "accessibilityPendingIcon": "[TRANSLATE] Yellow clock icon",
+  "accessibilityPinDot": "[TRANSLATE] PIN digit {position} of 6",
+  "accessibilityPinDotEmpty": "[TRANSLATE] PIN digit {position} of 6, empty",
+  "accessibilityPinDotFilled": "[TRANSLATE] PIN digit {position} of 6, entered",
+  "accessibilityRejectedIcon": "[TRANSLATE] Red X icon",
+  "accessibilityStatusIndicator": "[TRANSLATE] {status}. {iconDescription}",
+  "actionBack": "[TRANSLATE] Back",
+  "actionCancel": "បោះបង់",
+  "actionClose": "[TRANSLATE] Close",
+  "actionConfirm": "បញ្ជាក់",
+  "actionContinue": "[TRANSLATE] Continue",
+  "actionDelete": "[TRANSLATE] Delete",
+  "actionDone": "[TRANSLATE] Done",
+  "actionEdit": "[TRANSLATE] Edit",
+  "actionNo": "ទេ",
+  "actionOk": "[TRANSLATE] OK",
+  "actionRetry": "ព្យាយាមម្តងទៀត",
+  "actionSave": "រក្សាទុក",
+  "actionSeeLess": "[TRANSLATE] See Less",
+  "actionSeeMore": "[TRANSLATE] See More",
+  "actionSkip": "[TRANSLATE] Skip",
+  "actionSubmit": "ដាក់ស្នើ",
+  "actionYes": "បាទ/ចាស",
   "appName": "KerjaFlow",
-  "navHome": "ទំព័រដើម",
-  "navPayslip": "ប័ណ្ណប្រាក់ខែ",
-  "navLeave": "ច្បាប់ឈប់សម្រាក",
-  "navInbox": "ប្រអប់សំបុត្រ",
-  "navProfile": "ប្រវត្តិរូប",
-
-  "loginTitle": "សូមស្វាគមន៍មក KerjaFlow",
-  "loginSubtitle": "ចូលដើម្បីបន្ត",
-  "loginEmail": "អ៊ីមែល ឬ លេខបុគ្គលិក",
-  "loginPassword": "ពាក្យសម្ងាត់",
-  "loginButton": "ចូល",
-  "loginForgotPassword": "ភ្លេចពាក្យសម្ងាត់?",
-
-  "pinSetupTitle": "បង្កើត PIN របស់អ្នក",
-  "pinSetupSubtitle": "បញ្ចូល PIN ៦ ខ្ទង់ដើម្បីការពារគណនីរបស់អ្នក",
-  "pinEntryTitle": "បញ្ចូល PIN",
-  "pinVerifyBiometric": "ប្រើស្នាមម្រាមដៃ",
-  "pinForgot": "ភ្លេច PIN?",
-  "pinInvalid": "PIN មិនត្រឹមត្រូវ",
-
-  "dashboardGreeting": "អរុណសួស្តី {name}",
-  "dashboardMorning": "ព្រឹក",
+  "approvalApprove": "[TRANSLATE] Approve",
+  "approvalNoItems": "[TRANSLATE] No pending approvals",
+  "approvalPending": "[TRANSLATE] Pending Approval",
+  "approvalReject": "[TRANSLATE] Reject",
+  "approvalRejectReason": "[TRANSLATE] Rejection Reason",
+  "approvalRejectReasonPlaceholder": "[TRANSLATE] Please provide a reason for rejection",
+  "biometricPrompt": "[TRANSLATE] Verify your identity",
+  "biometricUseFingerprint": "[TRANSLATE] Use Fingerprint",
+  "biometricUsePinInstead": "[TRANSLATE] Use PIN Instead",
+  "cancelLeaveConfirmMessage": "[TRANSLATE] Are you sure you want to cancel this leave request?",
+  "cancelLeaveConfirmTitle": "[TRANSLATE] Cancel Leave Request?",
+  "cannotConnectNow": "[TRANSLATE] Cannot connect right now",
+  "checkConnectionAndRetry": "[TRANSLATE] Check your connection and try again",
+  "confirmDialogTitle": "[TRANSLATE] Confirm Action",
+  "contributionEmployee": "បុគ្គលិក",
+  "contributionEmployer": "និយោជក",
+  "contributionTotal": "សរុប",
+  "currencyBnd": "B$",
+  "currencyFormat": "៛{amount}",
+  "currencyIdr": "Rp",
+  "currencyKhr": "៛",
+  "currencyLak": "₭",
+  "currencyMmk": "K",
+  "currencyMyr": "RM",
+  "currencyPhp": "₱",
+  "currencySgd": "S$",
+  "currencyThb": "฿",
+  "currencyVnd": "₫",
   "dashboardAfternoon": "រសៀល",
   "dashboardEvening": "ល្ងាច",
-
-  "leaveBalanceTitle": "សមតុល្យច្បាប់ឈប់សម្រាក",
-  "leaveAnnual": "ច្បាប់ឈប់សម្រាកប្រចាំឆ្នាំ",
-  "leaveMedical": "ច្បាប់ឈប់សម្រាកជំងឺ",
-  "leaveApply": "ស្នើសុំច្បាប់ឈប់សម្រាក",
-  "leaveRemainingDays": "{count, plural, =0{គ្មានថ្ងៃ} =1{១ ថ្ងៃ} other{{count} ថ្ងៃ}} នៅសល់",
-
-  "payslipGrossEarnings": "ប្រាក់ចំណូលសរុប",
-  "payslipDeductions": "ការកាត់កង",
-  "payslipNetPay": "ប្រាក់ខែសុទ្ធ",
-  "payslipBasicSalary": "ប្រាក់ខែមូលដ្ឋាន",
-  "payslipDownloadPdf": "ទាញយក PDF",
-
-  "statusPending": "កំពុងរង់ចាំ",
-  "statusApproved": "បានអនុម័ត",
-  "statusRejected": "បានបដិសេធ",
-  "statusCancelled": "បានលុបចោល",
-
-  "actionSubmit": "ដាក់ស្នើ",
-  "actionCancel": "បោះបង់",
-  "actionSave": "រក្សាទុក",
-  "actionRetry": "ព្យាយាមម្តងទៀត",
-  "actionConfirm": "បញ្ជាក់",
-  "actionYes": "បាទ/ចាស",
-  "actionNo": "ទេ",
-
-  "errorGeneric": "មានបញ្ហាកើតឡើង។ សូមព្យាយាមម្តងទៀត។",
-  "errorNetwork": "គ្មានការតភ្ជាប់អ៊ីនធឺណិត",
-
-  "settingsTitle": "ការកំណត់",
-  "settingsLanguage": "ភាសា",
-
-  "loadingPleaseWait": "សូមរង់ចាំ...",
-  "emptyNoData": "គ្មានទិន្នន័យ",
-
-  "languageKhmer": "ភាសាខ្មែរ",
+  "dashboardGreeting": "អរុណសួស្តី {name}",
+  "dashboardMorning": "ព្រឹក",
+  "dashboardQuickActions": "[TRANSLATE] Quick Actions",
+  "dashboardUpcoming": "[TRANSLATE] Upcoming",
+  "dateDaysAgo": "[TRANSLATE] {count, plural, =1{1 day ago} other{{count} days ago}}",
+  "dateHoursAgo": "[TRANSLATE] {count, plural, =1{1 hour ago} other{{count} hours ago}}",
+  "dateJustNow": "[TRANSLATE] Just now",
+  "dateMinutesAgo": "[TRANSLATE] {count, plural, =1{1 minute ago} other{{count} minutes ago}}",
   "dateToday": "ថ្ងៃនេះ",
-
-  "currencyFormat": "៛{amount}",
+  "dateTomorrow": "[TRANSLATE] Tomorrow",
+  "dateYesterday": "[TRANSLATE] Yesterday",
+  "deleteConfirmMessage": "[TRANSLATE] This action cannot be undone.",
+  "deleteConfirmTitle": "[TRANSLATE] Delete?",
+  "documentDelete": "[TRANSLATE] Delete",
+  "documentDownload": "[TRANSLATE] Download",
+  "documentEmpty": "[TRANSLATE] No documents",
+  "documentTitle": "[TRANSLATE] Documents",
+  "documentUpload": "[TRANSLATE] Upload Document",
+  "emptyNoData": "គ្មានទិន្នន័យ",
+  "emptyNoResults": "[TRANSLATE] No results found",
+  "errorFieldRequired": "[TRANSLATE] This field is required",
+  "errorGeneric": "មានបញ្ហាកើតឡើង។ សូមព្យាយាមម្តងទៀត។",
+  "errorInvalidEmail": "[TRANSLATE] Please enter a valid email address",
+  "errorNetwork": "គ្មានការតភ្ជាប់អ៊ីនធឺណិត",
+  "errorPasswordTooShort": "[TRANSLATE] Password must be at least 8 characters",
+  "errorServerError": "[TRANSLATE] Server error. Please try again later.",
+  "errorSessionExpired": "[TRANSLATE] Your session has expired. Please login again.",
+  "errorValidation": "[TRANSLATE] Please check your input and try again.",
+  "halfDayAm": "ព្រឹក",
+  "halfDayPm": "រសៀល",
+  "languageBalinese": "[TRANSLATE] Basa Bali",
+  "languageBengali": "[TRANSLATE] বাংলা",
+  "languageChinese": "[TRANSLATE] 简体中文",
+  "languageEnglish": "[TRANSLATE] English",
+  "languageIndonesian": "[TRANSLATE] Bahasa Indonesia",
+  "languageJavanese": "[TRANSLATE] Basa Jawa",
+  "languageJawi": "[TRANSLATE] جاوي (Jawi)",
+  "languageKhmer": "ភាសាខ្មែរ",
+  "languageLao": "[TRANSLATE] ພາສາລາວ",
+  "languageMadurese": "[TRANSLATE] Basa Madhura",
+  "languageMalay": "[TRANSLATE] Bahasa Malaysia",
+  "languageMinangkabau": "[TRANSLATE] Baso Minang",
+  "languageMyanmar": "[TRANSLATE] မြန်မာ",
+  "languageNepali": "[TRANSLATE] नेपाली",
+  "languageSundanese": "[TRANSLATE] Basa Sunda",
+  "languageTagalog": "[TRANSLATE] Filipino",
+  "languageTamil": "[TRANSLATE] தமிழ்",
+  "languageThai": "[TRANSLATE] ภาษาไทย",
+  "languageVietnamese": "[TRANSLATE] Tiếng Việt",
+  "leaveAnnual": "ច្បាប់ឈប់សម្រាកប្រចាំឆ្នាំ",
+  "leaveApply": "ស្នើសុំច្បាប់ឈប់សម្រាក",
+  "leaveAttachment": "[TRANSLATE] Attachment",
+  "leaveAttachmentUpload": "[TRANSLATE] Upload attachment",
+  "leaveBalanceTitle": "សមតុល្យច្បាប់ឈប់សម្រាក",
+  "leaveCompassionate": "[TRANSLATE] Compassionate Leave",
+  "leaveDaysCount": "[TRANSLATE] {count, plural, =0{0 days} =1{1 day} other{{count} days}}",
+  "leaveEmergency": "[TRANSLATE] Emergency Leave",
+  "leaveEndDate": "[TRANSLATE] End Date",
+  "leaveFullDay": "ពេញមួយថ្ងៃ",
+  "leaveHalfDay": "កន្លះថ្ងៃ",
+  "leaveHistory": "[TRANSLATE] Leave History",
+  "leaveInsufficientBalance": "[TRANSLATE] Insufficient leave balance",
+  "leaveMaternity": "[TRANSLATE] Maternity Leave",
+  "leaveMedical": "ច្បាប់ឈប់សម្រាកជំងឺ",
+  "leaveMinimumNotice": "[TRANSLATE] Minimum notice period not met",
+  "leaveOverlapping": "[TRANSLATE] Leave dates overlap with existing request",
+  "leavePaternity": "[TRANSLATE] Paternity Leave",
+  "leaveReason": "[TRANSLATE] Reason",
+  "leaveReasonPlaceholder": "[TRANSLATE] Please provide a reason for your leave request",
+  "leaveRemainingDays": "{count, plural, =0{គ្មានថ្ងៃ} =1{១ ថ្ងៃ} other{{count} ថ្ងៃ}} នៅសល់",
+  "leaveSelectType": "[TRANSLATE] Select leave type",
+  "leaveStartDate": "[TRANSLATE] Start Date",
+  "leaveUnpaid": "[TRANSLATE] Unpaid Leave",
+  "leaveWorkingDays": "[TRANSLATE] Working days",
+  "loadingPleaseWait": "សូមរង់ចាំ...",
+  "loadingProcessing": "[TRANSLATE] Processing...",
+  "loadingSubmitting": "[TRANSLATE] Submitting...",
+  "loginAccountLocked": "[TRANSLATE] Account locked. Try again in 15 minutes.",
+  "loginButton": "ចូល",
+  "loginEmail": "អ៊ីមែល ឬ លេខបុគ្គលិក",
+  "loginForgotPassword": "ភ្លេចពាក្យសម្ងាត់?",
+  "loginInvalidCredentials": "[TRANSLATE] Invalid email or password",
+  "loginPassword": "ពាក្យសម្ងាត់",
+  "loginRememberMe": "[TRANSLATE] Remember me",
+  "loginSubtitle": "ចូលដើម្បីបន្ត",
+  "loginTitle": "សូមស្វាគមន៍មក KerjaFlow",
+  "logoutButton": "[TRANSLATE] Logout",
+  "logoutConfirmMessage": "[TRANSLATE] Are you sure you want to logout?",
+  "logoutConfirmTitle": "[TRANSLATE] Logout",
+  "navHome": "ទំព័រដើម",
+  "navInbox": "ប្រអប់សំបុត្រ",
+  "navLeave": "ច្បាប់ឈប់សម្រាក",
+  "navPayslip": "ប័ណ្ណប្រាក់ខែ",
+  "navProfile": "ប្រវត្តិរូប",
+  "notificationEmpty": "[TRANSLATE] No notifications",
+  "notificationMarkAllRead": "[TRANSLATE] Mark all as read",
+  "notificationTitle": "[TRANSLATE] Notifications",
+  "notificationUnreadCount": "[TRANSLATE] {count, plural, =0{No unread} =1{1 unread} other{{count} unread}}",
+  "offlineDataAvailable": "[TRANSLATE] You can still view saved data",
+  "offlineModeActive": "[TRANSLATE] Working offline - changes saved",
+  "onboardingGetStarted": "[TRANSLATE] Get Started",
+  "onboardingLeave": "[TRANSLATE] Apply for leave easily",
+  "onboardingNotifications": "[TRANSLATE] Stay updated with notifications",
+  "onboardingPayslip": "[TRANSLATE] View your payslip anytime",
+  "onboardingWelcome": "[TRANSLATE] Welcome",
+  "payslipAllowances": "[TRANSLATE] Allowances",
+  "payslipBasicSalary": "ប្រាក់ខែមូលដ្ឋាន",
+  "payslipBonus": "[TRANSLATE] Bonus",
+  "payslipDeductions": "ការកាត់កង",
+  "payslipDownloadPdf": "ទាញយក PDF",
+  "payslipEmployeeContribution": "[TRANSLATE] Employee",
+  "payslipEmployerContribution": "[TRANSLATE] Employer",
+  "payslipGrossEarnings": "ប្រាក់ចំណូលសរុប",
+  "payslipMonthYear": "[TRANSLATE] {month} {year}",
+  "payslipNetPay": "ប្រាក់ខែសុទ្ធ",
+  "payslipOvertime": "[TRANSLATE] Overtime",
+  "payslipPinProtected": "[TRANSLATE] PIN protected",
+  "payslipShare": "[TRANSLATE] Share",
+  "payslipStatutory": "[TRANSLATE] Statutory Contributions",
+  "payslipViewBreakdown": "[TRANSLATE] View Breakdown",
+  "payslipYouKeep": "[TRANSLATE] What You Keep",
   "percentFormat": "{value}%",
-
-  "statutoryContributions": "ការបរិច្ចាគតាមច្បាប់",
-  "statutoryEpf": "EPF",
-  "statutoryEpfDescription": "មូលនិធិសោធននិវត្តន៍បុគ្គលិក",
-  "statutorySocso": "SOCSO",
-  "statutorySocsoDescription": "អង្គការសន្តិសុខសង្គម",
-  "statutoryEis": "EIS",
-  "statutoryEisDescription": "ប្រព័ន្ធធានារ៉ាប់រងការងារ",
-  "statutoryPcb": "PCB",
-  "statutoryPcbDescription": "ការកាត់ពន្ធប្រចាំខែ",
-  "statutoryCpf": "CPF",
-  "statutoryCpfDescription": "មូលនិធិសោធននិវត្តន៍កណ្តាល",
-  "statutoryBpjsTk": "BPJS-TK",
-  "statutoryBpjsTkDescription": "សន្តិសុខសង្គមការងារ",
-  "statutoryBpjsKes": "BPJS-Kes",
-  "statutoryBpjsKesDescription": "ធានារ៉ាប់រងសុខភាព",
-  "statutorySss": "SSS",
-  "statutorySssDescription": "ប្រព័ន្ធសន្តិសុខសង្គម",
-  "statutoryPhilHealth": "PhilHealth",
-  "statutoryPhilHealthDescription": "ធានារ៉ាប់រងសុខភាពហ្វីលីពីន",
-  "statutoryPagIbig": "Pag-IBIG",
-  "statutoryPagIbigDescription": "មូលនិធិអភិវឌ្ឍន៍លំនៅដ្ឋាន",
-  "statutorySsf": "SSF",
-  "statutorySsfDescription": "មូលនិធិសន្តិសុខសង្គម",
+  "pinAttemptsRemaining": "[TRANSLATE] {count, plural, =1{1 attempt remaining} other{{count} attempts remaining}}",
+  "pinConfirmSubtitle": "[TRANSLATE] Enter the same PIN again to confirm",
+  "pinConfirmTitle": "[TRANSLATE] Confirm Your PIN",
+  "pinEntrySubtitle": "[TRANSLATE] Enter your 6-digit PIN to continue",
+  "pinEntryTitle": "បញ្ចូល PIN",
+  "pinForgot": "ភ្លេច PIN?",
+  "pinInvalid": "PIN មិនត្រឹមត្រូវ",
+  "pinMismatch": "[TRANSLATE] PINs do not match. Please try again.",
+  "pinRequired": "[TRANSLATE] PIN required",
+  "pinSetupLater": "[TRANSLATE] Set up later",
+  "pinSetupSubtitle": "បញ្ចូល PIN ៦ ខ្ទង់ដើម្បីការពារគណនីរបស់អ្នក",
+  "pinSetupTitle": "បង្កើត PIN របស់អ្នក",
+  "pinVerifyBiometric": "ប្រើស្នាមម្រាមដៃ",
+  "profileChangePhoto": "[TRANSLATE] Change Photo",
+  "profileDepartment": "[TRANSLATE] Department",
+  "profileEditProfile": "[TRANSLATE] Edit Profile",
+  "profileEmail": "[TRANSLATE] Email",
+  "profileEmergencyContact": "[TRANSLATE] Emergency Contact",
+  "profileEmployeeId": "[TRANSLATE] Employee ID",
+  "profileJoinDate": "[TRANSLATE] Join Date",
+  "profilePhone": "[TRANSLATE] Phone",
+  "profilePosition": "[TRANSLATE] Position",
+  "profileTitle": "[TRANSLATE] Profile",
+  "publicHolidays": "[TRANSLATE] Public Holidays",
+  "settingsAbout": "[TRANSLATE] About",
+  "settingsAccessibility": "[TRANSLATE] Accessibility",
+  "settingsAudio": "[TRANSLATE] Audio Settings",
+  "settingsAudioFeedback": "[TRANSLATE] Sound Effects",
+  "settingsAudioFeedbackDesc": "[TRANSLATE] Hear success and error sounds",
+  "settingsBiometricFirst": "[TRANSLATE] Fingerprint First",
+  "settingsBiometricFirstDesc": "[TRANSLATE] Use fingerprint before PIN",
+  "settingsGloveMode": "[TRANSLATE] Glove Mode",
+  "settingsGloveModeDesc": "[TRANSLATE] Bigger buttons for gloves",
+  "settingsHapticFeedback": "[TRANSLATE] Vibration",
+  "settingsHapticFeedbackDesc": "[TRANSLATE] Feel taps and actions",
+  "settingsHighContrast": "[TRANSLATE] High Contrast",
+  "settingsHighContrastDesc": "[TRANSLATE] Easier to see outdoors",
+  "settingsInteraction": "[TRANSLATE] Interaction Settings",
+  "settingsLanguage": "ភាសា",
+  "settingsLargeText": "[TRANSLATE] Large Text",
+  "settingsLargeTextDesc": "[TRANSLATE] Make text bigger",
+  "settingsPrivacy": "[TRANSLATE] Privacy Policy",
+  "settingsSimpleMode": "[TRANSLATE] Simple Mode",
+  "settingsSimpleModeDesc": "[TRANSLATE] Hide advanced features",
+  "settingsTTS": "[TRANSLATE] Voice Readout",
+  "settingsTTSDesc": "[TRANSLATE] Read screen content aloud",
+  "settingsTerms": "[TRANSLATE] Terms & Conditions",
+  "settingsTitle": "ការកំណត់",
+  "settingsVersion": "[TRANSLATE] Version {version}",
+  "settingsVisual": "[TRANSLATE] Visual Settings",
+  "statusApproved": "បានអនុម័ត",
+  "statusCancelled": "បានលុបចោល",
+  "statusCompleted": "[TRANSLATE] Completed",
+  "statusPending": "កំពុងរង់ចាំ",
+  "statusProcessing": "[TRANSLATE] Processing",
+  "statusRejected": "បានបដិសេធ",
   "statutoryBhxh": "BHXH",
   "statutoryBhxhDescription": "ធានារ៉ាប់រងសង្គម",
   "statutoryBhyt": "BHYT",
   "statutoryBhytDescription": "ធានារ៉ាប់រងសុខភាព",
-  "statutoryNssf": "NSSF",
-  "statutoryNssfDescription": "មូលនិធិជាតិសន្តិសុខសង្គម",
-  "statutorySsb": "SSB",
-  "statutorySsbDescription": "ក្រុមប្រឹក្សាសន្តិសុខសង្គម",
-  "statutoryTap": "TAP",
-  "statutoryTapDescription": "មូលនិធិទុកចិត្តបុគ្គលិក",
+  "statutoryBpjsKes": "BPJS-Kes",
+  "statutoryBpjsKesDescription": "ធានារ៉ាប់រងសុខភាព",
+  "statutoryBpjsTk": "BPJS-TK",
+  "statutoryBpjsTkDescription": "សន្តិសុខសង្គមការងារ",
+  "statutoryContributions": "ការបរិច្ចាគតាមច្បាប់",
+  "statutoryCpf": "CPF",
+  "statutoryCpfDescription": "មូលនិធិសោធននិវត្តន៍កណ្តាល",
+  "statutoryEis": "EIS",
+  "statutoryEisDescription": "ប្រព័ន្ធធានារ៉ាប់រងការងារ",
+  "statutoryEpf": "EPF",
+  "statutoryEpfDescription": "មូលនិធិសោធននិវត្តន៍បុគ្គលិក",
   "statutoryLsso": "LSSO",
   "statutoryLssoDescription": "អង្គការសន្តិសុខសង្គមឡាវ",
-
-  "contributionEmployee": "បុគ្គលិក",
-  "contributionEmployer": "និយោជក",
-  "contributionTotal": "សរុប",
-
-  "currencyMyr": "RM",
-  "currencySgd": "S$",
-  "currencyIdr": "Rp",
-  "currencyThb": "฿",
-  "currencyPhp": "₱",
-  "currencyVnd": "₫",
-  "currencyKhr": "៛",
-  "currencyMmk": "K",
-  "currencyBnd": "B$",
-  "currencyLak": "₭",
-
-  "halfDayAm": "ព្រឹក",
-  "halfDayPm": "រសៀល",
-  "leaveHalfDay": "កន្លះថ្ងៃ",
-  "leaveFullDay": "ពេញមួយថ្ងៃ"
+  "statutoryNssf": "NSSF",
+  "statutoryNssfDescription": "មូលនិធិជាតិសន្តិសុខសង្គម",
+  "statutoryPagIbig": "Pag-IBIG",
+  "statutoryPagIbigDescription": "មូលនិធិអភិវឌ្ឍន៍លំនៅដ្ឋាន",
+  "statutoryPcb": "PCB",
+  "statutoryPcbDescription": "ការកាត់ពន្ធប្រចាំខែ",
+  "statutoryPhilHealth": "PhilHealth",
+  "statutoryPhilHealthDescription": "ធានារ៉ាប់រងសុខភាពហ្វីលីពីន",
+  "statutorySocso": "SOCSO",
+  "statutorySocsoDescription": "អង្គការសន្តិសុខសង្គម",
+  "statutorySsb": "SSB",
+  "statutorySsbDescription": "ក្រុមប្រឹក្សាសន្តិសុខសង្គម",
+  "statutorySsf": "SSF",
+  "statutorySsfDescription": "មូលនិធិសន្តិសុខសង្គម",
+  "statutorySss": "SSS",
+  "statutorySssDescription": "ប្រព័ន្ធសន្តិសុខសង្គម",
+  "statutoryTap": "TAP",
+  "statutoryTapDescription": "មូលនិធិទុកចិត្តបុគ្គលិក",
+  "successApproved": "[TRANSLATE] Request approved",
+  "successDocumentUploaded": "[TRANSLATE] Document uploaded successfully",
+  "successLeaveSubmitted": "[TRANSLATE] Leave request submitted successfully",
+  "successPinChanged": "[TRANSLATE] PIN changed successfully",
+  "successProfileUpdated": "[TRANSLATE] Profile updated successfully",
+  "successRejected": "[TRANSLATE] Request rejected"
 }

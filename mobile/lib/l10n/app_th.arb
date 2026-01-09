@@ -1,204 +1,679 @@
 {
   "@@locale": "th",
-  "@@last_modified": "2025-12-27T00:00:00.000Z",
   "@@context": "Thai - ภาษาไทย",
-
+  "@@last_modified": "2025-12-27T00:00:00.000Z",
+  "@accessibilityApprovedIcon": {
+    "description": "Approved status icon description"
+  },
+  "@accessibilityCancelledIcon": {
+    "description": "Cancelled status icon description"
+  },
+  "@accessibilityDeleteDigit": {
+    "description": "Delete digit button label"
+  },
+  "@accessibilityDigitButton": {
+    "description": "Number pad digit button label",
+    "placeholders": {
+      "digit": {
+        "type": "String",
+        "example": "5"
+      }
+    }
+  },
+  "@accessibilityLeaveCard": {
+    "description": "Leave card accessibility label",
+    "placeholders": {
+      "startDate": {
+        "type": "String",
+        "example": "1 Jan"
+      },
+      "endDate": {
+        "type": "String",
+        "example": "5 Jan"
+      },
+      "days": {
+        "type": "int",
+        "example": "5"
+      },
+      "status": {
+        "type": "String",
+        "example": "Pending"
+      }
+    }
+  },
+  "@accessibilityPayslipCard": {
+    "description": "Payslip card accessibility label",
+    "placeholders": {
+      "period": {
+        "type": "String",
+        "example": "December 2025"
+      },
+      "amount": {
+        "type": "String",
+        "example": "RM 3,500.00"
+      }
+    }
+  },
+  "@accessibilityPendingIcon": {
+    "description": "Pending status icon description"
+  },
+  "@accessibilityPinDot": {
+    "description": "Screen reader label for PIN dots",
+    "placeholders": {
+      "position": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@accessibilityPinDotEmpty": {
+    "description": "Screen reader label for empty PIN dots",
+    "placeholders": {
+      "position": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@accessibilityPinDotFilled": {
+    "description": "Screen reader label for filled PIN dots",
+    "placeholders": {
+      "position": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@accessibilityRejectedIcon": {
+    "description": "Rejected status icon description"
+  },
+  "@accessibilityStatusIndicator": {
+    "description": "Combined status with icon for screen readers",
+    "placeholders": {
+      "status": {
+        "type": "String",
+        "example": "Approved"
+      },
+      "iconDescription": {
+        "type": "String",
+        "example": "Green checkmark icon"
+      }
+    }
+  },
+  "@approvalApprove": {
+    "description": "Approve button"
+  },
+  "@approvalNoItems": {
+    "description": "Empty approvals message"
+  },
+  "@approvalPending": {
+    "description": "Pending approval section header"
+  },
+  "@approvalReject": {
+    "description": "Reject button"
+  },
+  "@approvalRejectReason": {
+    "description": "Rejection reason field"
+  },
+  "@approvalRejectReasonPlaceholder": {
+    "description": "Rejection reason placeholder"
+  },
+  "@cancelLeaveConfirmMessage": {
+    "description": "Cancel leave confirmation message"
+  },
+  "@cancelLeaveConfirmTitle": {
+    "description": "Cancel leave confirmation title"
+  },
+  "@confirmDialogTitle": {
+    "description": "Confirm dialog title"
+  },
+  "@dateDaysAgo": {
+    "description": "Days ago",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "7"
+      }
+    }
+  },
+  "@dateHoursAgo": {
+    "description": "Hours ago",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@dateJustNow": {
+    "description": "Just now label"
+  },
+  "@dateMinutesAgo": {
+    "description": "Minutes ago",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "@deleteConfirmMessage": {
+    "description": "Delete confirmation message"
+  },
+  "@deleteConfirmTitle": {
+    "description": "Delete confirmation title"
+  },
+  "@documentDelete": {
+    "description": "Delete document button"
+  },
+  "@documentDownload": {
+    "description": "Download button"
+  },
+  "@documentEmpty": {
+    "description": "Empty documents message"
+  },
+  "@documentTitle": {
+    "description": "Documents screen title"
+  },
+  "@documentUpload": {
+    "description": "Upload document button"
+  },
+  "@emptyNoResults": {
+    "description": "No search results message"
+  },
+  "@errorFieldRequired": {
+    "description": "Required field error"
+  },
+  "@errorInvalidEmail": {
+    "description": "Invalid email error"
+  },
+  "@errorPasswordTooShort": {
+    "description": "Password too short error"
+  },
+  "@errorServerError": {
+    "description": "Server error message"
+  },
+  "@errorValidation": {
+    "description": "Validation error message"
+  },
+  "@languageBalinese": {
+    "description": "Balinese language name"
+  },
+  "@languageBengali": {
+    "description": "Bengali language name"
+  },
+  "@languageChinese": {
+    "description": "Chinese Simplified language name"
+  },
+  "@languageIndonesian": {
+    "description": "Indonesian language name"
+  },
+  "@languageJavanese": {
+    "description": "Javanese language name"
+  },
+  "@languageJawi": {
+    "description": "Jawi language name"
+  },
+  "@languageKhmer": {
+    "description": "Khmer language name"
+  },
+  "@languageLao": {
+    "description": "Lao language name"
+  },
+  "@languageMadurese": {
+    "description": "Madurese language name"
+  },
+  "@languageMinangkabau": {
+    "description": "Minangkabau language name"
+  },
+  "@languageMyanmar": {
+    "description": "Myanmar language name"
+  },
+  "@languageNepali": {
+    "description": "Nepali language name"
+  },
+  "@languageSundanese": {
+    "description": "Sundanese language name"
+  },
+  "@languageTagalog": {
+    "description": "Tagalog/Filipino language name"
+  },
+  "@languageTamil": {
+    "description": "Tamil language name"
+  },
+  "@languageVietnamese": {
+    "description": "Vietnamese language name"
+  },
+  "@loadingProcessing": {
+    "description": "Processing indicator message"
+  },
+  "@loadingSubmitting": {
+    "description": "Submitting indicator message"
+  },
+  "@notificationEmpty": {
+    "description": "Empty notifications message"
+  },
+  "@notificationMarkAllRead": {
+    "description": "Mark all read button"
+  },
+  "@notificationTitle": {
+    "description": "Notifications screen title"
+  },
+  "@notificationUnreadCount": {
+    "description": "Unread notification count",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "@offlineDataAvailable": {
+    "description": "Offline data available message"
+  },
+  "@onboardingGetStarted": {
+    "description": "Onboarding get started button"
+  },
+  "@onboardingLeave": {
+    "description": "Onboarding leave feature"
+  },
+  "@onboardingNotifications": {
+    "description": "Onboarding notifications feature"
+  },
+  "@onboardingPayslip": {
+    "description": "Onboarding payslip feature"
+  },
+  "@onboardingWelcome": {
+    "description": "Onboarding welcome screen"
+  },
+  "@profileChangePhoto": {
+    "description": "Change photo button"
+  },
+  "@profileDepartment": {
+    "description": "Department label"
+  },
+  "@profileEditProfile": {
+    "description": "Edit profile button"
+  },
+  "@profileEmail": {
+    "description": "Email label"
+  },
+  "@profileEmergencyContact": {
+    "description": "Emergency contact label"
+  },
+  "@profileEmployeeId": {
+    "description": "Employee ID label"
+  },
+  "@profileJoinDate": {
+    "description": "Join date label"
+  },
+  "@profilePhone": {
+    "description": "Phone label"
+  },
+  "@profilePosition": {
+    "description": "Position label"
+  },
+  "@profileTitle": {
+    "description": "Profile screen title"
+  },
+  "@settingsAbout": {
+    "description": "About section"
+  },
+  "@settingsAudio": {
+    "description": "Audio settings section header"
+  },
+  "@settingsAudioFeedback": {
+    "description": "Audio feedback setting"
+  },
+  "@settingsAudioFeedbackDesc": {
+    "description": "Audio feedback description"
+  },
+  "@settingsBiometricFirst": {
+    "description": "Biometric first setting"
+  },
+  "@settingsBiometricFirstDesc": {
+    "description": "Biometric first description"
+  },
+  "@settingsGloveMode": {
+    "description": "Glove mode setting"
+  },
+  "@settingsGloveModeDesc": {
+    "description": "Glove mode description"
+  },
+  "@settingsHapticFeedbackDesc": {
+    "description": "Haptic feedback description"
+  },
+  "@settingsHighContrastDesc": {
+    "description": "High contrast description"
+  },
+  "@settingsInteraction": {
+    "description": "Interaction settings section header"
+  },
+  "@settingsLargeTextDesc": {
+    "description": "Large text description"
+  },
+  "@settingsPrivacy": {
+    "description": "Privacy policy link"
+  },
+  "@settingsSimpleModeDesc": {
+    "description": "Simple mode description"
+  },
+  "@settingsTTS": {
+    "description": "Text-to-speech setting"
+  },
+  "@settingsTTSDesc": {
+    "description": "TTS description"
+  },
+  "@settingsTerms": {
+    "description": "Terms link"
+  },
+  "@settingsVersion": {
+    "description": "App version display",
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.0.0"
+      }
+    }
+  },
+  "@settingsVisual": {
+    "description": "Visual settings section header"
+  },
+  "@successApproved": {
+    "description": "Approval success message"
+  },
+  "@successDocumentUploaded": {
+    "description": "Document upload success"
+  },
+  "@successLeaveSubmitted": {
+    "description": "Leave submission success"
+  },
+  "@successPinChanged": {
+    "description": "PIN change success"
+  },
+  "@successProfileUpdated": {
+    "description": "Profile update success"
+  },
+  "@successRejected": {
+    "description": "Rejection success message"
+  },
+  "accessibilityApprovedIcon": "[TRANSLATE] Green checkmark icon",
+  "accessibilityCancelledIcon": "[TRANSLATE] Grey block icon",
+  "accessibilityDeleteDigit": "[TRANSLATE] Delete last digit",
+  "accessibilityDigitButton": "[TRANSLATE] Digit {digit}",
+  "accessibilityLeaveCard": "[TRANSLATE] Leave request from {startDate} to {endDate}, {days} days. Status: {status}.",
+  "accessibilityPayslipCard": "[TRANSLATE] Payslip for {period}, Net salary {amount}. Tap to view details. PIN required.",
+  "accessibilityPendingIcon": "[TRANSLATE] Yellow clock icon",
+  "accessibilityPinDot": "[TRANSLATE] PIN digit {position} of 6",
+  "accessibilityPinDotEmpty": "[TRANSLATE] PIN digit {position} of 6, empty",
+  "accessibilityPinDotFilled": "[TRANSLATE] PIN digit {position} of 6, entered",
+  "accessibilityRejectedIcon": "[TRANSLATE] Red X icon",
+  "accessibilityStatusIndicator": "[TRANSLATE] {status}. {iconDescription}",
+  "actionBack": "กลับ",
+  "actionCancel": "ยกเลิก",
+  "actionClose": "ปิด",
+  "actionConfirm": "ยืนยัน",
+  "actionContinue": "ดำเนินการต่อ",
+  "actionDelete": "ลบ",
+  "actionDone": "เสร็จสิ้น",
+  "actionEdit": "แก้ไข",
+  "actionNo": "ไม่",
+  "actionOk": "ตกลง",
+  "actionRetry": "ลองใหม่",
+  "actionSave": "บันทึก",
+  "actionSeeLess": "ดูน้อยลง",
+  "actionSeeMore": "ดูเพิ่มเติม",
+  "actionSkip": "ข้าม",
+  "actionSubmit": "ส่ง",
+  "actionYes": "ใช่",
   "appName": "KerjaFlow",
-  "navHome": "หน้าหลัก",
-  "navPayslip": "สลิปเงินเดือน",
-  "navLeave": "ลางาน",
-  "navInbox": "กล่องข้อความ",
-  "navProfile": "โปรไฟล์",
-
-  "loginTitle": "ยินดีต้อนรับสู่ KerjaFlow",
-  "loginSubtitle": "เข้าสู่ระบบเพื่อดำเนินการต่อ",
-  "loginEmail": "อีเมลหรือรหัสพนักงาน",
-  "loginPassword": "รหัสผ่าน",
-  "loginButton": "เข้าสู่ระบบ",
-  "loginForgotPassword": "ลืมรหัสผ่าน?",
-  "loginRememberMe": "จดจำฉัน",
-  "loginInvalidCredentials": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
-  "loginAccountLocked": "บัญชีถูกล็อค กรุณาลองใหม่ใน 15 นาที",
-
-  "logoutButton": "ออกจากระบบ",
-  "logoutConfirmTitle": "ออกจากระบบ",
-  "logoutConfirmMessage": "คุณแน่ใจหรือไม่ว่าต้องการออกจากระบบ?",
-
-  "pinSetupTitle": "สร้าง PIN ของคุณ",
-  "pinSetupSubtitle": "ใส่ PIN 6 หลักเพื่อรักษาความปลอดภัยบัญชี",
-  "pinConfirmTitle": "ยืนยัน PIN",
-  "pinConfirmSubtitle": "ใส่ PIN เดิมอีกครั้งเพื่อยืนยัน",
-  "pinMismatch": "PIN ไม่ตรงกัน กรุณาลองใหม่",
-  "pinEntryTitle": "ใส่ PIN",
-  "pinEntrySubtitle": "ใส่ PIN 6 หลักเพื่อดำเนินการต่อ",
-  "pinVerifyBiometric": "ใช้ลายนิ้วมือ",
-  "pinForgot": "ลืม PIN?",
-  "pinAttemptsRemaining": "{count, plural, =1{เหลือ 1 ครั้ง} other{เหลือ {count} ครั้ง}}",
-  "pinInvalid": "PIN ไม่ถูกต้อง",
-  "pinSetupLater": "ตั้งค่าภายหลัง",
-  "pinRequired": "ต้องใช้ PIN",
-
+  "approvalApprove": "[TRANSLATE] Approve",
+  "approvalNoItems": "[TRANSLATE] No pending approvals",
+  "approvalPending": "[TRANSLATE] Pending Approval",
+  "approvalReject": "[TRANSLATE] Reject",
+  "approvalRejectReason": "[TRANSLATE] Rejection Reason",
+  "approvalRejectReasonPlaceholder": "[TRANSLATE] Please provide a reason for rejection",
   "biometricPrompt": "ยืนยันตัวตนของคุณ",
   "biometricUseFingerprint": "ใช้ลายนิ้วมือ",
   "biometricUsePinInstead": "ใช้ PIN แทน",
-
-  "dashboardGreeting": "สวัสดี{timeOfDay} {name}",
-  "dashboardMorning": "ตอนเช้า",
-  "dashboardAfternoon": "ตอนบ่าย",
-  "dashboardEvening": "ตอนเย็น",
-  "dashboardQuickActions": "ทางลัด",
-  "dashboardUpcoming": "กำลังจะมาถึง",
-
-  "leaveBalanceTitle": "วันลาคงเหลือ",
-  "leaveAnnual": "ลาพักร้อน",
-  "leaveMedical": "ลาป่วย",
-  "leaveEmergency": "ลาฉุกเฉิน",
-  "leaveMaternity": "ลาคลอด",
-  "leavePaternity": "ลาเพื่อดูแลภรรยาคลอด",
-  "leaveCompassionate": "ลากิจ",
-  "leaveUnpaid": "ลาไม่รับเงินเดือน",
-  "leaveRemainingDays": "{count, plural, =0{ไม่มีวันเหลือ} =1{เหลือ 1 วัน} other{เหลือ {count} วัน}}",
-  "leaveDaysCount": "{count, plural, =0{0 วัน} =1{1 วัน} other{{count} วัน}}",
-  "leaveApply": "ขอลางาน",
-  "leaveHistory": "ประวัติการลา",
-  "leaveSelectType": "เลือกประเภทการลา",
-  "leaveStartDate": "วันที่เริ่มต้น",
-  "leaveEndDate": "วันที่สิ้นสุด",
-  "leaveReason": "เหตุผล",
-  "leaveReasonPlaceholder": "กรุณาระบุเหตุผลในการลา",
-  "leaveAttachment": "เอกสารแนบ",
-  "leaveAttachmentUpload": "อัปโหลดเอกสาร",
-  "leaveWorkingDays": "วันทำงาน",
-  "leaveInsufficientBalance": "วันลาไม่เพียงพอ",
-  "leaveOverlapping": "วันลาซ้อนทับกับคำขอที่มีอยู่",
-  "leaveMinimumNotice": "ไม่ถึงระยะเวลาแจ้งล่วงหน้าขั้นต่ำ",
-
-  "publicHolidays": "วันหยุดราชการ",
-
-  "payslipMonthYear": "{month} {year}",
-  "payslipGrossEarnings": "รายได้รวม",
-  "payslipDeductions": "รายการหัก",
-  "payslipNetPay": "เงินเดือนสุทธิ",
-  "payslipBasicSalary": "เงินเดือนพื้นฐาน",
-  "payslipOvertime": "ค่าล่วงเวลา",
-  "payslipAllowances": "เบี้ยเลี้ยง",
-  "payslipBonus": "โบนัส",
-  "payslipStatutory": "เงินสมทบตามกฎหมาย",
-  "payslipEmployeeContribution": "พนักงาน",
-  "payslipEmployerContribution": "นายจ้าง",
-  "payslipDownloadPdf": "ดาวน์โหลด PDF",
-  "payslipShare": "แชร์",
-  "payslipPinProtected": "ป้องกันด้วย PIN",
-  "payslipViewBreakdown": "ดูรายละเอียด",
-  "payslipYouKeep": "ที่คุณได้รับ",
-
-  "statusPending": "รอดำเนินการ",
-  "statusApproved": "อนุมัติแล้ว",
-  "statusRejected": "ถูกปฏิเสธ",
-  "statusCancelled": "ยกเลิกแล้ว",
-  "statusProcessing": "กำลังดำเนินการ",
-  "statusCompleted": "เสร็จสิ้น",
-
-  "actionSubmit": "ส่ง",
-  "actionCancel": "ยกเลิก",
-  "actionSave": "บันทึก",
-  "actionRetry": "ลองใหม่",
-  "actionConfirm": "ยืนยัน",
-  "actionDelete": "ลบ",
-  "actionEdit": "แก้ไข",
-  "actionClose": "ปิด",
-  "actionBack": "กลับ",
-  "actionContinue": "ดำเนินการต่อ",
-  "actionSkip": "ข้าม",
-  "actionDone": "เสร็จสิ้น",
-  "actionYes": "ใช่",
-  "actionNo": "ไม่",
-  "actionOk": "ตกลง",
-  "actionSeeMore": "ดูเพิ่มเติม",
-  "actionSeeLess": "ดูน้อยลง",
-
-  "errorGeneric": "เกิดข้อผิดพลาด กรุณาลองใหม่",
-  "errorNetwork": "ไม่มีการเชื่อมต่ออินเทอร์เน็ต",
-  "errorSessionExpired": "เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่",
+  "cancelLeaveConfirmMessage": "[TRANSLATE] Are you sure you want to cancel this leave request?",
+  "cancelLeaveConfirmTitle": "[TRANSLATE] Cancel Leave Request?",
   "cannotConnectNow": "ไม่สามารถเชื่อมต่อได้ในขณะนี้",
   "checkConnectionAndRetry": "ตรวจสอบการเชื่อมต่อและลองใหม่",
-  "offlineModeActive": "โหมดออฟไลน์ - บันทึกการเปลี่ยนแปลงแล้ว",
-
-  "settingsTitle": "การตั้งค่า",
-  "settingsLanguage": "ภาษา",
-  "settingsAccessibility": "การเข้าถึง",
-  "settingsLargeText": "ตัวอักษรใหญ่",
-  "settingsHighContrast": "ความเปรียบต่างสูง",
-  "settingsHapticFeedback": "การสั่น",
-  "settingsSimpleMode": "โหมดเรียบง่าย",
-
-  "loadingPleaseWait": "กรุณารอสักครู่...",
-  "emptyNoData": "ไม่มีข้อมูล",
-
-  "languageEnglish": "English",
-  "languageMalay": "Bahasa Malaysia",
-  "languageThai": "ภาษาไทย",
-
-  "dateToday": "วันนี้",
-  "dateYesterday": "เมื่อวาน",
-  "dateTomorrow": "พรุ่งนี้",
-
+  "confirmDialogTitle": "[TRANSLATE] Confirm Action",
+  "contributionEmployee": "พนักงาน",
+  "contributionEmployer": "นายจ้าง",
+  "contributionTotal": "รวม",
+  "currencyBnd": "B$",
   "currencyFormat": "฿{amount}",
+  "currencyIdr": "Rp",
+  "currencyKhr": "៛",
+  "currencyLak": "₭",
+  "currencyMmk": "K",
+  "currencyMyr": "RM",
+  "currencyPhp": "₱",
+  "currencySgd": "S$",
+  "currencyThb": "฿",
+  "currencyVnd": "₫",
+  "dashboardAfternoon": "ตอนบ่าย",
+  "dashboardEvening": "ตอนเย็น",
+  "dashboardGreeting": "สวัสดี{timeOfDay} {name}",
+  "dashboardMorning": "ตอนเช้า",
+  "dashboardQuickActions": "ทางลัด",
+  "dashboardUpcoming": "กำลังจะมาถึง",
+  "dateDaysAgo": "[TRANSLATE] {count, plural, =1{1 day ago} other{{count} days ago}}",
+  "dateHoursAgo": "[TRANSLATE] {count, plural, =1{1 hour ago} other{{count} hours ago}}",
+  "dateJustNow": "[TRANSLATE] Just now",
+  "dateMinutesAgo": "[TRANSLATE] {count, plural, =1{1 minute ago} other{{count} minutes ago}}",
+  "dateToday": "วันนี้",
+  "dateTomorrow": "พรุ่งนี้",
+  "dateYesterday": "เมื่อวาน",
+  "deleteConfirmMessage": "[TRANSLATE] This action cannot be undone.",
+  "deleteConfirmTitle": "[TRANSLATE] Delete?",
+  "documentDelete": "[TRANSLATE] Delete",
+  "documentDownload": "[TRANSLATE] Download",
+  "documentEmpty": "[TRANSLATE] No documents",
+  "documentTitle": "[TRANSLATE] Documents",
+  "documentUpload": "[TRANSLATE] Upload Document",
+  "emptyNoData": "ไม่มีข้อมูล",
+  "emptyNoResults": "[TRANSLATE] No results found",
+  "errorFieldRequired": "[TRANSLATE] This field is required",
+  "errorGeneric": "เกิดข้อผิดพลาด กรุณาลองใหม่",
+  "errorInvalidEmail": "[TRANSLATE] Please enter a valid email address",
+  "errorNetwork": "ไม่มีการเชื่อมต่ออินเทอร์เน็ต",
+  "errorPasswordTooShort": "[TRANSLATE] Password must be at least 8 characters",
+  "errorServerError": "[TRANSLATE] Server error. Please try again later.",
+  "errorSessionExpired": "เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่",
+  "errorValidation": "[TRANSLATE] Please check your input and try again.",
+  "halfDayAm": "ครึ่งวันเช้า",
+  "halfDayPm": "ครึ่งวันบ่าย",
+  "languageBalinese": "[TRANSLATE] Basa Bali",
+  "languageBengali": "[TRANSLATE] বাংলা",
+  "languageChinese": "[TRANSLATE] 简体中文",
+  "languageEnglish": "English",
+  "languageIndonesian": "[TRANSLATE] Bahasa Indonesia",
+  "languageJavanese": "[TRANSLATE] Basa Jawa",
+  "languageJawi": "[TRANSLATE] جاوي (Jawi)",
+  "languageKhmer": "[TRANSLATE] ភាសាខ្មែរ",
+  "languageLao": "[TRANSLATE] ພາສາລາວ",
+  "languageMadurese": "[TRANSLATE] Basa Madhura",
+  "languageMalay": "Bahasa Malaysia",
+  "languageMinangkabau": "[TRANSLATE] Baso Minang",
+  "languageMyanmar": "[TRANSLATE] မြန်မာ",
+  "languageNepali": "[TRANSLATE] नेपाली",
+  "languageSundanese": "[TRANSLATE] Basa Sunda",
+  "languageTagalog": "[TRANSLATE] Filipino",
+  "languageTamil": "[TRANSLATE] தமிழ்",
+  "languageThai": "ภาษาไทย",
+  "languageVietnamese": "[TRANSLATE] Tiếng Việt",
+  "leaveAnnual": "ลาพักร้อน",
+  "leaveApply": "ขอลางาน",
+  "leaveAttachment": "เอกสารแนบ",
+  "leaveAttachmentUpload": "อัปโหลดเอกสาร",
+  "leaveBalanceTitle": "วันลาคงเหลือ",
+  "leaveCompassionate": "ลากิจ",
+  "leaveDaysCount": "{count, plural, =0{0 วัน} =1{1 วัน} other{{count} วัน}}",
+  "leaveEmergency": "ลาฉุกเฉิน",
+  "leaveEndDate": "วันที่สิ้นสุด",
+  "leaveFullDay": "ลาเต็มวัน",
+  "leaveHalfDay": "ลาครึ่งวัน",
+  "leaveHistory": "ประวัติการลา",
+  "leaveInsufficientBalance": "วันลาไม่เพียงพอ",
+  "leaveMaternity": "ลาคลอด",
+  "leaveMedical": "ลาป่วย",
+  "leaveMinimumNotice": "ไม่ถึงระยะเวลาแจ้งล่วงหน้าขั้นต่ำ",
+  "leaveOverlapping": "วันลาซ้อนทับกับคำขอที่มีอยู่",
+  "leavePaternity": "ลาเพื่อดูแลภรรยาคลอด",
+  "leaveReason": "เหตุผล",
+  "leaveReasonPlaceholder": "กรุณาระบุเหตุผลในการลา",
+  "leaveRemainingDays": "{count, plural, =0{ไม่มีวันเหลือ} =1{เหลือ 1 วัน} other{เหลือ {count} วัน}}",
+  "leaveSelectType": "เลือกประเภทการลา",
+  "leaveStartDate": "วันที่เริ่มต้น",
+  "leaveUnpaid": "ลาไม่รับเงินเดือน",
+  "leaveWorkingDays": "วันทำงาน",
+  "loadingPleaseWait": "กรุณารอสักครู่...",
+  "loadingProcessing": "[TRANSLATE] Processing...",
+  "loadingSubmitting": "[TRANSLATE] Submitting...",
+  "loginAccountLocked": "บัญชีถูกล็อค กรุณาลองใหม่ใน 15 นาที",
+  "loginButton": "เข้าสู่ระบบ",
+  "loginEmail": "อีเมลหรือรหัสพนักงาน",
+  "loginForgotPassword": "ลืมรหัสผ่าน?",
+  "loginInvalidCredentials": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
+  "loginPassword": "รหัสผ่าน",
+  "loginRememberMe": "จดจำฉัน",
+  "loginSubtitle": "เข้าสู่ระบบเพื่อดำเนินการต่อ",
+  "loginTitle": "ยินดีต้อนรับสู่ KerjaFlow",
+  "logoutButton": "ออกจากระบบ",
+  "logoutConfirmMessage": "คุณแน่ใจหรือไม่ว่าต้องการออกจากระบบ?",
+  "logoutConfirmTitle": "ออกจากระบบ",
+  "navHome": "หน้าหลัก",
+  "navInbox": "กล่องข้อความ",
+  "navLeave": "ลางาน",
+  "navPayslip": "สลิปเงินเดือน",
+  "navProfile": "โปรไฟล์",
+  "notificationEmpty": "[TRANSLATE] No notifications",
+  "notificationMarkAllRead": "[TRANSLATE] Mark all as read",
+  "notificationTitle": "[TRANSLATE] Notifications",
+  "notificationUnreadCount": "[TRANSLATE] {count, plural, =0{No unread} =1{1 unread} other{{count} unread}}",
+  "offlineDataAvailable": "[TRANSLATE] You can still view saved data",
+  "offlineModeActive": "โหมดออฟไลน์ - บันทึกการเปลี่ยนแปลงแล้ว",
+  "onboardingGetStarted": "[TRANSLATE] Get Started",
+  "onboardingLeave": "[TRANSLATE] Apply for leave easily",
+  "onboardingNotifications": "[TRANSLATE] Stay updated with notifications",
+  "onboardingPayslip": "[TRANSLATE] View your payslip anytime",
+  "onboardingWelcome": "[TRANSLATE] Welcome",
+  "payslipAllowances": "เบี้ยเลี้ยง",
+  "payslipBasicSalary": "เงินเดือนพื้นฐาน",
+  "payslipBonus": "โบนัส",
+  "payslipDeductions": "รายการหัก",
+  "payslipDownloadPdf": "ดาวน์โหลด PDF",
+  "payslipEmployeeContribution": "พนักงาน",
+  "payslipEmployerContribution": "นายจ้าง",
+  "payslipGrossEarnings": "รายได้รวม",
+  "payslipMonthYear": "{month} {year}",
+  "payslipNetPay": "เงินเดือนสุทธิ",
+  "payslipOvertime": "ค่าล่วงเวลา",
+  "payslipPinProtected": "ป้องกันด้วย PIN",
+  "payslipShare": "แชร์",
+  "payslipStatutory": "เงินสมทบตามกฎหมาย",
+  "payslipViewBreakdown": "ดูรายละเอียด",
+  "payslipYouKeep": "ที่คุณได้รับ",
   "percentFormat": "{value}%",
-
-  "statutoryContributions": "เงินสมทบตามกฎหมาย",
-  "statutoryEpf": "EPF",
-  "statutoryEpfDescription": "กองทุนสำรองเลี้ยงชีพพนักงาน",
-  "statutorySocso": "SOCSO",
-  "statutorySocsoDescription": "องค์กรประกันสังคม",
-  "statutoryEis": "EIS",
-  "statutoryEisDescription": "ระบบประกันการจ้างงาน",
-  "statutoryPcb": "PCB",
-  "statutoryPcbDescription": "หักภาษีรายเดือน",
-  "statutoryCpf": "CPF",
-  "statutoryCpfDescription": "กองทุนสำรองเลี้ยงชีพกลาง",
-  "statutoryBpjsTk": "BPJS-TK",
-  "statutoryBpjsTkDescription": "ประกันสังคมการจ้างงาน",
-  "statutoryBpjsKes": "BPJS-Kes",
-  "statutoryBpjsKesDescription": "ประกันสุขภาพ",
-  "statutorySss": "SSS",
-  "statutorySssDescription": "ระบบประกันสังคม",
-  "statutoryPhilHealth": "PhilHealth",
-  "statutoryPhilHealthDescription": "ประกันสุขภาพฟิลิปปินส์",
-  "statutoryPagIbig": "Pag-IBIG",
-  "statutoryPagIbigDescription": "กองทุนพัฒนาที่อยู่อาศัย",
-  "statutorySsf": "SSF",
-  "statutorySsfDescription": "กองทุนประกันสังคม",
+  "pinAttemptsRemaining": "{count, plural, =1{เหลือ 1 ครั้ง} other{เหลือ {count} ครั้ง}}",
+  "pinConfirmSubtitle": "ใส่ PIN เดิมอีกครั้งเพื่อยืนยัน",
+  "pinConfirmTitle": "ยืนยัน PIN",
+  "pinEntrySubtitle": "ใส่ PIN 6 หลักเพื่อดำเนินการต่อ",
+  "pinEntryTitle": "ใส่ PIN",
+  "pinForgot": "ลืม PIN?",
+  "pinInvalid": "PIN ไม่ถูกต้อง",
+  "pinMismatch": "PIN ไม่ตรงกัน กรุณาลองใหม่",
+  "pinRequired": "ต้องใช้ PIN",
+  "pinSetupLater": "ตั้งค่าภายหลัง",
+  "pinSetupSubtitle": "ใส่ PIN 6 หลักเพื่อรักษาความปลอดภัยบัญชี",
+  "pinSetupTitle": "สร้าง PIN ของคุณ",
+  "pinVerifyBiometric": "ใช้ลายนิ้วมือ",
+  "profileChangePhoto": "[TRANSLATE] Change Photo",
+  "profileDepartment": "[TRANSLATE] Department",
+  "profileEditProfile": "[TRANSLATE] Edit Profile",
+  "profileEmail": "[TRANSLATE] Email",
+  "profileEmergencyContact": "[TRANSLATE] Emergency Contact",
+  "profileEmployeeId": "[TRANSLATE] Employee ID",
+  "profileJoinDate": "[TRANSLATE] Join Date",
+  "profilePhone": "[TRANSLATE] Phone",
+  "profilePosition": "[TRANSLATE] Position",
+  "profileTitle": "[TRANSLATE] Profile",
+  "publicHolidays": "วันหยุดราชการ",
+  "settingsAbout": "[TRANSLATE] About",
+  "settingsAccessibility": "การเข้าถึง",
+  "settingsAudio": "[TRANSLATE] Audio Settings",
+  "settingsAudioFeedback": "[TRANSLATE] Sound Effects",
+  "settingsAudioFeedbackDesc": "[TRANSLATE] Hear success and error sounds",
+  "settingsBiometricFirst": "[TRANSLATE] Fingerprint First",
+  "settingsBiometricFirstDesc": "[TRANSLATE] Use fingerprint before PIN",
+  "settingsGloveMode": "[TRANSLATE] Glove Mode",
+  "settingsGloveModeDesc": "[TRANSLATE] Bigger buttons for gloves",
+  "settingsHapticFeedback": "การสั่น",
+  "settingsHapticFeedbackDesc": "[TRANSLATE] Feel taps and actions",
+  "settingsHighContrast": "ความเปรียบต่างสูง",
+  "settingsHighContrastDesc": "[TRANSLATE] Easier to see outdoors",
+  "settingsInteraction": "[TRANSLATE] Interaction Settings",
+  "settingsLanguage": "ภาษา",
+  "settingsLargeText": "ตัวอักษรใหญ่",
+  "settingsLargeTextDesc": "[TRANSLATE] Make text bigger",
+  "settingsPrivacy": "[TRANSLATE] Privacy Policy",
+  "settingsSimpleMode": "โหมดเรียบง่าย",
+  "settingsSimpleModeDesc": "[TRANSLATE] Hide advanced features",
+  "settingsTTS": "[TRANSLATE] Voice Readout",
+  "settingsTTSDesc": "[TRANSLATE] Read screen content aloud",
+  "settingsTerms": "[TRANSLATE] Terms & Conditions",
+  "settingsTitle": "การตั้งค่า",
+  "settingsVersion": "[TRANSLATE] Version {version}",
+  "settingsVisual": "[TRANSLATE] Visual Settings",
+  "statusApproved": "อนุมัติแล้ว",
+  "statusCancelled": "ยกเลิกแล้ว",
+  "statusCompleted": "เสร็จสิ้น",
+  "statusPending": "รอดำเนินการ",
+  "statusProcessing": "กำลังดำเนินการ",
+  "statusRejected": "ถูกปฏิเสธ",
   "statutoryBhxh": "BHXH",
   "statutoryBhxhDescription": "ประกันสังคม",
   "statutoryBhyt": "BHYT",
   "statutoryBhytDescription": "ประกันสุขภาพ",
-  "statutoryNssf": "NSSF",
-  "statutoryNssfDescription": "กองทุนประกันสังคมแห่งชาติ",
-  "statutorySsb": "SSB",
-  "statutorySsbDescription": "คณะกรรมการประกันสังคม",
-  "statutoryTap": "TAP",
-  "statutoryTapDescription": "กองทุนพนักงาน",
+  "statutoryBpjsKes": "BPJS-Kes",
+  "statutoryBpjsKesDescription": "ประกันสุขภาพ",
+  "statutoryBpjsTk": "BPJS-TK",
+  "statutoryBpjsTkDescription": "ประกันสังคมการจ้างงาน",
+  "statutoryContributions": "เงินสมทบตามกฎหมาย",
+  "statutoryCpf": "CPF",
+  "statutoryCpfDescription": "กองทุนสำรองเลี้ยงชีพกลาง",
+  "statutoryEis": "EIS",
+  "statutoryEisDescription": "ระบบประกันการจ้างงาน",
+  "statutoryEpf": "EPF",
+  "statutoryEpfDescription": "กองทุนสำรองเลี้ยงชีพพนักงาน",
   "statutoryLsso": "LSSO",
   "statutoryLssoDescription": "องค์กรประกันสังคมลาว",
-
-  "contributionEmployee": "พนักงาน",
-  "contributionEmployer": "นายจ้าง",
-  "contributionTotal": "รวม",
-
-  "currencyMyr": "RM",
-  "currencySgd": "S$",
-  "currencyIdr": "Rp",
-  "currencyThb": "฿",
-  "currencyPhp": "₱",
-  "currencyVnd": "₫",
-  "currencyKhr": "៛",
-  "currencyMmk": "K",
-  "currencyBnd": "B$",
-  "currencyLak": "₭",
-
-  "halfDayAm": "ครึ่งวันเช้า",
-  "halfDayPm": "ครึ่งวันบ่าย",
-  "leaveHalfDay": "ลาครึ่งวัน",
-  "leaveFullDay": "ลาเต็มวัน"
+  "statutoryNssf": "NSSF",
+  "statutoryNssfDescription": "กองทุนประกันสังคมแห่งชาติ",
+  "statutoryPagIbig": "Pag-IBIG",
+  "statutoryPagIbigDescription": "กองทุนพัฒนาที่อยู่อาศัย",
+  "statutoryPcb": "PCB",
+  "statutoryPcbDescription": "หักภาษีรายเดือน",
+  "statutoryPhilHealth": "PhilHealth",
+  "statutoryPhilHealthDescription": "ประกันสุขภาพฟิลิปปินส์",
+  "statutorySocso": "SOCSO",
+  "statutorySocsoDescription": "องค์กรประกันสังคม",
+  "statutorySsb": "SSB",
+  "statutorySsbDescription": "คณะกรรมการประกันสังคม",
+  "statutorySsf": "SSF",
+  "statutorySsfDescription": "กองทุนประกันสังคม",
+  "statutorySss": "SSS",
+  "statutorySssDescription": "ระบบประกันสังคม",
+  "statutoryTap": "TAP",
+  "statutoryTapDescription": "กองทุนพนักงาน",
+  "successApproved": "[TRANSLATE] Request approved",
+  "successDocumentUploaded": "[TRANSLATE] Document uploaded successfully",
+  "successLeaveSubmitted": "[TRANSLATE] Leave request submitted successfully",
+  "successPinChanged": "[TRANSLATE] PIN changed successfully",
+  "successProfileUpdated": "[TRANSLATE] Profile updated successfully",
+  "successRejected": "[TRANSLATE] Request rejected"
 }

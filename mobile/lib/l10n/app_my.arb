@@ -1,124 +1,929 @@
 {
   "@@locale": "my",
-  "@@last_modified": "2025-12-27T00:00:00.000Z",
   "@@context": "Myanmar - မြန်မာ",
-
+  "@@last_modified": "2025-12-27T00:00:00.000Z",
+  "@accessibilityApprovedIcon": {
+    "description": "Approved status icon description"
+  },
+  "@accessibilityCancelledIcon": {
+    "description": "Cancelled status icon description"
+  },
+  "@accessibilityDeleteDigit": {
+    "description": "Delete digit button label"
+  },
+  "@accessibilityDigitButton": {
+    "description": "Number pad digit button label",
+    "placeholders": {
+      "digit": {
+        "type": "String",
+        "example": "5"
+      }
+    }
+  },
+  "@accessibilityLeaveCard": {
+    "description": "Leave card accessibility label",
+    "placeholders": {
+      "startDate": {
+        "type": "String",
+        "example": "1 Jan"
+      },
+      "endDate": {
+        "type": "String",
+        "example": "5 Jan"
+      },
+      "days": {
+        "type": "int",
+        "example": "5"
+      },
+      "status": {
+        "type": "String",
+        "example": "Pending"
+      }
+    }
+  },
+  "@accessibilityPayslipCard": {
+    "description": "Payslip card accessibility label",
+    "placeholders": {
+      "period": {
+        "type": "String",
+        "example": "December 2025"
+      },
+      "amount": {
+        "type": "String",
+        "example": "RM 3,500.00"
+      }
+    }
+  },
+  "@accessibilityPendingIcon": {
+    "description": "Pending status icon description"
+  },
+  "@accessibilityPinDot": {
+    "description": "Screen reader label for PIN dots",
+    "placeholders": {
+      "position": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@accessibilityPinDotEmpty": {
+    "description": "Screen reader label for empty PIN dots",
+    "placeholders": {
+      "position": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@accessibilityPinDotFilled": {
+    "description": "Screen reader label for filled PIN dots",
+    "placeholders": {
+      "position": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@accessibilityRejectedIcon": {
+    "description": "Rejected status icon description"
+  },
+  "@accessibilityStatusIndicator": {
+    "description": "Combined status with icon for screen readers",
+    "placeholders": {
+      "status": {
+        "type": "String",
+        "example": "Approved"
+      },
+      "iconDescription": {
+        "type": "String",
+        "example": "Green checkmark icon"
+      }
+    }
+  },
+  "@actionBack": {
+    "description": "Back button text"
+  },
+  "@actionClose": {
+    "description": "Close button text"
+  },
+  "@actionConfirm": {
+    "description": "Confirm button text"
+  },
+  "@actionContinue": {
+    "description": "Continue button text"
+  },
+  "@actionDelete": {
+    "description": "Delete button text"
+  },
+  "@actionDone": {
+    "description": "Done button text"
+  },
+  "@actionEdit": {
+    "description": "Edit button text"
+  },
+  "@actionOk": {
+    "description": "OK button text"
+  },
+  "@actionSeeLess": {
+    "description": "See less button text"
+  },
+  "@actionSeeMore": {
+    "description": "See more button text"
+  },
+  "@actionSkip": {
+    "description": "Skip button text"
+  },
+  "@approvalApprove": {
+    "description": "Approve button"
+  },
+  "@approvalNoItems": {
+    "description": "Empty approvals message"
+  },
+  "@approvalPending": {
+    "description": "Pending approval section header"
+  },
+  "@approvalReject": {
+    "description": "Reject button"
+  },
+  "@approvalRejectReason": {
+    "description": "Rejection reason field"
+  },
+  "@approvalRejectReasonPlaceholder": {
+    "description": "Rejection reason placeholder"
+  },
+  "@biometricPrompt": {
+    "description": "Biometric prompt message"
+  },
+  "@biometricUseFingerprint": {
+    "description": "Use fingerprint button"
+  },
+  "@biometricUsePinInstead": {
+    "description": "Fall back to PIN option"
+  },
+  "@cancelLeaveConfirmMessage": {
+    "description": "Cancel leave confirmation message"
+  },
+  "@cancelLeaveConfirmTitle": {
+    "description": "Cancel leave confirmation title"
+  },
+  "@cannotConnectNow": {
+    "description": "Connection error heading"
+  },
+  "@checkConnectionAndRetry": {
+    "description": "Connection error instruction"
+  },
+  "@confirmDialogTitle": {
+    "description": "Confirm dialog title"
+  },
+  "@dashboardQuickActions": {
+    "description": "Quick actions section header"
+  },
+  "@dashboardUpcoming": {
+    "description": "Upcoming events section header"
+  },
+  "@dateDaysAgo": {
+    "description": "Days ago",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "7"
+      }
+    }
+  },
+  "@dateHoursAgo": {
+    "description": "Hours ago",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@dateJustNow": {
+    "description": "Just now label"
+  },
+  "@dateMinutesAgo": {
+    "description": "Minutes ago",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "@dateTomorrow": {
+    "description": "Tomorrow label"
+  },
+  "@dateYesterday": {
+    "description": "Yesterday label"
+  },
+  "@deleteConfirmMessage": {
+    "description": "Delete confirmation message"
+  },
+  "@deleteConfirmTitle": {
+    "description": "Delete confirmation title"
+  },
+  "@documentDelete": {
+    "description": "Delete document button"
+  },
+  "@documentDownload": {
+    "description": "Download button"
+  },
+  "@documentEmpty": {
+    "description": "Empty documents message"
+  },
+  "@documentTitle": {
+    "description": "Documents screen title"
+  },
+  "@documentUpload": {
+    "description": "Upload document button"
+  },
+  "@emptyNoResults": {
+    "description": "No search results message"
+  },
+  "@errorFieldRequired": {
+    "description": "Required field error"
+  },
+  "@errorInvalidEmail": {
+    "description": "Invalid email error"
+  },
+  "@errorPasswordTooShort": {
+    "description": "Password too short error"
+  },
+  "@errorServerError": {
+    "description": "Server error message"
+  },
+  "@errorSessionExpired": {
+    "description": "Session expired message"
+  },
+  "@errorValidation": {
+    "description": "Validation error message"
+  },
+  "@languageBalinese": {
+    "description": "Balinese language name"
+  },
+  "@languageBengali": {
+    "description": "Bengali language name"
+  },
+  "@languageChinese": {
+    "description": "Chinese Simplified language name"
+  },
+  "@languageEnglish": {
+    "description": "English language name"
+  },
+  "@languageIndonesian": {
+    "description": "Indonesian language name"
+  },
+  "@languageJavanese": {
+    "description": "Javanese language name"
+  },
+  "@languageJawi": {
+    "description": "Jawi language name"
+  },
+  "@languageKhmer": {
+    "description": "Khmer language name"
+  },
+  "@languageLao": {
+    "description": "Lao language name"
+  },
+  "@languageMadurese": {
+    "description": "Madurese language name"
+  },
+  "@languageMalay": {
+    "description": "Malay language name"
+  },
+  "@languageMinangkabau": {
+    "description": "Minangkabau language name"
+  },
+  "@languageNepali": {
+    "description": "Nepali language name"
+  },
+  "@languageSundanese": {
+    "description": "Sundanese language name"
+  },
+  "@languageTagalog": {
+    "description": "Tagalog/Filipino language name"
+  },
+  "@languageTamil": {
+    "description": "Tamil language name"
+  },
+  "@languageThai": {
+    "description": "Thai language name"
+  },
+  "@languageVietnamese": {
+    "description": "Vietnamese language name"
+  },
+  "@leaveAttachment": {
+    "description": "Leave attachment label"
+  },
+  "@leaveAttachmentUpload": {
+    "description": "Upload attachment button"
+  },
+  "@leaveCompassionate": {
+    "description": "Compassionate leave type label"
+  },
+  "@leaveDaysCount": {
+    "description": "Day count with pluralization",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@leaveEmergency": {
+    "description": "Emergency leave type label"
+  },
+  "@leaveEndDate": {
+    "description": "Leave end date label"
+  },
+  "@leaveHistory": {
+    "description": "Leave history section header"
+  },
+  "@leaveInsufficientBalance": {
+    "description": "Insufficient balance error"
+  },
+  "@leaveMaternity": {
+    "description": "Maternity leave type label"
+  },
+  "@leaveMinimumNotice": {
+    "description": "Minimum notice error"
+  },
+  "@leaveOverlapping": {
+    "description": "Overlapping leave error"
+  },
+  "@leavePaternity": {
+    "description": "Paternity leave type label"
+  },
+  "@leaveReason": {
+    "description": "Leave reason field label"
+  },
+  "@leaveReasonPlaceholder": {
+    "description": "Leave reason placeholder text"
+  },
+  "@leaveSelectType": {
+    "description": "Leave type selection label"
+  },
+  "@leaveStartDate": {
+    "description": "Leave start date label"
+  },
+  "@leaveUnpaid": {
+    "description": "Unpaid leave type label"
+  },
+  "@leaveWorkingDays": {
+    "description": "Working days count label"
+  },
+  "@loadingProcessing": {
+    "description": "Processing indicator message"
+  },
+  "@loadingSubmitting": {
+    "description": "Submitting indicator message"
+  },
+  "@loginAccountLocked": {
+    "description": "Account lockout message"
+  },
+  "@loginInvalidCredentials": {
+    "description": "Login error message"
+  },
+  "@loginRememberMe": {
+    "description": "Remember me checkbox"
+  },
+  "@logoutButton": {
+    "description": "Logout button text"
+  },
+  "@logoutConfirmMessage": {
+    "description": "Logout confirmation message"
+  },
+  "@logoutConfirmTitle": {
+    "description": "Logout confirmation dialog title"
+  },
+  "@notificationEmpty": {
+    "description": "Empty notifications message"
+  },
+  "@notificationMarkAllRead": {
+    "description": "Mark all read button"
+  },
+  "@notificationTitle": {
+    "description": "Notifications screen title"
+  },
+  "@notificationUnreadCount": {
+    "description": "Unread notification count",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "@offlineDataAvailable": {
+    "description": "Offline data available message"
+  },
+  "@offlineModeActive": {
+    "description": "Offline mode banner message"
+  },
+  "@onboardingGetStarted": {
+    "description": "Onboarding get started button"
+  },
+  "@onboardingLeave": {
+    "description": "Onboarding leave feature"
+  },
+  "@onboardingNotifications": {
+    "description": "Onboarding notifications feature"
+  },
+  "@onboardingPayslip": {
+    "description": "Onboarding payslip feature"
+  },
+  "@onboardingWelcome": {
+    "description": "Onboarding welcome screen"
+  },
+  "@payslipAllowances": {
+    "description": "Allowances label"
+  },
+  "@payslipBonus": {
+    "description": "Bonus label"
+  },
+  "@payslipEmployeeContribution": {
+    "description": "Employee contribution column"
+  },
+  "@payslipEmployerContribution": {
+    "description": "Employer contribution column"
+  },
+  "@payslipMonthYear": {
+    "description": "Payslip month/year header",
+    "placeholders": {
+      "month": {
+        "type": "String",
+        "example": "December"
+      },
+      "year": {
+        "type": "String",
+        "example": "2025"
+      }
+    }
+  },
+  "@payslipOvertime": {
+    "description": "Overtime label"
+  },
+  "@payslipPinProtected": {
+    "description": "PIN protection indicator"
+  },
+  "@payslipShare": {
+    "description": "Share payslip button"
+  },
+  "@payslipStatutory": {
+    "description": "Statutory contributions section"
+  },
+  "@payslipViewBreakdown": {
+    "description": "View breakdown button"
+  },
+  "@payslipYouKeep": {
+    "description": "Net pay visual label"
+  },
+  "@pinAttemptsRemaining": {
+    "description": "Remaining PIN attempts",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@pinConfirmSubtitle": {
+    "description": "PIN confirmation instruction"
+  },
+  "@pinConfirmTitle": {
+    "description": "PIN confirmation screen title"
+  },
+  "@pinEntrySubtitle": {
+    "description": "PIN entry instruction"
+  },
+  "@pinForgot": {
+    "description": "Forgot PIN link"
+  },
+  "@pinMismatch": {
+    "description": "PIN mismatch error"
+  },
+  "@pinRequired": {
+    "description": "PIN required indicator"
+  },
+  "@pinSetupLater": {
+    "description": "Skip PIN setup option"
+  },
+  "@pinSetupSubtitle": {
+    "description": "PIN setup instruction"
+  },
+  "@profileChangePhoto": {
+    "description": "Change photo button"
+  },
+  "@profileDepartment": {
+    "description": "Department label"
+  },
+  "@profileEditProfile": {
+    "description": "Edit profile button"
+  },
+  "@profileEmail": {
+    "description": "Email label"
+  },
+  "@profileEmergencyContact": {
+    "description": "Emergency contact label"
+  },
+  "@profileEmployeeId": {
+    "description": "Employee ID label"
+  },
+  "@profileJoinDate": {
+    "description": "Join date label"
+  },
+  "@profilePhone": {
+    "description": "Phone label"
+  },
+  "@profilePosition": {
+    "description": "Position label"
+  },
+  "@profileTitle": {
+    "description": "Profile screen title"
+  },
+  "@publicHolidays": {
+    "description": "Public holidays section header"
+  },
+  "@settingsAbout": {
+    "description": "About section"
+  },
+  "@settingsAccessibility": {
+    "description": "Accessibility section"
+  },
+  "@settingsAudio": {
+    "description": "Audio settings section header"
+  },
+  "@settingsAudioFeedback": {
+    "description": "Audio feedback setting"
+  },
+  "@settingsAudioFeedbackDesc": {
+    "description": "Audio feedback description"
+  },
+  "@settingsBiometricFirst": {
+    "description": "Biometric first setting"
+  },
+  "@settingsBiometricFirstDesc": {
+    "description": "Biometric first description"
+  },
+  "@settingsGloveMode": {
+    "description": "Glove mode setting"
+  },
+  "@settingsGloveModeDesc": {
+    "description": "Glove mode description"
+  },
+  "@settingsHapticFeedback": {
+    "description": "Haptic feedback setting"
+  },
+  "@settingsHapticFeedbackDesc": {
+    "description": "Haptic feedback description"
+  },
+  "@settingsHighContrast": {
+    "description": "High contrast mode setting"
+  },
+  "@settingsHighContrastDesc": {
+    "description": "High contrast description"
+  },
+  "@settingsInteraction": {
+    "description": "Interaction settings section header"
+  },
+  "@settingsLargeText": {
+    "description": "Large text mode setting"
+  },
+  "@settingsLargeTextDesc": {
+    "description": "Large text description"
+  },
+  "@settingsPrivacy": {
+    "description": "Privacy policy link"
+  },
+  "@settingsSimpleMode": {
+    "description": "Simple mode setting"
+  },
+  "@settingsSimpleModeDesc": {
+    "description": "Simple mode description"
+  },
+  "@settingsTTS": {
+    "description": "Text-to-speech setting"
+  },
+  "@settingsTTSDesc": {
+    "description": "TTS description"
+  },
+  "@settingsTerms": {
+    "description": "Terms link"
+  },
+  "@settingsVersion": {
+    "description": "App version display",
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.0.0"
+      }
+    }
+  },
+  "@settingsVisual": {
+    "description": "Visual settings section header"
+  },
+  "@statusCompleted": {
+    "description": "Status: Completed"
+  },
+  "@statusProcessing": {
+    "description": "Status: Processing"
+  },
+  "@successApproved": {
+    "description": "Approval success message"
+  },
+  "@successDocumentUploaded": {
+    "description": "Document upload success"
+  },
+  "@successLeaveSubmitted": {
+    "description": "Leave submission success"
+  },
+  "@successPinChanged": {
+    "description": "PIN change success"
+  },
+  "@successProfileUpdated": {
+    "description": "Profile update success"
+  },
+  "@successRejected": {
+    "description": "Rejection success message"
+  },
+  "accessibilityApprovedIcon": "[TRANSLATE] Green checkmark icon",
+  "accessibilityCancelledIcon": "[TRANSLATE] Grey block icon",
+  "accessibilityDeleteDigit": "[TRANSLATE] Delete last digit",
+  "accessibilityDigitButton": "[TRANSLATE] Digit {digit}",
+  "accessibilityLeaveCard": "[TRANSLATE] Leave request from {startDate} to {endDate}, {days} days. Status: {status}.",
+  "accessibilityPayslipCard": "[TRANSLATE] Payslip for {period}, Net salary {amount}. Tap to view details. PIN required.",
+  "accessibilityPendingIcon": "[TRANSLATE] Yellow clock icon",
+  "accessibilityPinDot": "[TRANSLATE] PIN digit {position} of 6",
+  "accessibilityPinDotEmpty": "[TRANSLATE] PIN digit {position} of 6, empty",
+  "accessibilityPinDotFilled": "[TRANSLATE] PIN digit {position} of 6, entered",
+  "accessibilityRejectedIcon": "[TRANSLATE] Red X icon",
+  "accessibilityStatusIndicator": "[TRANSLATE] {status}. {iconDescription}",
+  "actionBack": "[TRANSLATE] Back",
+  "actionCancel": "မလုပ်တော့ပါ",
+  "actionClose": "[TRANSLATE] Close",
+  "actionConfirm": "[TRANSLATE] Confirm",
+  "actionContinue": "[TRANSLATE] Continue",
+  "actionDelete": "[TRANSLATE] Delete",
+  "actionDone": "[TRANSLATE] Done",
+  "actionEdit": "[TRANSLATE] Edit",
+  "actionNo": "မဟုတ်ပါ",
+  "actionOk": "[TRANSLATE] OK",
+  "actionRetry": "ထပ်ကြိုးစားပါ",
+  "actionSave": "သိမ်းဆည်းရန်",
+  "actionSeeLess": "[TRANSLATE] See Less",
+  "actionSeeMore": "[TRANSLATE] See More",
+  "actionSkip": "[TRANSLATE] Skip",
+  "actionSubmit": "တင်သွင်းရန်",
+  "actionYes": "ဟုတ်ကဲ့",
   "appName": "KerjaFlow",
-  "navHome": "ပင်မစာမျက်နှာ",
-  "navPayslip": "လစာစလစ်",
-  "navLeave": "ခွင့်",
-  "navInbox": "စာတိုက်ပုံး",
-  "navProfile": "ပရိုဖိုင်",
-
-  "loginTitle": "KerjaFlow မှ ကြိုဆိုပါသည်",
-  "loginSubtitle": "ဆက်လက်ရန် အကောင့်ဝင်ပါ",
-  "loginEmail": "အီးမေးလ် သို့မဟုတ် ဝန်ထမ်း ID",
-  "loginPassword": "စကားဝှက်",
-  "loginButton": "အကောင့်ဝင်ရန်",
-  "loginForgotPassword": "စကားဝှက်မေ့နေပါသလား?",
-
-  "pinSetupTitle": "သင့် PIN ဖန်တီးပါ",
-  "pinEntryTitle": "PIN ထည့်ပါ",
-  "pinVerifyBiometric": "လက်ဗွေသုံးပါ",
-  "pinInvalid": "PIN မမှန်ပါ",
-
-  "dashboardGreeting": "မင်္ဂလာပါ {name}",
-  "dashboardMorning": "နံနက်",
+  "approvalApprove": "[TRANSLATE] Approve",
+  "approvalNoItems": "[TRANSLATE] No pending approvals",
+  "approvalPending": "[TRANSLATE] Pending Approval",
+  "approvalReject": "[TRANSLATE] Reject",
+  "approvalRejectReason": "[TRANSLATE] Rejection Reason",
+  "approvalRejectReasonPlaceholder": "[TRANSLATE] Please provide a reason for rejection",
+  "biometricPrompt": "[TRANSLATE] Verify your identity",
+  "biometricUseFingerprint": "[TRANSLATE] Use Fingerprint",
+  "biometricUsePinInstead": "[TRANSLATE] Use PIN Instead",
+  "cancelLeaveConfirmMessage": "[TRANSLATE] Are you sure you want to cancel this leave request?",
+  "cancelLeaveConfirmTitle": "[TRANSLATE] Cancel Leave Request?",
+  "cannotConnectNow": "[TRANSLATE] Cannot connect right now",
+  "checkConnectionAndRetry": "[TRANSLATE] Check your connection and try again",
+  "confirmDialogTitle": "[TRANSLATE] Confirm Action",
+  "contributionEmployee": "ဝန်ထမ်း",
+  "contributionEmployer": "အလုပ်ရှင်",
+  "contributionTotal": "စုစုပေါင်း",
+  "currencyBnd": "B$",
+  "currencyFormat": "K {amount}",
+  "currencyIdr": "Rp",
+  "currencyKhr": "៛",
+  "currencyLak": "₭",
+  "currencyMmk": "K",
+  "currencyMyr": "RM",
+  "currencyPhp": "₱",
+  "currencySgd": "S$",
+  "currencyThb": "฿",
+  "currencyVnd": "₫",
   "dashboardAfternoon": "နေ့လည်",
   "dashboardEvening": "ညနေ",
-
-  "leaveBalanceTitle": "ခွင့်လက်ကျန်",
-  "leaveAnnual": "နှစ်ပတ်လည်ခွင့်",
-  "leaveMedical": "ဆေးခွင့်",
-  "leaveApply": "ခွင့်တောင်းရန်",
-  "leaveRemainingDays": "{count, plural, =0{ရက်မရှိပါ} =1{၁ ရက်} other{{count} ရက်}} ကျန်ပါသည်",
-
-  "payslipGrossEarnings": "စုစုပေါင်းဝင်ငွေ",
-  "payslipDeductions": "နုတ်ယူမှုများ",
-  "payslipNetPay": "အသားတင်လစာ",
-  "payslipBasicSalary": "အခြေခံလစာ",
-  "payslipDownloadPdf": "PDF ဒေါင်းလုပ်",
-
-  "statusPending": "စောင့်ဆိုင်းဆဲ",
-  "statusApproved": "အတည်ပြုပြီး",
-  "statusRejected": "ငြင်းပယ်ပြီး",
-  "statusCancelled": "ပယ်ဖျက်ပြီး",
-
-  "actionSubmit": "တင်သွင်းရန်",
-  "actionCancel": "မလုပ်တော့ပါ",
-  "actionSave": "သိမ်းဆည်းရန်",
-  "actionRetry": "ထပ်ကြိုးစားပါ",
-  "actionYes": "ဟုတ်ကဲ့",
-  "actionNo": "မဟုတ်ပါ",
-
-  "errorGeneric": "တစ်ခုခုမှားသွားပါပြီ။ ထပ်ကြိုးစားပါ။",
-  "errorNetwork": "အင်တာနက်ချိတ်ဆက်မှုမရှိပါ",
-
-  "settingsTitle": "ဆက်တင်များ",
-  "settingsLanguage": "ဘာသာစကား",
-
-  "loadingPleaseWait": "ခဏစောင့်ပါ...",
-  "emptyNoData": "ဒေတာမရှိပါ",
-
-  "languageMyanmar": "မြန်မာ",
+  "dashboardGreeting": "မင်္ဂလာပါ {name}",
+  "dashboardMorning": "နံနက်",
+  "dashboardQuickActions": "[TRANSLATE] Quick Actions",
+  "dashboardUpcoming": "[TRANSLATE] Upcoming",
+  "dateDaysAgo": "[TRANSLATE] {count, plural, =1{1 day ago} other{{count} days ago}}",
+  "dateHoursAgo": "[TRANSLATE] {count, plural, =1{1 hour ago} other{{count} hours ago}}",
+  "dateJustNow": "[TRANSLATE] Just now",
+  "dateMinutesAgo": "[TRANSLATE] {count, plural, =1{1 minute ago} other{{count} minutes ago}}",
   "dateToday": "ဒီနေ့",
-
-  "currencyFormat": "K {amount}",
+  "dateTomorrow": "[TRANSLATE] Tomorrow",
+  "dateYesterday": "[TRANSLATE] Yesterday",
+  "deleteConfirmMessage": "[TRANSLATE] This action cannot be undone.",
+  "deleteConfirmTitle": "[TRANSLATE] Delete?",
+  "documentDelete": "[TRANSLATE] Delete",
+  "documentDownload": "[TRANSLATE] Download",
+  "documentEmpty": "[TRANSLATE] No documents",
+  "documentTitle": "[TRANSLATE] Documents",
+  "documentUpload": "[TRANSLATE] Upload Document",
+  "emptyNoData": "ဒေတာမရှိပါ",
+  "emptyNoResults": "[TRANSLATE] No results found",
+  "errorFieldRequired": "[TRANSLATE] This field is required",
+  "errorGeneric": "တစ်ခုခုမှားသွားပါပြီ။ ထပ်ကြိုးစားပါ။",
+  "errorInvalidEmail": "[TRANSLATE] Please enter a valid email address",
+  "errorNetwork": "အင်တာနက်ချိတ်ဆက်မှုမရှိပါ",
+  "errorPasswordTooShort": "[TRANSLATE] Password must be at least 8 characters",
+  "errorServerError": "[TRANSLATE] Server error. Please try again later.",
+  "errorSessionExpired": "[TRANSLATE] Your session has expired. Please login again.",
+  "errorValidation": "[TRANSLATE] Please check your input and try again.",
+  "halfDayAm": "နံနက်ပိုင်း",
+  "halfDayPm": "နေ့လည်ပိုင်း",
+  "languageBalinese": "[TRANSLATE] Basa Bali",
+  "languageBengali": "[TRANSLATE] বাংলা",
+  "languageChinese": "[TRANSLATE] 简体中文",
+  "languageEnglish": "[TRANSLATE] English",
+  "languageIndonesian": "[TRANSLATE] Bahasa Indonesia",
+  "languageJavanese": "[TRANSLATE] Basa Jawa",
+  "languageJawi": "[TRANSLATE] جاوي (Jawi)",
+  "languageKhmer": "[TRANSLATE] ភាសាខ្មែរ",
+  "languageLao": "[TRANSLATE] ພາສາລາວ",
+  "languageMadurese": "[TRANSLATE] Basa Madhura",
+  "languageMalay": "[TRANSLATE] Bahasa Malaysia",
+  "languageMinangkabau": "[TRANSLATE] Baso Minang",
+  "languageMyanmar": "မြန်မာ",
+  "languageNepali": "[TRANSLATE] नेपाली",
+  "languageSundanese": "[TRANSLATE] Basa Sunda",
+  "languageTagalog": "[TRANSLATE] Filipino",
+  "languageTamil": "[TRANSLATE] தமிழ்",
+  "languageThai": "[TRANSLATE] ภาษาไทย",
+  "languageVietnamese": "[TRANSLATE] Tiếng Việt",
+  "leaveAnnual": "နှစ်ပတ်လည်ခွင့်",
+  "leaveApply": "ခွင့်တောင်းရန်",
+  "leaveAttachment": "[TRANSLATE] Attachment",
+  "leaveAttachmentUpload": "[TRANSLATE] Upload attachment",
+  "leaveBalanceTitle": "ခွင့်လက်ကျန်",
+  "leaveCompassionate": "[TRANSLATE] Compassionate Leave",
+  "leaveDaysCount": "[TRANSLATE] {count, plural, =0{0 days} =1{1 day} other{{count} days}}",
+  "leaveEmergency": "[TRANSLATE] Emergency Leave",
+  "leaveEndDate": "[TRANSLATE] End Date",
+  "leaveFullDay": "တစ်ရက်တာခွင့်",
+  "leaveHalfDay": "ထက်ဝက်ခွင့်",
+  "leaveHistory": "[TRANSLATE] Leave History",
+  "leaveInsufficientBalance": "[TRANSLATE] Insufficient leave balance",
+  "leaveMaternity": "[TRANSLATE] Maternity Leave",
+  "leaveMedical": "ဆေးခွင့်",
+  "leaveMinimumNotice": "[TRANSLATE] Minimum notice period not met",
+  "leaveOverlapping": "[TRANSLATE] Leave dates overlap with existing request",
+  "leavePaternity": "[TRANSLATE] Paternity Leave",
+  "leaveReason": "[TRANSLATE] Reason",
+  "leaveReasonPlaceholder": "[TRANSLATE] Please provide a reason for your leave request",
+  "leaveRemainingDays": "{count, plural, =0{ရက်မရှိပါ} =1{၁ ရက်} other{{count} ရက်}} ကျန်ပါသည်",
+  "leaveSelectType": "[TRANSLATE] Select leave type",
+  "leaveStartDate": "[TRANSLATE] Start Date",
+  "leaveUnpaid": "[TRANSLATE] Unpaid Leave",
+  "leaveWorkingDays": "[TRANSLATE] Working days",
+  "loadingPleaseWait": "ခဏစောင့်ပါ...",
+  "loadingProcessing": "[TRANSLATE] Processing...",
+  "loadingSubmitting": "[TRANSLATE] Submitting...",
+  "loginAccountLocked": "[TRANSLATE] Account locked. Try again in 15 minutes.",
+  "loginButton": "အကောင့်ဝင်ရန်",
+  "loginEmail": "အီးမေးလ် သို့မဟုတ် ဝန်ထမ်း ID",
+  "loginForgotPassword": "စကားဝှက်မေ့နေပါသလား?",
+  "loginInvalidCredentials": "[TRANSLATE] Invalid email or password",
+  "loginPassword": "စကားဝှက်",
+  "loginRememberMe": "[TRANSLATE] Remember me",
+  "loginSubtitle": "ဆက်လက်ရန် အကောင့်ဝင်ပါ",
+  "loginTitle": "KerjaFlow မှ ကြိုဆိုပါသည်",
+  "logoutButton": "[TRANSLATE] Logout",
+  "logoutConfirmMessage": "[TRANSLATE] Are you sure you want to logout?",
+  "logoutConfirmTitle": "[TRANSLATE] Logout",
+  "navHome": "ပင်မစာမျက်နှာ",
+  "navInbox": "စာတိုက်ပုံး",
+  "navLeave": "ခွင့်",
+  "navPayslip": "လစာစလစ်",
+  "navProfile": "ပရိုဖိုင်",
+  "notificationEmpty": "[TRANSLATE] No notifications",
+  "notificationMarkAllRead": "[TRANSLATE] Mark all as read",
+  "notificationTitle": "[TRANSLATE] Notifications",
+  "notificationUnreadCount": "[TRANSLATE] {count, plural, =0{No unread} =1{1 unread} other{{count} unread}}",
+  "offlineDataAvailable": "[TRANSLATE] You can still view saved data",
+  "offlineModeActive": "[TRANSLATE] Working offline - changes saved",
+  "onboardingGetStarted": "[TRANSLATE] Get Started",
+  "onboardingLeave": "[TRANSLATE] Apply for leave easily",
+  "onboardingNotifications": "[TRANSLATE] Stay updated with notifications",
+  "onboardingPayslip": "[TRANSLATE] View your payslip anytime",
+  "onboardingWelcome": "[TRANSLATE] Welcome",
+  "payslipAllowances": "[TRANSLATE] Allowances",
+  "payslipBasicSalary": "အခြေခံလစာ",
+  "payslipBonus": "[TRANSLATE] Bonus",
+  "payslipDeductions": "နုတ်ယူမှုများ",
+  "payslipDownloadPdf": "PDF ဒေါင်းလုပ်",
+  "payslipEmployeeContribution": "[TRANSLATE] Employee",
+  "payslipEmployerContribution": "[TRANSLATE] Employer",
+  "payslipGrossEarnings": "စုစုပေါင်းဝင်ငွေ",
+  "payslipMonthYear": "[TRANSLATE] {month} {year}",
+  "payslipNetPay": "အသားတင်လစာ",
+  "payslipOvertime": "[TRANSLATE] Overtime",
+  "payslipPinProtected": "[TRANSLATE] PIN protected",
+  "payslipShare": "[TRANSLATE] Share",
+  "payslipStatutory": "[TRANSLATE] Statutory Contributions",
+  "payslipViewBreakdown": "[TRANSLATE] View Breakdown",
+  "payslipYouKeep": "[TRANSLATE] What You Keep",
   "percentFormat": "{value}%",
-
-  "statutoryContributions": "ဥပဒေအရ ထည့်ဝင်မှုများ",
-  "statutoryEpf": "EPF",
-  "statutoryEpfDescription": "ဝန်ထမ်းကြိုတင်ငွေစုရန်ပုံငွေ",
-  "statutorySocso": "SOCSO",
-  "statutorySocsoDescription": "လူမှုဖူလုံရေးအဖွဲ့အစည်း",
-  "statutoryEis": "EIS",
-  "statutoryEisDescription": "အလုပ်သမားအာမခံစနစ်",
-  "statutoryPcb": "PCB",
-  "statutoryPcbDescription": "လစဉ်အခွန်နုတ်ယူခြင်း",
-  "statutoryCpf": "CPF",
-  "statutoryCpfDescription": "ဗဟိုကြိုတင်ငွေစုရန်ပုံငွေ",
-  "statutoryBpjsTk": "BPJS-TK",
-  "statutoryBpjsTkDescription": "အလုပ်သမားလူမှုဖူလုံရေး",
-  "statutoryBpjsKes": "BPJS-Kes",
-  "statutoryBpjsKesDescription": "ကျန်းမာရေးအာမခံ",
-  "statutorySss": "SSS",
-  "statutorySssDescription": "လူမှုဖူလုံရေးစနစ်",
-  "statutoryPhilHealth": "PhilHealth",
-  "statutoryPhilHealthDescription": "ဖိလစ်ပိုင်ကျန်းမာရေးအာမခံ",
-  "statutoryPagIbig": "Pag-IBIG",
-  "statutoryPagIbigDescription": "အိမ်ယာဖွံ့ဖြိုးရေးရန်ပုံငွေ",
-  "statutorySsf": "SSF",
-  "statutorySsfDescription": "လူမှုဖူလုံရေးရန်ပုံငွေ",
+  "pinAttemptsRemaining": "[TRANSLATE] {count, plural, =1{1 attempt remaining} other{{count} attempts remaining}}",
+  "pinConfirmSubtitle": "[TRANSLATE] Enter the same PIN again to confirm",
+  "pinConfirmTitle": "[TRANSLATE] Confirm Your PIN",
+  "pinEntrySubtitle": "[TRANSLATE] Enter your 6-digit PIN to continue",
+  "pinEntryTitle": "PIN ထည့်ပါ",
+  "pinForgot": "[TRANSLATE] Forgot PIN?",
+  "pinInvalid": "PIN မမှန်ပါ",
+  "pinMismatch": "[TRANSLATE] PINs do not match. Please try again.",
+  "pinRequired": "[TRANSLATE] PIN required",
+  "pinSetupLater": "[TRANSLATE] Set up later",
+  "pinSetupSubtitle": "[TRANSLATE] Enter a 6-digit PIN to secure your account",
+  "pinSetupTitle": "သင့် PIN ဖန်တီးပါ",
+  "pinVerifyBiometric": "လက်ဗွေသုံးပါ",
+  "profileChangePhoto": "[TRANSLATE] Change Photo",
+  "profileDepartment": "[TRANSLATE] Department",
+  "profileEditProfile": "[TRANSLATE] Edit Profile",
+  "profileEmail": "[TRANSLATE] Email",
+  "profileEmergencyContact": "[TRANSLATE] Emergency Contact",
+  "profileEmployeeId": "[TRANSLATE] Employee ID",
+  "profileJoinDate": "[TRANSLATE] Join Date",
+  "profilePhone": "[TRANSLATE] Phone",
+  "profilePosition": "[TRANSLATE] Position",
+  "profileTitle": "[TRANSLATE] Profile",
+  "publicHolidays": "[TRANSLATE] Public Holidays",
+  "settingsAbout": "[TRANSLATE] About",
+  "settingsAccessibility": "[TRANSLATE] Accessibility",
+  "settingsAudio": "[TRANSLATE] Audio Settings",
+  "settingsAudioFeedback": "[TRANSLATE] Sound Effects",
+  "settingsAudioFeedbackDesc": "[TRANSLATE] Hear success and error sounds",
+  "settingsBiometricFirst": "[TRANSLATE] Fingerprint First",
+  "settingsBiometricFirstDesc": "[TRANSLATE] Use fingerprint before PIN",
+  "settingsGloveMode": "[TRANSLATE] Glove Mode",
+  "settingsGloveModeDesc": "[TRANSLATE] Bigger buttons for gloves",
+  "settingsHapticFeedback": "[TRANSLATE] Vibration",
+  "settingsHapticFeedbackDesc": "[TRANSLATE] Feel taps and actions",
+  "settingsHighContrast": "[TRANSLATE] High Contrast",
+  "settingsHighContrastDesc": "[TRANSLATE] Easier to see outdoors",
+  "settingsInteraction": "[TRANSLATE] Interaction Settings",
+  "settingsLanguage": "ဘာသာစကား",
+  "settingsLargeText": "[TRANSLATE] Large Text",
+  "settingsLargeTextDesc": "[TRANSLATE] Make text bigger",
+  "settingsPrivacy": "[TRANSLATE] Privacy Policy",
+  "settingsSimpleMode": "[TRANSLATE] Simple Mode",
+  "settingsSimpleModeDesc": "[TRANSLATE] Hide advanced features",
+  "settingsTTS": "[TRANSLATE] Voice Readout",
+  "settingsTTSDesc": "[TRANSLATE] Read screen content aloud",
+  "settingsTerms": "[TRANSLATE] Terms & Conditions",
+  "settingsTitle": "ဆက်တင်များ",
+  "settingsVersion": "[TRANSLATE] Version {version}",
+  "settingsVisual": "[TRANSLATE] Visual Settings",
+  "statusApproved": "အတည်ပြုပြီး",
+  "statusCancelled": "ပယ်ဖျက်ပြီး",
+  "statusCompleted": "[TRANSLATE] Completed",
+  "statusPending": "စောင့်ဆိုင်းဆဲ",
+  "statusProcessing": "[TRANSLATE] Processing",
+  "statusRejected": "ငြင်းပယ်ပြီး",
   "statutoryBhxh": "BHXH",
   "statutoryBhxhDescription": "လူမှုအာမခံ",
   "statutoryBhyt": "BHYT",
   "statutoryBhytDescription": "ကျန်းမာရေးအာမခံ",
-  "statutoryNssf": "NSSF",
-  "statutoryNssfDescription": "အမျိုးသားလူမှုဖူလုံရေးရန်ပုံငွေ",
-  "statutorySsb": "SSB",
-  "statutorySsbDescription": "လူမှုဖူလုံရေးအဖွဲ့",
-  "statutoryTap": "TAP",
-  "statutoryTapDescription": "ဝန်ထမ်းယုံကြည်မှုရန်ပုံငွေ",
+  "statutoryBpjsKes": "BPJS-Kes",
+  "statutoryBpjsKesDescription": "ကျန်းမာရေးအာမခံ",
+  "statutoryBpjsTk": "BPJS-TK",
+  "statutoryBpjsTkDescription": "အလုပ်သမားလူမှုဖူလုံရေး",
+  "statutoryContributions": "ဥပဒေအရ ထည့်ဝင်မှုများ",
+  "statutoryCpf": "CPF",
+  "statutoryCpfDescription": "ဗဟိုကြိုတင်ငွေစုရန်ပုံငွေ",
+  "statutoryEis": "EIS",
+  "statutoryEisDescription": "အလုပ်သမားအာမခံစနစ်",
+  "statutoryEpf": "EPF",
+  "statutoryEpfDescription": "ဝန်ထမ်းကြိုတင်ငွေစုရန်ပုံငွေ",
   "statutoryLsso": "LSSO",
   "statutoryLssoDescription": "လာအိုလူမှုဖူလုံရေးအဖွဲ့အစည်း",
-
-  "contributionEmployee": "ဝန်ထမ်း",
-  "contributionEmployer": "အလုပ်ရှင်",
-  "contributionTotal": "စုစုပေါင်း",
-
-  "currencyMyr": "RM",
-  "currencySgd": "S$",
-  "currencyIdr": "Rp",
-  "currencyThb": "฿",
-  "currencyPhp": "₱",
-  "currencyVnd": "₫",
-  "currencyKhr": "៛",
-  "currencyMmk": "K",
-  "currencyBnd": "B$",
-  "currencyLak": "₭",
-
-  "halfDayAm": "နံနက်ပိုင်း",
-  "halfDayPm": "နေ့လည်ပိုင်း",
-  "leaveHalfDay": "ထက်ဝက်ခွင့်",
-  "leaveFullDay": "တစ်ရက်တာခွင့်"
+  "statutoryNssf": "NSSF",
+  "statutoryNssfDescription": "အမျိုးသားလူမှုဖူလုံရေးရန်ပုံငွေ",
+  "statutoryPagIbig": "Pag-IBIG",
+  "statutoryPagIbigDescription": "အိမ်ယာဖွံ့ဖြိုးရေးရန်ပုံငွေ",
+  "statutoryPcb": "PCB",
+  "statutoryPcbDescription": "လစဉ်အခွန်နုတ်ယူခြင်း",
+  "statutoryPhilHealth": "PhilHealth",
+  "statutoryPhilHealthDescription": "ဖိလစ်ပိုင်ကျန်းမာရေးအာမခံ",
+  "statutorySocso": "SOCSO",
+  "statutorySocsoDescription": "လူမှုဖူလုံရေးအဖွဲ့အစည်း",
+  "statutorySsb": "SSB",
+  "statutorySsbDescription": "လူမှုဖူလုံရေးအဖွဲ့",
+  "statutorySsf": "SSF",
+  "statutorySsfDescription": "လူမှုဖူလုံရေးရန်ပုံငွေ",
+  "statutorySss": "SSS",
+  "statutorySssDescription": "လူမှုဖူလုံရေးစနစ်",
+  "statutoryTap": "TAP",
+  "statutoryTapDescription": "ဝန်ထမ်းယုံကြည်မှုရန်ပုံငွေ",
+  "successApproved": "[TRANSLATE] Request approved",
+  "successDocumentUploaded": "[TRANSLATE] Document uploaded successfully",
+  "successLeaveSubmitted": "[TRANSLATE] Leave request submitted successfully",
+  "successPinChanged": "[TRANSLATE] PIN changed successfully",
+  "successProfileUpdated": "[TRANSLATE] Profile updated successfully",
+  "successRejected": "[TRANSLATE] Request rejected"
 }
