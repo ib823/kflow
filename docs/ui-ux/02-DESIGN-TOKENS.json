@@ -1,0 +1,315 @@
+{
+  "$schema": "https://kerjaflow.my/design-tokens/v4.0.json",
+  "version": "4.0.0",
+  "lastUpdated": "2026-01-09",
+  "metadata": {
+    "name": "KerjaFlow Design Tokens",
+    "description": "Single source of truth for all design values",
+    "platforms": ["ios", "android", "huawei", "web", "flutter"],
+    "compliance": ["WCAG 2.2 AA", "Material Design 3", "Human Interface Guidelines"]
+  },
+  
+  "colors": {
+    "brand": {
+      "primary": {
+        "50": {"value": "#EBF5FB", "description": "Lightest primary background"},
+        "100": {"value": "#D4E6F1", "description": "Light primary background"},
+        "200": {"value": "#85C1E9", "description": "Light primary accent"},
+        "300": {"value": "#5DADE2", "description": "Medium primary"},
+        "400": {"value": "#2E86AB", "description": "Primary hover"},
+        "500": {"value": "#2471A3", "description": "Primary active"},
+        "600": {"value": "#1A5276", "description": "Primary default", "contrastRatio": "7.2:1"},
+        "700": {"value": "#145470", "description": "Primary emphasis"},
+        "800": {"value": "#0F4460", "description": "Primary dark"},
+        "900": {"value": "#0D3B50", "description": "Primary darkest", "contrastRatio": "10.5:1"}
+      },
+      "secondary": {
+        "100": {"value": "#FCF3CF", "description": "Lightest secondary"},
+        "300": {"value": "#F9E79F", "description": "Light secondary"},
+        "400": {"value": "#F7B731", "description": "Secondary hover"},
+        "500": {"value": "#F39C12", "description": "Secondary default"},
+        "600": {"value": "#D68910", "description": "Secondary emphasis"}
+      }
+    },
+    
+    "semantic": {
+      "success": {
+        "50": {"value": "#EAFAF1", "description": "Success background light"},
+        "100": {"value": "#D5F5E3", "description": "Success background"},
+        "500": {"value": "#2ECC71", "description": "Success accent"},
+        "600": {"value": "#27AE60", "description": "Success default"},
+        "700": {"value": "#1E8449", "description": "Success dark"}
+      },
+      "warning": {
+        "50": {"value": "#FEF9E7", "description": "Warning background light"},
+        "100": {"value": "#FCF3CF", "description": "Warning background"},
+        "500": {"value": "#F5B041", "description": "Warning accent"},
+        "600": {"value": "#F39C12", "description": "Warning default"},
+        "700": {"value": "#B9770E", "description": "Warning dark"}
+      },
+      "error": {
+        "50": {"value": "#FDEDEC", "description": "Error background light"},
+        "100": {"value": "#F5B7B1", "description": "Error background"},
+        "500": {"value": "#E74C3C", "description": "Error accent"},
+        "600": {"value": "#C0392B", "description": "Error default"},
+        "700": {"value": "#922B21", "description": "Error dark"}
+      },
+      "info": {
+        "100": {"value": "#D4E6F1", "description": "Info background"},
+        "500": {"value": "#3498DB", "description": "Info accent"},
+        "600": {"value": "#2980B9", "description": "Info default"}
+      }
+    },
+    
+    "neutral": {
+      "white": {"value": "#FFFFFF"},
+      "50": {"value": "#FAFAFA", "description": "Background"},
+      "100": {"value": "#F0F0F3", "description": "Surface"},
+      "200": {"value": "#E0E0E5", "description": "Border light"},
+      "300": {"value": "#C4C4CC", "description": "Border"},
+      "400": {"value": "#A8A8B3", "description": "Placeholder"},
+      "500": {"value": "#8E8E9A", "description": "Text disabled"},
+      "600": {"value": "#6B6B7B", "description": "Text secondary"},
+      "700": {"value": "#4A4A5A", "description": "Text primary"},
+      "800": {"value": "#2D2D44", "description": "Text emphasis"},
+      "900": {"value": "#1A1A2E", "description": "Text heading"}
+    },
+    
+    "dark": {
+      "background": {"value": "#0F0F1A"},
+      "surface": {"value": "#1A1A2E"},
+      "surfaceElevated": {"value": "#2D2D44"},
+      "border": {"value": "#3D3D54"},
+      "textPrimary": {"value": "#FFFFFF"},
+      "textSecondary": {"value": "#A8A8B3"},
+      "primary": {"value": "#5DADE2"},
+      "primarySurface": {"value": "#1A3A4A"}
+    }
+  },
+  
+  "typography": {
+    "fontFamily": {
+      "primary": {
+        "value": "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        "flutter": "PlusJakartaSans",
+        "ios": "-apple-system",
+        "android": "sans-serif"
+      },
+      "arabic": {
+        "value": "'IBM Plex Sans Arabic', 'Noto Sans Arabic', sans-serif",
+        "flutter": "IBMPlexSansArabic"
+      },
+      "thai": {
+        "value": "'Noto Sans Thai', sans-serif",
+        "flutter": "NotoSansThai"
+      },
+      "chinese": {
+        "value": "'Noto Sans SC', 'PingFang SC', sans-serif",
+        "flutter": "NotoSansSC"
+      },
+      "tamil": {
+        "value": "'Noto Sans Tamil', sans-serif",
+        "flutter": "NotoSansTamil"
+      },
+      "monospace": {
+        "value": "'JetBrains Mono', 'Fira Code', monospace",
+        "flutter": "JetBrainsMono"
+      }
+    },
+    
+    "fontSize": {
+      "xs": {"value": "10px", "flutter": 10, "lineHeight": 1.4, "letterSpacing": 0.4},
+      "sm": {"value": "12px", "flutter": 12, "lineHeight": 1.5, "letterSpacing": 0.25},
+      "base": {"value": "14px", "flutter": 14, "lineHeight": 1.5, "letterSpacing": 0.15},
+      "md": {"value": "16px", "flutter": 16, "lineHeight": 1.5, "letterSpacing": 0.1},
+      "lg": {"value": "18px", "flutter": 18, "lineHeight": 1.4, "letterSpacing": 0},
+      "xl": {"value": "20px", "flutter": 20, "lineHeight": 1.4, "letterSpacing": -0.1},
+      "2xl": {"value": "24px", "flutter": 24, "lineHeight": 1.3, "letterSpacing": -0.2},
+      "3xl": {"value": "30px", "flutter": 30, "lineHeight": 1.2, "letterSpacing": -0.3},
+      "4xl": {"value": "36px", "flutter": 36, "lineHeight": 1.2, "letterSpacing": -0.4},
+      "5xl": {"value": "48px", "flutter": 48, "lineHeight": 1.1, "letterSpacing": -0.5},
+      "6xl": {"value": "60px", "flutter": 60, "lineHeight": 1.1, "letterSpacing": -0.6}
+    },
+    
+    "fontWeight": {
+      "light": {"value": 300},
+      "regular": {"value": 400},
+      "medium": {"value": 500},
+      "semibold": {"value": 600},
+      "bold": {"value": 700},
+      "extrabold": {"value": 800}
+    },
+    
+    "textStyles": {
+      "displayLarge": {"fontSize": "5xl", "fontWeight": "extrabold", "letterSpacing": -0.5},
+      "displayMedium": {"fontSize": "4xl", "fontWeight": "bold", "letterSpacing": -0.4},
+      "displaySmall": {"fontSize": "3xl", "fontWeight": "bold", "letterSpacing": -0.3},
+      "headlineLarge": {"fontSize": "2xl", "fontWeight": "bold", "letterSpacing": -0.2},
+      "headlineMedium": {"fontSize": "xl", "fontWeight": "semibold", "letterSpacing": -0.1},
+      "headlineSmall": {"fontSize": "lg", "fontWeight": "semibold", "letterSpacing": 0},
+      "titleLarge": {"fontSize": "md", "fontWeight": "semibold", "letterSpacing": 0.1},
+      "titleMedium": {"fontSize": "base", "fontWeight": "semibold", "letterSpacing": 0.15},
+      "titleSmall": {"fontSize": "sm", "fontWeight": "semibold", "letterSpacing": 0.25},
+      "bodyLarge": {"fontSize": "md", "fontWeight": "regular", "letterSpacing": 0.1},
+      "bodyMedium": {"fontSize": "base", "fontWeight": "regular", "letterSpacing": 0.15},
+      "bodySmall": {"fontSize": "sm", "fontWeight": "regular", "letterSpacing": 0.25},
+      "labelLarge": {"fontSize": "base", "fontWeight": "medium", "letterSpacing": 0.15},
+      "labelMedium": {"fontSize": "sm", "fontWeight": "medium", "letterSpacing": 0.5},
+      "labelSmall": {"fontSize": "xs", "fontWeight": "medium", "letterSpacing": 0.5}
+    }
+  },
+  
+  "spacing": {
+    "0": {"value": "0px", "flutter": 0},
+    "1": {"value": "4px", "flutter": 4},
+    "2": {"value": "8px", "flutter": 8},
+    "3": {"value": "12px", "flutter": 12},
+    "4": {"value": "16px", "flutter": 16},
+    "5": {"value": "20px", "flutter": 20},
+    "6": {"value": "24px", "flutter": 24},
+    "8": {"value": "32px", "flutter": 32},
+    "10": {"value": "40px", "flutter": 40},
+    "12": {"value": "48px", "flutter": 48},
+    "16": {"value": "64px", "flutter": 64},
+    "20": {"value": "80px", "flutter": 80},
+    "24": {"value": "96px", "flutter": 96}
+  },
+  
+  "borderRadius": {
+    "none": {"value": "0px", "flutter": 0},
+    "sm": {"value": "4px", "flutter": 4},
+    "md": {"value": "8px", "flutter": 8},
+    "lg": {"value": "12px", "flutter": 12},
+    "xl": {"value": "16px", "flutter": 16},
+    "2xl": {"value": "24px", "flutter": 24},
+    "3xl": {"value": "32px", "flutter": 32},
+    "full": {"value": "9999px", "flutter": 9999}
+  },
+  
+  "shadows": {
+    "none": {"value": "none"},
+    "xs": {
+      "value": "0 1px 2px rgba(0,0,0,0.05)",
+      "flutter": {"offset": [0, 1], "blur": 2, "color": "rgba(0,0,0,0.05)"}
+    },
+    "sm": {
+      "value": "0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06)",
+      "flutter": {"offset": [0, 1], "blur": 3, "color": "rgba(0,0,0,0.1)"}
+    },
+    "md": {
+      "value": "0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)",
+      "flutter": {"offset": [0, 4], "blur": 6, "color": "rgba(0,0,0,0.1)"}
+    },
+    "lg": {
+      "value": "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)",
+      "flutter": {"offset": [0, 10], "blur": 15, "color": "rgba(0,0,0,0.1)"}
+    },
+    "xl": {
+      "value": "0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)",
+      "flutter": {"offset": [0, 20], "blur": 25, "color": "rgba(0,0,0,0.1)"}
+    },
+    "2xl": {
+      "value": "0 25px 50px -12px rgba(0,0,0,0.25)",
+      "flutter": {"offset": [0, 25], "blur": 50, "color": "rgba(0,0,0,0.25)"}
+    }
+  },
+  
+  "touchTargets": {
+    "minimum": {"value": "44px", "flutter": 44, "description": "WCAG minimum"},
+    "comfortable": {"value": "48px", "flutter": 48, "description": "Recommended"},
+    "large": {"value": "56px", "flutter": 56, "description": "For gloves/accessibility"},
+    "extraLarge": {"value": "64px", "flutter": 64, "description": "Stadium/TV mode"}
+  },
+  
+  "breakpoints": {
+    "watch": {"min": 0, "max": 199, "description": "Smart watches"},
+    "phoneSmall": {"min": 320, "max": 359, "description": "Small phones (iPhone SE)"},
+    "phone": {"min": 360, "max": 389, "description": "Standard phones"},
+    "phoneLarge": {"min": 390, "max": 427, "description": "Large phones"},
+    "phoneXL": {"min": 428, "max": 599, "description": "Extra large phones"},
+    "tabletSmall": {"min": 600, "max": 743, "description": "Small tablets"},
+    "tablet": {"min": 744, "max": 833, "description": "Standard tablets"},
+    "tabletLarge": {"min": 834, "max": 1023, "description": "Large tablets"},
+    "desktop": {"min": 1024, "max": 1279, "description": "Small desktop"},
+    "desktopLarge": {"min": 1280, "max": 1439, "description": "Standard desktop"},
+    "desktopXL": {"min": 1440, "max": 1919, "description": "Large desktop"},
+    "ultrawide": {"min": 1920, "max": 2559, "description": "Full HD+"},
+    "4k": {"min": 2560, "max": 3839, "description": "4K displays"},
+    "stadium": {"min": 3840, "max": null, "description": "Stadium/8K displays"}
+  },
+  
+  "animation": {
+    "duration": {
+      "instant": {"value": "0ms"},
+      "fast": {"value": "100ms", "flutter": 100},
+      "normal": {"value": "200ms", "flutter": 200},
+      "slow": {"value": "300ms", "flutter": 300},
+      "slower": {"value": "500ms", "flutter": 500},
+      "slowest": {"value": "800ms", "flutter": 800}
+    },
+    "easing": {
+      "linear": {"value": "linear", "flutter": "Curves.linear"},
+      "easeIn": {"value": "cubic-bezier(0.4, 0, 1, 1)", "flutter": "Curves.easeIn"},
+      "easeOut": {"value": "cubic-bezier(0, 0, 0.2, 1)", "flutter": "Curves.easeOut"},
+      "easeInOut": {"value": "cubic-bezier(0.4, 0, 0.2, 1)", "flutter": "Curves.easeInOut"},
+      "spring": {"value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "flutter": "Curves.elasticOut"},
+      "bounce": {"value": "cubic-bezier(0.68, -0.55, 0.265, 1.55)", "flutter": "Curves.bounceOut"}
+    }
+  },
+  
+  "zIndex": {
+    "base": 0,
+    "dropdown": 1000,
+    "sticky": 1020,
+    "fixed": 1030,
+    "modalBackdrop": 1040,
+    "modal": 1050,
+    "popover": 1060,
+    "tooltip": 1070,
+    "toast": 1080,
+    "max": 9999
+  },
+  
+  "iconSizes": {
+    "xs": {"value": "12px", "flutter": 12},
+    "sm": {"value": "16px", "flutter": 16},
+    "md": {"value": "20px", "flutter": 20},
+    "lg": {"value": "24px", "flutter": 24},
+    "xl": {"value": "32px", "flutter": 32},
+    "2xl": {"value": "40px", "flutter": 40},
+    "3xl": {"value": "48px", "flutter": 48}
+  },
+  
+  "avatarSizes": {
+    "xs": {"value": "24px", "flutter": 24},
+    "sm": {"value": "32px", "flutter": 32},
+    "md": {"value": "40px", "flutter": 40},
+    "lg": {"value": "48px", "flutter": 48},
+    "xl": {"value": "64px", "flutter": 64},
+    "2xl": {"value": "80px", "flutter": 80},
+    "3xl": {"value": "120px", "flutter": 120}
+  },
+  
+  "statusBarHeight": {
+    "ios": {"value": "44px", "flutter": 44},
+    "iosDynamic": {"value": "59px", "flutter": 59, "description": "With Dynamic Island"},
+    "android": {"value": "24px", "flutter": 24},
+    "androidLarge": {"value": "48px", "flutter": 48, "description": "With camera cutout"}
+  },
+  
+  "bottomNavHeight": {
+    "ios": {"value": "83px", "flutter": 83, "description": "49 + 34 home indicator"},
+    "android": {"value": "56px", "flutter": 56},
+    "androidGesture": {"value": "80px", "flutter": 80, "description": "With gesture bar"}
+  },
+  
+  "safeAreas": {
+    "iosTop": {"value": "44px", "flutter": 44},
+    "iosTopDynamic": {"value": "59px", "flutter": 59},
+    "iosBottom": {"value": "34px", "flutter": 34},
+    "iosLeft": {"value": "0px", "flutter": 0},
+    "iosRight": {"value": "0px", "flutter": 0},
+    "androidTop": {"value": "24px", "flutter": 24},
+    "androidBottom": {"value": "0px", "flutter": 0}
+  }
+}
