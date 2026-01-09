@@ -39,7 +39,11 @@ class TestEmployee(KerjaFlowTestCase):
         """Test computed years_of_service field."""
         today = date.today()
         hire_date = date(2023, 1, 15)
-        expected_years = today.year - hire_date.year - ((today.month, today.day) < (hire_date.month, hire_date.day))
+        expected_years = (
+            today.year
+            - hire_date.year
+            - ((today.month, today.day) < (hire_date.month, hire_date.day))
+        )
         self.assertEqual(self.employee.years_of_service, expected_years)
 
     def test_employee_is_probation(self):
@@ -123,7 +127,9 @@ class TestEmployee(KerjaFlowTestCase):
 
     def test_employee_terminate(self):
         """Test employee termination action."""
-        self.employee.action_terminate(termination_date=date.today(), termination_reason="Resignation")
+        self.employee.action_terminate(
+            termination_date=date.today(), termination_reason="Resignation"
+        )
         self.assertEqual(self.employee.status, "TERMINATED")
         self.assertEqual(self.employee.termination_date, date.today())
         self.assertEqual(self.employee.termination_reason, "Resignation")

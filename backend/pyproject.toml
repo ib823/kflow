@@ -89,6 +89,12 @@ extend-exclude = '''
 )/
 '''
 
+[tool.isort]
+profile = "black"
+line_length = 100
+skip_gitignore = true
+skip = [".git", "__pycache__", ".venv", "venv"]
+
 [tool.mypy]
 python_version = "3.10"
 warn_return_any = true

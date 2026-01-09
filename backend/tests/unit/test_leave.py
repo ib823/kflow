@@ -14,21 +14,29 @@ class TestLeaveBalance:
     def test_balance_calculation(self, sample_leave_balance):
         """T-L01: Balance should be entitled + carried + adjustment - taken"""
         balance = sample_leave_balance
-        calculated = balance["entitled"] + balance["carried"] + balance["adjustment"] - balance["taken"]
+        calculated = (
+            balance["entitled"] + balance["carried"] + balance["adjustment"] - balance["taken"]
+        )
         assert calculated == 13.0  # 16 + 2 + 0 - 5
 
     def test_available_balance_excludes_pending(self, sample_leave_balance):
         """T-L02: Available balance should exclude pending requests"""
         balance = sample_leave_balance
         available = (
-            balance["entitled"] + balance["carried"] + balance["adjustment"] - balance["taken"] - balance["pending"]
+            balance["entitled"]
+            + balance["carried"]
+            + balance["adjustment"]
+            - balance["taken"]
+            - balance["pending"]
         )
         assert available == 11.0  # 13 - 2
 
     def test_negative_balance_not_allowed(self, sample_leave_balance):
         """T-L03: Balance should not go negative"""
         balance = sample_leave_balance
-        total_available = balance["entitled"] + balance["carried"] + balance["adjustment"] - balance["taken"]
+        total_available = (
+            balance["entitled"] + balance["carried"] + balance["adjustment"] - balance["taken"]
+        )
         # Attempting to take more than available
         request_days = total_available + 1
         assert request_days > total_available

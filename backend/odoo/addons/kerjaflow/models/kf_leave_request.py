@@ -128,7 +128,9 @@ class KfLeaveRequest(models.Model):
     @api.depends("employee_id", "leave_type_id", "date_from")
     def _compute_display_name(self):
         for rec in self:
-            rec.display_name = f"{rec.employee_id.full_name} - " f"{rec.leave_type_id.code} " f"({rec.date_from})"
+            rec.display_name = (
+                f"{rec.employee_id.full_name} - " f"{rec.leave_type_id.code} " f"({rec.date_from})"
+            )
 
     @api.depends("status", "date_from")
     def _compute_can_cancel(self):
@@ -293,7 +295,9 @@ class KfLeaveRequest(models.Model):
 
         # 3. Balance sufficiency
         year = date_from.year
-        balance = self.env["kf.leave.balance"].get_or_create_balance(employee_id, leave_type_id, year)
+        balance = self.env["kf.leave.balance"].get_or_create_balance(
+            employee_id, leave_type_id, year
+        )
         available = balance.available
         if exclude_id:
             # Editing existing request - add back its days

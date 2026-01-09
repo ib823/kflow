@@ -118,7 +118,7 @@ class KerjaFlowController(http.Controller):
     def _paginate(self, records, offset=0, limit=20):
         """Paginate records."""
         total = len(records)
-        items = records[offset : offset + limit]
+        items = records[offset : offset + limit]  # noqa: E203
         return {
             "items": items,
             "pagination": {

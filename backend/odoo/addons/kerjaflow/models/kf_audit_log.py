@@ -160,7 +160,9 @@ class KfAuditLog(models.Model):
         )
 
     @api.model
-    def log_data_change(self, action, user_id, entity_type, entity_id, old_values=None, new_values=None):
+    def log_data_change(
+        self, action, user_id, entity_type, entity_id, old_values=None, new_values=None
+    ):
         """Log data modification."""
         user = self.env["kf.user"].browse(user_id)
         return self.log(

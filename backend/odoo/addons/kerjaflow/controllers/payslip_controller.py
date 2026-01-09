@@ -115,7 +115,9 @@ class PayslipController(KerjaFlowController):
 
         # Check if published
         if payslip.status != "PUBLISHED":
-            return self._error_response("PAYSLIP_NOT_PUBLISHED", "Payslip not yet published", status=403)
+            return self._error_response(
+                "PAYSLIP_NOT_PUBLISHED", "Payslip not yet published", status=403
+            )
 
         # Log access
         request.env["kf.audit.log"].sudo().log_data_access(
@@ -209,10 +211,14 @@ class PayslipController(KerjaFlowController):
             return self._error_response("PAYSLIP_NOT_FOUND", "Payslip not found", status=404)
 
         if payslip.status != "PUBLISHED":
-            return self._error_response("PAYSLIP_NOT_PUBLISHED", "Payslip not yet published", status=403)
+            return self._error_response(
+                "PAYSLIP_NOT_PUBLISHED", "Payslip not yet published", status=403
+            )
 
         if not payslip.pdf_url:
-            return self._error_response("PDF_NOT_AVAILABLE", "PDF has not been generated", status=404)
+            return self._error_response(
+                "PDF_NOT_AVAILABLE", "PDF has not been generated", status=404
+            )
 
         # Log download
         request.env["kf.audit.log"].sudo().log_data_access(

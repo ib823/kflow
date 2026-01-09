@@ -267,6 +267,10 @@ class ContributionSummary:
 
     def __post_init__(self):
         """Calculate totals"""
-        self.total_employee_amount = sum((c.employee_amount for c in self.contributions), Decimal("0.00"))
-        self.total_employer_amount = sum((c.employer_amount for c in self.contributions), Decimal("0.00"))
+        self.total_employee_amount = sum(
+            (c.employee_amount for c in self.contributions), Decimal("0.00")
+        )
+        self.total_employer_amount = sum(
+            (c.employer_amount for c in self.contributions), Decimal("0.00")
+        )
         self.total_combined_amount = self.total_employee_amount + self.total_employer_amount

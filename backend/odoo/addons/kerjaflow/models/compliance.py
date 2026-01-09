@@ -263,7 +263,9 @@ class StatutoryRateService:
             LIMIT 1
         """
 
-        result = self.db.execute(query, (country_code, contribution_type, effective_date, effective_date)).fetchone()
+        result = self.db.execute(
+            query, (country_code, contribution_type, effective_date, effective_date)
+        ).fetchone()
 
         if result:
             return StatutoryRate(
@@ -323,7 +325,11 @@ class StatutoryRateService:
 
         results = self.db.execute(
             query,
-            ((country_code, effective_date, effective_date) if not include_future else (country_code, effective_date)),
+            (
+                (country_code, effective_date, effective_date)
+                if not include_future
+                else (country_code, effective_date)
+            ),
         ).fetchall()
 
         return [
@@ -440,7 +446,9 @@ class RegulatoryMonitorService:
         self.db = db_connection
         self.logger = logging.getLogger("kerjaflow.regulatory")
 
-    def get_pending_regulations(self, country_code: str = None, include_enacted: bool = True) -> List[RegulatoryUpdate]:
+    def get_pending_regulations(
+        self, country_code: str = None, include_enacted: bool = True
+    ) -> List[RegulatoryUpdate]:
         """
         Get all regulations being monitored or recently enacted.
 
@@ -728,7 +736,8 @@ class ComplianceAlertService:
                 )
 
                 self.logger.info(
-                    f"Created rate change alert for {change['country_code']} " f"{change['contribution_type']}"
+                    f"Created rate change alert for {change['country_code']} "
+                    f"{change['contribution_type']}"
                 )
 
 
@@ -771,7 +780,9 @@ class PayrollCalculator:
             )
             # Uses 4% pension rate (not 2%) because payslip_date is after Oct 2027
         """
-        rates = self.rate_service.get_all_rates_for_country(country_code, effective_date=payslip_date)
+        rates = self.rate_service.get_all_rates_for_country(
+            country_code, effective_date=payslip_date
+        )
 
         deductions = {
             "country_code": country_code,

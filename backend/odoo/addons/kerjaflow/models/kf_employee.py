@@ -379,7 +379,9 @@ class KfEmployee(models.Model):
     @api.depends("nationality")
     def _compute_is_foreign_worker(self):
         for employee in self:
-            employee.is_foreign_worker = employee.nationality and employee.nationality.lower() != "malaysian"
+            employee.is_foreign_worker = (
+                employee.nationality and employee.nationality.lower() != "malaysian"
+            )
 
     @api.constrains("manager_id")
     def _check_manager_recursion(self):

@@ -145,7 +145,9 @@ class KfCompany(models.Model):
     @api.depends("employee_ids")
     def _compute_employee_count(self):
         for company in self:
-            company.employee_count = len(company.employee_ids.filtered(lambda e: e.status == "ACTIVE"))
+            company.employee_count = len(
+                company.employee_ids.filtered(lambda e: e.status == "ACTIVE")
+            )
 
     @api.constrains("leave_year_start")
     def _check_leave_year_start(self):

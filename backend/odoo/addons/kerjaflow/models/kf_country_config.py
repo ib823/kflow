@@ -127,7 +127,8 @@ class KfCountryConfig(models.Model):
         for record in self:
             if record.country_code and record.country_code.upper() not in valid_codes:
                 raise ValidationError(
-                    f"Invalid country code: {record.country_code}. " f'Must be one of: {", ".join(valid_codes)}'
+                    f"Invalid country code: {record.country_code}. "
+                    f'Must be one of: {", ".join(valid_codes)}'
                 )
 
     @api.model

@@ -458,7 +458,8 @@ except:
         local matches=$(grep -rn --include="*.py" --include="*.dart" --include="*.yaml" --include="*.yml" \
             -E "$pattern" "$PROJECT_ROOT" 2>/dev/null | \
             grep -v "__pycache__" | grep -v ".git" | grep -v "node_modules" | \
-            grep -v "example" | grep -v "test" | wc -l || echo "0")
+            grep -v "example" | grep -v "test" | wc -l | tr -d '[:space:]' || echo "0")
+        matches=${matches:-0}
         secrets_found=$((secrets_found + matches))
     done
     

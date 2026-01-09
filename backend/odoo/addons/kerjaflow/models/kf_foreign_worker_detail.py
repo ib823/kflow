@@ -150,7 +150,9 @@ class KfForeignWorkerDetail(models.Model):
         warning_date = today + timedelta(days=90)
         for rec in self:
             if rec.permit_expiry:
-                rec.is_expiring_soon = rec.permit_expiry <= warning_date and rec.permit_expiry > today
+                rec.is_expiring_soon = (
+                    rec.permit_expiry <= warning_date and rec.permit_expiry > today
+                )
             else:
                 rec.is_expiring_soon = False
 

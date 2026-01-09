@@ -113,7 +113,9 @@ wQIDAQAB
             if not cls._jwt_public_key:
                 # In development only - DO NOT use in production
                 if os.environ.get("ODOO_STAGE", "production") == "development":
-                    _logger.warning("Using development-only JWT public key. " "NEVER use this in production!")
+                    _logger.warning(
+                        "Using development-only JWT public key. " "NEVER use this in production!"
+                    )
                     cls._jwt_public_key = cls._DEV_PUBLIC_KEY
                 else:
                     raise ValueError(
@@ -165,7 +167,11 @@ wQIDAQAB
     @classmethod
     def get_pin_verification_expire_minutes(cls):
         """Get PIN verification token expiration in minutes."""
-        return int(os.environ.get("JWT_PIN_VERIFICATION_EXPIRE_MINUTES", cls._jwt_pin_verification_expire_minutes))
+        return int(
+            os.environ.get(
+                "JWT_PIN_VERIFICATION_EXPIRE_MINUTES", cls._jwt_pin_verification_expire_minutes
+            )
+        )
 
     # Redis Configuration (for token storage)
     @classmethod

@@ -217,8 +217,12 @@ class TestPayslipLine(KerjaFlowTestCase):
 
         # Verify line counts
         self.assertEqual(len(self.payslip.line_ids), 7)
-        earnings_count = len(self.payslip.line_ids.filtered(lambda line: line.line_type == "EARNING"))
-        deductions_count = len(self.payslip.line_ids.filtered(lambda line: line.line_type == "DEDUCTION"))
+        earnings_count = len(
+            self.payslip.line_ids.filtered(lambda line: line.line_type == "EARNING")
+        )
+        deductions_count = len(
+            self.payslip.line_ids.filtered(lambda line: line.line_type == "DEDUCTION")
+        )
         self.assertEqual(earnings_count, 3)
         self.assertEqual(deductions_count, 4)
 
