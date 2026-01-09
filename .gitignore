@@ -1,19 +1,42 @@
 # KerjaFlow .gitignore
-# Environment and secrets
+# =====================
+# Comprehensive ignore rules for all project components
+
+# ============================================================================
+# SECRETS & CREDENTIALS (CRITICAL - NEVER COMMIT)
+# ============================================================================
 .env
 .env.*
-.env.local
-.env.*.local
+!.env.example
 *.pem
 *.key
+*.crt
+*.p12
+*.pfx
 secrets/
 credentials/
+service-account*.json
+*-credentials.json
+*.keystore
+keystore.properties
 
-# Python
+# ============================================================================
+# KBS (KerjaFlow Build System)
+# ============================================================================
+.kbs/logs/
+.kbs/reports/
+.kbs/artifacts/
+.kbs/*.log
+
+# ============================================================================
+# PYTHON / BACKEND
+# ============================================================================
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
+
+# Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -30,18 +53,46 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# Testing
 .pytest_cache/
 .coverage
+.coverage.*
 htmlcov/
-.tox/
-.nox/
 coverage.xml
 *.cover
 .hypothesis/
-.mypy_cache/
-.ruff_cache/
+.tox/
+.nox/
 
-# Flutter/Dart
+# Type checkers
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# ============================================================================
+# FLUTTER / MOBILE
+# ============================================================================
+# Dart/Flutter specific
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -49,20 +100,74 @@ coverage.xml
 .pub-cache/
 .pub/
 build/
+
+# Generated files
 *.g.dart
 *.freezed.dart
+*.gr.dart
+*.mocks.dart
+lib/generated/
+mobile/lib/generated/
 
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-.project
-.settings/
-*.iml
+# Coverage
+coverage/
+mobile/coverage/
 
-# OS
+# Android
+mobile/android/.gradle/
+mobile/android/app/debug/
+mobile/android/app/release/
+mobile/android/app/build/
+mobile/android/build/
+mobile/android/local.properties
+mobile/android/*.iml
+mobile/android/key.properties
+*.apk
+*.aab
+*.dex
+*.class
+
+# iOS
+mobile/ios/Pods/
+mobile/ios/.symlinks/
+mobile/ios/Flutter/Flutter.framework/
+mobile/ios/Flutter/Flutter.podspec
+mobile/ios/Flutter/app.flx
+mobile/ios/Flutter/App.framework/
+mobile/ios/Flutter/Generated.xcconfig
+mobile/ios/build/
+*.ipa
+*.xcworkspace
+!*.xcworkspace/contents.xcworkspacedata
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+DerivedData/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# ============================================================================
+# DOCKER
+# ============================================================================
+docker-compose.override.yml
+*.log
+
+# ============================================================================
+# DATABASE
+# ============================================================================
+*.sqlite
+*.sqlite3
+*.db
+*.sql.gz
+*.dump
+
+# ============================================================================
+# OPERATING SYSTEM
+# ============================================================================
 .DS_Store
 .DS_Store?
 ._*
@@ -70,27 +175,119 @@ build/
 .Trashes
 ehthumbs.db
 Thumbs.db
+desktop.ini
 
-# Logs
-*.log
-logs/
+# ============================================================================
+# EDITORS & IDES
+# ============================================================================
+# VSCode
+.vscode/
+*.code-workspace
 
-# Database
-*.sqlite
-*.db
+# JetBrains (IntelliJ, PyCharm, Android Studio)
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
 
-# Docker
-docker-compose.override.yml
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
 
-# Node (for any JS tooling)
-node_modules/
+# Vim
+*.swp
+*.swo
+*.vim
+Session.vim
+.netrwhist
 
-# Testing
-coverage/
-.nyc_output/
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
 
-# Temporary files
-tmp/
-temp/
+# ============================================================================
+# TEMPORARY FILES
+# ============================================================================
 *.tmp
 *.temp
+*.bak
+*.backup
+*.old
+tmp/
+temp/
+.cache/
+
+# ============================================================================
+# DOCUMENTATION BUILD
+# ============================================================================
+docs/_build/
+docs/site/
+site/
+.mkdocs/
+
+# ============================================================================
+# NODE (if any Node tools used)
+# ============================================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# ============================================================================
+# TERRAFORM (if used for infrastructure)
+# ============================================================================
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# ============================================================================
+# MISC
+# ============================================================================
+*.pid
+*.seed
+*.pid.lock
+*.gz
+*.zip
+*.tar
+*.rar
+
+# Large files
+*.mp4
+*.mov
+*.avi
+*.wmv
+
+# ============================================================================
+# PROJECT SPECIFIC
+# ============================================================================
+# Ignore generated APK/IPA names with versions
+kerjaflow-*.apk
+kerjaflow-*.ipa
+kerjaflow-*.aab
+
+# Ignore local configuration overrides
+config.local.yaml
+config.local.json
+settings.local.py
+
+# Test outputs
+test-results/
+test-reports/
+screenshots/
