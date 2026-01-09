@@ -11,3 +11,4 @@ export 'payslip_provider.dart';
 export 'leave_provider.dart';
 export 'approval_provider.dart';
 export 'notification_provider.dart';
+export 'data_providers.dart';
