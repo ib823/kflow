@@ -72,6 +72,4 @@ class KfJobPosition(models.Model):
 
     def _compute_employee_count(self):
         for position in self:
-            position.employee_count = len(
-                position.employee_ids.filtered(lambda e: e.status == "ACTIVE")
-            )
+            position.employee_count = len(position.employee_ids.filtered(lambda e: e.status == "ACTIVE"))

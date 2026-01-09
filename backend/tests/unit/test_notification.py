@@ -5,9 +5,7 @@ KerjaFlow Notification Tests
 
 Test suite for notification functionality (T-N01 to T-N07)
 """
-from datetime import datetime, timedelta
-
-import pytest
+from datetime import datetime
 
 
 class TestNotificationData:

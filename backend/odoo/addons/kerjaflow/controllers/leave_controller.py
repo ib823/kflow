@@ -258,11 +258,7 @@ class LeaveController(KerjaFlowController):
 
         # Update pending balance
         year = date_from.year
-        balance = (
-            request.env["kf.leave.balance"]
-            .sudo()
-            .get_or_create_balance(employee.id, leave_type_id, year)
-        )
+        balance = request.env["kf.leave.balance"].sudo().get_or_create_balance(employee.id, leave_type_id, year)
         balance.update_pending(leave_request.total_days, add=True)
 
         # Log

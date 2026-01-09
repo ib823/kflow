@@ -6,10 +6,6 @@ KerjaFlow Profile Tests
 Test suite for profile functionality (T-PR01 to T-PR08)
 """
 import re
-from datetime import date
-from decimal import Decimal
-
-import pytest
 
 
 class TestEmployeeProfile:

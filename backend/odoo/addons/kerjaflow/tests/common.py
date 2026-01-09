@@ -190,9 +190,7 @@ class KerjaFlowTestCase(TransactionCase):
             }
         )
 
-    def _create_leave_request(
-        self, employee, leave_type, date_from, date_to, status="PENDING", **kwargs
-    ):
+    def _create_leave_request(self, employee, leave_type, date_from, date_to, status="PENDING", **kwargs):
         """Helper to create leave request."""
         vals = {
             "employee_id": employee.id,

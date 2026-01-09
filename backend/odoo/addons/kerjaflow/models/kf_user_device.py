@@ -16,8 +16,6 @@ Per CLAUDE.md:
 import secrets
 from datetime import datetime, timedelta
 
-from odoo.exceptions import ValidationError
-
 from odoo import api, fields, models
 
 

@@ -33,40 +33,40 @@ CREATE TABLE IF NOT EXISTS kf_regulatory_monitor (
     regulation_name VARCHAR(255) NOT NULL,
     regulation_type VARCHAR(50) NOT NULL,  -- 'data_protection', 'social_security', 'labor_law'
     status VARCHAR(50) NOT NULL DEFAULT 'monitoring',  -- 'monitoring', 'enacted', 'effective', 'superseded'
-    
+
     -- Draft/Pending Details
     draft_announced_date DATE,
     expected_enactment_date DATE,
     actual_enactment_date DATE,
     effective_date DATE,
     grace_period_end DATE,
-    
+
     -- Impact Assessment
     impact_level VARCHAR(20) NOT NULL DEFAULT 'medium',  -- 'critical', 'high', 'medium', 'low'
     requires_data_migration BOOLEAN DEFAULT FALSE,
     requires_infra_change BOOLEAN DEFAULT FALSE,
     requires_rate_change BOOLEAN DEFAULT FALSE,
-    
+
     -- Action Items
     action_required TEXT,
     action_deadline DATE,
     action_completed BOOLEAN DEFAULT FALSE,
     action_completed_date DATE,
-    
+
     -- Monitoring
     last_checked_date DATE,
     check_frequency_days INTEGER DEFAULT 30,
     next_check_date DATE,
     source_url TEXT,
     notes TEXT,
-    
+
     -- Audit
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_by INTEGER,
     updated_by INTEGER,
-    
-    CONSTRAINT fk_country FOREIGN KEY (country_code) 
+
+    CONSTRAINT fk_country FOREIGN KEY (country_code)
         REFERENCES kf_country_config(country_code)
 );
 
@@ -79,7 +79,7 @@ CREATE INDEX idx_regulatory_next_check ON kf_regulatory_monitor(next_check_date)
 -- Purpose: Support future-dated rates with automatic activation
 -- ============================================================================
 -- Add columns if not exists
-ALTER TABLE kf_statutory_rate 
+ALTER TABLE kf_statutory_rate
 ADD COLUMN IF NOT EXISTS effective_from DATE NOT NULL DEFAULT '2024-01-01',
 ADD COLUMN IF NOT EXISTS effective_to DATE,  -- NULL means currently active
 ADD COLUMN IF NOT EXISTS is_scheduled BOOLEAN DEFAULT FALSE,
@@ -88,7 +88,7 @@ ADD COLUMN IF NOT EXISTS regulatory_reference VARCHAR(255),
 ADD COLUMN IF NOT EXISTS notes TEXT;
 
 -- Index for efficient rate lookups by date
-CREATE INDEX IF NOT EXISTS idx_statutory_rate_dates 
+CREATE INDEX IF NOT EXISTS idx_statutory_rate_dates
 ON kf_statutory_rate(country_code, contribution_type, effective_from, effective_to);
 
 -- ============================================================================
@@ -102,24 +102,24 @@ CREATE TABLE IF NOT EXISTS kf_compliance_alert (
     country_code VARCHAR(2),
     title VARCHAR(255) NOT NULL,
     message TEXT NOT NULL,
-    
+
     -- Related Records
     regulatory_monitor_id INTEGER REFERENCES kf_regulatory_monitor(id),
     statutory_rate_id INTEGER,
-    
+
     -- Alert Status
     is_read BOOLEAN DEFAULT FALSE,
     is_acknowledged BOOLEAN DEFAULT FALSE,
     acknowledged_by INTEGER,
     acknowledged_at TIMESTAMP,
-    
+
     -- Timing
     trigger_date DATE NOT NULL,
     expiry_date DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_compliance_alert_unread 
+CREATE INDEX idx_compliance_alert_unread
 ON kf_compliance_alert(is_read, severity, trigger_date);
 
 -- ============================================================================
@@ -127,19 +127,19 @@ ON kf_compliance_alert(is_read, severity, trigger_date);
 -- ============================================================================
 -- Current rates (effective Oct 2022)
 INSERT INTO kf_statutory_rate (
-    country_code, contribution_type, 
+    country_code, contribution_type,
     employee_rate, employer_rate, salary_cap, currency_code,
     effective_from, effective_to, is_scheduled, regulatory_reference, notes
-) VALUES 
+) VALUES
 -- Current pension rate
 ('KH', 'NSSF_PENSION', 2.0, 2.0, 1200000, 'KHR',
- '2022-10-01', '2027-09-30', FALSE, 
+ '2022-10-01', '2027-09-30', FALSE,
  'NSSF Pension Scheme 2022', 'Initial 5-year rate period'),
 
 -- Future pension rate (auto-activates Oct 2027)
 ('KH', 'NSSF_PENSION', 4.0, 4.0, 1200000, 'KHR',
  '2027-10-01', NULL, TRUE,
- 'NSSF Pension Scheme 2022 - Phase 2', 
+ 'NSSF Pension Scheme 2022 - Phase 2',
  'Rate increase after 5-year initial period. Employee 2%→4%, Employer 2%→4%')
 ON CONFLICT DO NOTHING;
 
@@ -152,8 +152,8 @@ INSERT INTO kf_regulatory_monitor (
     requires_data_migration, requires_infra_change,
     action_required, check_frequency_days, source_url, notes
 ) VALUES (
-    'KH', 
-    'Personal Data Protection Law (LPDP)', 
+    'KH',
+    'Personal Data Protection Law (LPDP)',
     'data_protection',
     'monitoring',
     '2025-07-01',  -- Draft announced July 2025
@@ -250,7 +250,7 @@ class StatutoryRateService:
             effective_date = date.today()
 
         query = """
-            SELECT 
+            SELECT
                 country_code, contribution_type,
                 employee_rate, employer_rate, salary_cap, currency_code,
                 effective_from, effective_to, is_scheduled, notes
@@ -263,9 +263,7 @@ class StatutoryRateService:
             LIMIT 1
         """
 
-        result = self.db.execute(
-            query, (country_code, contribution_type, effective_date, effective_date)
-        ).fetchone()
+        result = self.db.execute(query, (country_code, contribution_type, effective_date, effective_date)).fetchone()
 
         if result:
             return StatutoryRate(
@@ -312,7 +310,7 @@ class StatutoryRateService:
             """
         else:
             query = """
-                SELECT 
+                SELECT
                     country_code, contribution_type,
                     employee_rate, employer_rate, salary_cap, currency_code,
                     effective_from, effective_to, is_scheduled, notes
@@ -325,11 +323,7 @@ class StatutoryRateService:
 
         results = self.db.execute(
             query,
-            (
-                (country_code, effective_date, effective_date)
-                if not include_future
-                else (country_code, effective_date)
-            ),
+            ((country_code, effective_date, effective_date) if not include_future else (country_code, effective_date)),
         ).fetchall()
 
         return [
@@ -362,19 +356,19 @@ class StatutoryRateService:
         future_date = date.today() + timedelta(days=days_ahead)
 
         query = """
-            SELECT 
+            SELECT
                 r.country_code, c.country_name, r.contribution_type,
-                r.employee_rate, r.employer_rate, 
+                r.employee_rate, r.employer_rate,
                 r.effective_from, r.notes,
                 -- Get current rate for comparison
                 (SELECT employee_rate FROM kf_statutory_rate curr
-                 WHERE curr.country_code = r.country_code 
+                 WHERE curr.country_code = r.country_code
                    AND curr.contribution_type = r.contribution_type
                    AND curr.effective_from <= CURRENT_DATE
                    AND (curr.effective_to IS NULL OR curr.effective_to >= CURRENT_DATE)
                  ORDER BY curr.effective_from DESC LIMIT 1) as current_employee_rate,
                 (SELECT employer_rate FROM kf_statutory_rate curr
-                 WHERE curr.country_code = r.country_code 
+                 WHERE curr.country_code = r.country_code
                    AND curr.contribution_type = r.contribution_type
                    AND curr.effective_from <= CURRENT_DATE
                    AND (curr.effective_to IS NULL OR curr.effective_to >= CURRENT_DATE)
@@ -446,9 +440,7 @@ class RegulatoryMonitorService:
         self.db = db_connection
         self.logger = logging.getLogger("kerjaflow.regulatory")
 
-    def get_pending_regulations(
-        self, country_code: str = None, include_enacted: bool = True
-    ) -> List[RegulatoryUpdate]:
+    def get_pending_regulations(self, country_code: str = None, include_enacted: bool = True) -> List[RegulatoryUpdate]:
         """
         Get all regulations being monitored or recently enacted.
 
@@ -464,7 +456,7 @@ class RegulatoryMonitorService:
             statuses.append("enacted")
 
         query = """
-            SELECT 
+            SELECT
                 id, country_code, regulation_name, regulation_type,
                 status, impact_level, requires_data_migration, requires_infra_change,
                 action_required, action_deadline, next_check_date
@@ -563,7 +555,7 @@ class RegulatoryMonitorService:
         Called by scheduled job to prompt compliance team.
         """
         query = """
-            SELECT 
+            SELECT
                 id, country_code, regulation_name, regulation_type,
                 status, impact_level, requires_data_migration, requires_infra_change,
                 action_required, action_deadline, next_check_date
@@ -599,7 +591,7 @@ class RegulatoryMonitorService:
             UPDATE kf_regulatory_monitor
             SET last_checked_date = CURRENT_DATE,
                 next_check_date = CURRENT_DATE + (check_frequency_days || ' days')::interval,
-                notes = CASE WHEN %s IS NOT NULL 
+                notes = CASE WHEN %s IS NOT NULL
                         THEN %s || ' | ' || COALESCE(notes, '')
                         ELSE notes END,
                 updated_at = CURRENT_TIMESTAMP
@@ -616,7 +608,7 @@ class RegulatoryMonitorService:
                 alert_type, severity, country_code, title, message,
                 regulatory_monitor_id, trigger_date
             )
-            SELECT 
+            SELECT
                 'law_enacted',
                 CASE WHEN impact_level = 'critical' THEN 'critical' ELSE 'warning' END,
                 country_code,
@@ -649,7 +641,7 @@ class ComplianceAlertService:
     ) -> List[Dict[str, Any]]:
         """Get active compliance alerts for dashboard"""
         query = """
-            SELECT 
+            SELECT
                 id, alert_type, severity, country_code, title, message,
                 regulatory_monitor_id, is_read, is_acknowledged,
                 trigger_date, created_at
@@ -736,8 +728,7 @@ class ComplianceAlertService:
                 )
 
                 self.logger.info(
-                    f"Created rate change alert for {change['country_code']} "
-                    f"{change['contribution_type']}"
+                    f"Created rate change alert for {change['country_code']} " f"{change['contribution_type']}"
                 )
 
 
@@ -780,9 +771,7 @@ class PayrollCalculator:
             )
             # Uses 4% pension rate (not 2%) because payslip_date is after Oct 2027
         """
-        rates = self.rate_service.get_all_rates_for_country(
-            country_code, effective_date=payslip_date
-        )
+        rates = self.rate_service.get_all_rates_for_country(country_code, effective_date=payslip_date)
 
         deductions = {
             "country_code": country_code,
@@ -943,8 +932,8 @@ class DataMigrationService:
 
         for table in tables_to_migrate:
             count_query = f"""
-                SELECT COUNT(*) FROM {table} 
-                WHERE country_code = %s OR 
+                SELECT COUNT(*) FROM {table}
+                WHERE country_code = %s OR
                       employee_id IN (
                           SELECT id FROM kf_employee WHERE country_code = %s
                       )
@@ -975,7 +964,7 @@ class DataMigrationService:
                 {
                     "step": 1,
                     "action": "Provision new regional VPS",
-                    "details": f"Provision Cambodia VPS (recommend: DPDC or GDMS, ~$15-20/mo)",
+                    "details": "Provision Cambodia VPS (recommend: DPDC or GDMS, ~$15-20/mo)",
                     "estimated_time": "1-2 hours",
                 },
                 {

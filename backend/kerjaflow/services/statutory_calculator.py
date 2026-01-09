@@ -7,13 +7,20 @@ Core calculation engine for ASEAN statutory contributions
 import logging
 from datetime import date
 from decimal import ROUND_DOWN, ROUND_HALF_UP, ROUND_UP, Decimal
-from typing import Any, Dict, List, Optional
+from typing import List, Optional
 
-from ..models.statutory import (CalculationMethod, ContributionSummary,
-                                EmployeeContext, NationalityType, RiskCategory,
-                                RoundingMethod, StatutoryCeiling,
-                                StatutoryContribution, StatutoryRate,
-                                StatutoryScheme)
+from ..models.statutory import (
+    CalculationMethod,
+    ContributionSummary,
+    EmployeeContext,
+    NationalityType,
+    RiskCategory,
+    RoundingMethod,
+    StatutoryCeiling,
+    StatutoryContribution,
+    StatutoryRate,
+    StatutoryScheme,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -39,9 +46,7 @@ class StatutoryCalculator:
         """
         self.db = db_connection
 
-    def calculate_all(
-        self, employee: EmployeeContext, calculation_date: Optional[date] = None
-    ) -> ContributionSummary:
+    def calculate_all(self, employee: EmployeeContext, calculation_date: Optional[date] = None) -> ContributionSummary:
         """
         Calculate ALL statutory contributions for an employee
 
@@ -56,9 +61,7 @@ class StatutoryCalculator:
             calculation_date = employee.calculation_date or date.today()
 
         # Get all applicable schemes for this country
-        schemes = self._get_applicable_schemes(
-            employee.country_code, employee.nationality, calculation_date
-        )
+        schemes = self._get_applicable_schemes(employee.country_code, employee.nationality, calculation_date)
 
         contributions = []
         for scheme in schemes:
@@ -109,8 +112,7 @@ class StatutoryCalculator:
 
         if not rate:
             logger.warning(
-                f"No matching rate found for {scheme.code} "
-                f"(age={employee.age}, nationality={employee.nationality})"
+                f"No matching rate found for {scheme.code} " f"(age={employee.age}, nationality={employee.nationality})"
             )
             return None
 
@@ -118,24 +120,16 @@ class StatutoryCalculator:
         if scheme.calculation_method == CalculationMethod.PERCENTAGE:
             employee_amount, employer_amount = self._calculate_percentage(applied_salary, rate)
         elif scheme.calculation_method == CalculationMethod.TIERED_PERCENTAGE:
-            employee_amount, employer_amount = self._calculate_tiered_percentage(
-                applied_salary, rate, employee, scheme
-            )
+            employee_amount, employer_amount = self._calculate_tiered_percentage(applied_salary, rate, employee, scheme)
         elif scheme.calculation_method == CalculationMethod.TABLE_LOOKUP:
-            employee_amount, employer_amount = self._calculate_table_lookup(
-                base_amount, scheme, calculation_date
-            )
+            employee_amount, employer_amount = self._calculate_table_lookup(base_amount, scheme, calculation_date)
         else:
             logger.error(f"Unsupported calculation method: {scheme.calculation_method}")
             return None
 
         # Apply rounding
-        employee_amount = self._apply_rounding(
-            employee_amount, scheme.rounding_method, scheme.rounding_precision
-        )
-        employer_amount = self._apply_rounding(
-            employer_amount, scheme.rounding_method, scheme.rounding_precision
-        )
+        employee_amount = self._apply_rounding(employee_amount, scheme.rounding_method, scheme.rounding_precision)
+        employer_amount = self._apply_rounding(employer_amount, scheme.rounding_method, scheme.rounding_precision)
 
         return StatutoryContribution(
             scheme_code=scheme.code,
@@ -317,9 +311,7 @@ class StatutoryCalculator:
         else:
             return employee.gross_salary
 
-    def _calculate_percentage(
-        self, salary: Decimal, rate: StatutoryRate
-    ) -> tuple[Decimal, Decimal]:
+    def _calculate_percentage(self, salary: Decimal, rate: StatutoryRate) -> tuple[Decimal, Decimal]:
         """Calculate using simple percentage rates"""
         employee_amount = Decimal("0.00")
         employer_amount = Decimal("0.00")

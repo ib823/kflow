@@ -1,9 +1,17 @@
 """KerjaFlow Data Models"""
 
-from .statutory import (CalculationMethod, Country, EmployeeContext,
-                        NationalityType, RoundingMethod, SchemeType,
-                        StatutoryCeiling, StatutoryContribution, StatutoryRate,
-                        StatutoryScheme)
+from .statutory import (
+    CalculationMethod,
+    Country,
+    EmployeeContext,
+    NationalityType,
+    RoundingMethod,
+    SchemeType,
+    StatutoryCeiling,
+    StatutoryContribution,
+    StatutoryRate,
+    StatutoryScheme,
+)
 
 __all__ = [
     "Country",

@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../config/app_config.dart';
+import '../security/certificate_pins.dart';
 import 'interceptors/auth_interceptor.dart';
 import 'interceptors/error_interceptor.dart';
 import 'interceptors/logging_interceptor.dart';
@@ -48,7 +52,29 @@ class DioClient {
       if (kDebugMode) LoggingInterceptor(),
     ]);
 
+    // Configure certificate pinning (mobile platforms only)
+    if (!kIsWeb) {
+      _configureCertificatePinning();
+    }
+
     _initialized = true;
+  }
+
+  /// Configure certificate pinning for MITM prevention
+  /// Per CLAUDE.md: SHA-256 fingerprint validation required
+  static void _configureCertificatePinning() {
+    (_dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+      final client = CertificatePins.createSecureClient();
+
+      // Additional security settings
+      client.findProxy = HttpClient.findProxyFromEnvironment;
+
+      if (kDebugMode) {
+        debugPrint('[DioClient] Certificate pinning configured');
+      }
+
+      return client;
+    };
   }
 
   /// Reset client (useful for testing)

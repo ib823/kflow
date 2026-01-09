@@ -39,8 +39,7 @@ System Domain:
 from . import compliance  # noqa: F401
 from . import kf_audit_log  # noqa: F401
 from . import kf_company  # noqa: F401
-from . import \
-    kf_country_config  # noqa: F401 - Must be first (other models depend on it)
+from . import kf_country_config  # noqa: F401 - Must be first (other models depend on it)
 from . import kf_department  # noqa: F401
 from . import kf_document  # noqa: F401
 from . import kf_employee  # noqa: F401

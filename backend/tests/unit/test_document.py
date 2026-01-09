@@ -5,9 +5,7 @@ KerjaFlow Document Tests
 
 Test suite for document functionality (T-D01 to T-D06)
 """
-from datetime import date, timedelta
-
-import pytest
+from datetime import timedelta
 
 
 class TestDocumentData:

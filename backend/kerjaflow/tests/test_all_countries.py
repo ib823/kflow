@@ -7,9 +7,7 @@ Tests for Indonesia, Thailand, Philippines, Vietnam, Cambodia, Myanmar, Brunei
 from datetime import date
 from decimal import Decimal
 
-import pytest
-
-from ..models.statutory import EmployeeContext, NationalityType, RiskCategory
+from ..models.statutory import EmployeeContext, NationalityType
 
 
 class TestIndonesia:

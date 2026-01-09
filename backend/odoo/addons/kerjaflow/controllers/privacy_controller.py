@@ -20,7 +20,6 @@ import logging
 import secrets
 from datetime import datetime, timedelta
 
-from odoo.exceptions import AccessDenied, ValidationError
 from odoo.http import Response, request
 
 from odoo import _, fields, http
@@ -35,9 +34,7 @@ class PrivacyController(http.Controller):
     # Data Access Request
     # =========================================================================
 
-    @http.route(
-        "/api/v1/privacy/data-request", type="json", auth="user", methods=["POST"], csrf=False
-    )
+    @http.route("/api/v1/privacy/data-request", type="json", auth="user", methods=["POST"], csrf=False)
     def request_data_access(self, **kwargs):
         """
         Submit a data access request (DSAR).
@@ -86,7 +83,7 @@ class PrivacyController(http.Controller):
                 "action": "privacy_data_request",
                 "reference_model": "kf.privacy.request",
                 "reference_id": data_request.id,
-                "description": f"Data access request submitted",
+                "description": "Data access request submitted",
                 "ip_address": request.httprequest.remote_addr,
             }
         )
@@ -97,9 +94,7 @@ class PrivacyController(http.Controller):
                 "reference": data_request.reference,
                 "status": "pending",
                 "response_deadline": deadline.isoformat(),
-                "message": _(
-                    "Your data access request has been received. " "We will respond by %s."
-                )
+                "message": _("Your data access request has been received. " "We will respond by %s.")
                 % deadline.strftime("%Y-%m-%d"),
             },
         }
@@ -108,9 +103,7 @@ class PrivacyController(http.Controller):
     # Data Deletion Request
     # =========================================================================
 
-    @http.route(
-        "/api/v1/privacy/delete-request", type="json", auth="user", methods=["POST"], csrf=False
-    )
+    @http.route("/api/v1/privacy/delete-request", type="json", auth="user", methods=["POST"], csrf=False)
     def request_data_deletion(self, reason=None, **kwargs):
         """
         Submit a data deletion request.
@@ -169,7 +162,7 @@ class PrivacyController(http.Controller):
                 "action": "privacy_deletion_request",
                 "reference_model": "kf.privacy.request",
                 "reference_id": delete_request.id,
-                "description": f"Data deletion request submitted",
+                "description": "Data deletion request submitted",
                 "ip_address": request.httprequest.remote_addr,
             }
         )
@@ -237,12 +230,8 @@ class PrivacyController(http.Controller):
             "data": {
                 "reference": delete_request.reference,
                 "status": delete_request.status,
-                "requested_at": (
-                    delete_request.requested_at.isoformat() if delete_request.requested_at else None
-                ),
-                "completed_at": (
-                    delete_request.completed_at.isoformat() if delete_request.completed_at else None
-                ),
+                "requested_at": (delete_request.requested_at.isoformat() if delete_request.requested_at else None),
+                "completed_at": (delete_request.completed_at.isoformat() if delete_request.completed_at else None),
                 "data_retained": self._get_retained_data_summary(delete_request),
             },
         }
@@ -357,9 +346,7 @@ class PrivacyController(http.Controller):
     # Data Portability
     # =========================================================================
 
-    @http.route(
-        "/api/v1/privacy/export-data", type="json", auth="user", methods=["POST"], csrf=False
-    )
+    @http.route("/api/v1/privacy/export-data", type="json", auth="user", methods=["POST"], csrf=False)
     def export_personal_data(self, format="json", **kwargs):
         """
         Export personal data in machine-readable format.
@@ -542,9 +529,7 @@ class PrivacyController(http.Controller):
 
     def _send_deletion_confirmation_email(self, user, delete_request, token):
         """Send confirmation email for deletion request."""
-        template = request.env.ref(
-            "kerjaflow.email_template_deletion_confirmation", raise_if_not_found=False
-        )
+        template = request.env.ref("kerjaflow.email_template_deletion_confirmation", raise_if_not_found=False)
         if template:
             template.sudo().send_mail(delete_request.id, force_send=True)
         else:

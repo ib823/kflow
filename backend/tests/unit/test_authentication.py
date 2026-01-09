@@ -5,9 +5,6 @@ KerjaFlow Authentication Tests
 
 Test suite for authentication functionality (T-A01 to T-A12)
 """
-from datetime import datetime, timedelta
-from unittest.mock import Mock, patch
-
 import bcrypt
 import jwt
 import pytest
@@ -76,8 +73,7 @@ class TestRoleBasedAccess:
         """T-A09: EMPLOYEE role should have limited permissions"""
         payload = jwt.decode(valid_jwt_token, jwt_secret, algorithms=["HS256"])
         assert payload["role"] == "EMPLOYEE"
-        # EMPLOYEE can view own data only
-        allowed_actions = ["view_own_profile", "view_own_leave", "view_own_payslip"]
+        # EMPLOYEE can view own data only (view_own_profile, view_own_leave, view_own_payslip)
         # Verify role is not admin
         assert payload["role"] != "ADMIN"
 

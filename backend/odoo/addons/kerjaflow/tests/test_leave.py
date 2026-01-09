@@ -90,24 +90,18 @@ class TestLeaveBalance(KerjaFlowTestCase):
         self._create_leave_balance(self.employee, self.leave_type_annual, year=2025)
 
         with self.assertRaises(Exception):
-            self._create_leave_balance(
-                self.employee, self.leave_type_annual, year=2025  # Same combination
-            )
+            self._create_leave_balance(self.employee, self.leave_type_annual, year=2025)  # Same combination
 
     def test_leave_balance_get_or_create(self):
         """Test get_or_create_balance helper method."""
         LeaveBalance = self.env["kf.leave.balance"]
 
         # First call should create
-        balance1 = LeaveBalance.get_or_create_balance(
-            self.employee.id, self.leave_type_annual.id, 2026
-        )
+        balance1 = LeaveBalance.get_or_create_balance(self.employee.id, self.leave_type_annual.id, 2026)
         self.assertTrue(balance1.id)
 
         # Second call should return existing
-        balance2 = LeaveBalance.get_or_create_balance(
-            self.employee.id, self.leave_type_annual.id, 2026
-        )
+        balance2 = LeaveBalance.get_or_create_balance(self.employee.id, self.leave_type_annual.id, 2026)
         self.assertEqual(balance1.id, balance2.id)
 
     def test_leave_balance_update_pending(self):

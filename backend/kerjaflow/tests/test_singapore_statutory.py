@@ -7,8 +7,6 @@ Tests for CPF and SDL
 from datetime import date
 from decimal import Decimal
 
-import pytest
-
 from ..models.statutory import EmployeeContext, NationalityType
 
 

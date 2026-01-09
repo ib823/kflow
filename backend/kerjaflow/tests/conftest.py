@@ -6,7 +6,6 @@ Shared fixtures for all test modules
 
 from datetime import date
 from decimal import Decimal
-from typing import Generator
 
 import psycopg2
 import pytest

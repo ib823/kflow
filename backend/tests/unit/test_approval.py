@@ -5,9 +5,6 @@ KerjaFlow Approval Tests
 
 Test suite for approval workflow functionality (T-AP01 to T-AP06)
 """
-from datetime import date, datetime
-
-import pytest
 
 
 class TestApprovalWorkflow:

@@ -113,9 +113,7 @@ class KfLeaveBalance(models.Model):
     @api.depends("employee_id", "leave_type_id", "year")
     def _compute_display_name(self):
         for rec in self:
-            rec.display_name = (
-                f"{rec.employee_id.full_name} - " f"{rec.leave_type_id.code} ({rec.year})"
-            )
+            rec.display_name = f"{rec.employee_id.full_name} - " f"{rec.leave_type_id.code} ({rec.year})"
 
     @api.model
     def get_or_create_balance(self, employee_id, leave_type_id, year):
@@ -143,9 +141,7 @@ class KfLeaveBalance(models.Model):
 
                 if employee.join_date > leave_year_start:
                     # Pro-rata calculation
-                    months_remaining = 12 - (
-                        (employee.join_date.month - company.leave_year_start) % 12
-                    )
+                    months_remaining = 12 - ((employee.join_date.month - company.leave_year_start) % 12)
                     monthly = leave_type.default_entitlement / 12
                     entitled = round(monthly * months_remaining * 2) / 2
 

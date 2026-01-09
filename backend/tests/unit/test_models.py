@@ -6,10 +6,8 @@ KerjaFlow Model Unit Tests
 Unit tests for business logic and model validation (30+ tests)
 """
 import re
-from datetime import date, datetime, timedelta
+from datetime import datetime
 from decimal import Decimal
-
-import pytest
 
 
 class TestCompanyModel:

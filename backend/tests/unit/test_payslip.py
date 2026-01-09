@@ -5,10 +5,7 @@ KerjaFlow Payslip Tests
 
 Test suite for payslip functionality (T-P01 to T-P09)
 """
-from datetime import date
 from decimal import Decimal
-
-import pytest
 
 
 class TestPayslipData:

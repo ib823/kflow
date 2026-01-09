@@ -7,7 +7,6 @@ import os
 import sys
 from datetime import date, datetime, timedelta
 from decimal import Decimal
-from unittest.mock import MagicMock, Mock, patch
 
 import jwt
 import pytest

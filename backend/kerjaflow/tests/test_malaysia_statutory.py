@@ -7,8 +7,6 @@ Tests for EPF, SOCSO, EIS, HRDF
 from datetime import date
 from decimal import Decimal
 
-import pytest
-
 from ..models.statutory import EmployeeContext, NationalityType
 
 
