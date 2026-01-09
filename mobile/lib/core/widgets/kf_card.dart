@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/design_tokens.dart';
+import 'kf_status.dart';
 
 /// Standard card container
 class KFCard extends StatelessWidget {
@@ -368,10 +369,16 @@ class KFStatsCard extends StatelessWidget {
 /// Approval card for pending approvals
 class KFApprovalCard extends StatelessWidget {
   final String employeeName;
+  final String? employeeId;
   final String? employeeAvatar;
-  final String requestType;
-  final String dateRange;
+  final String leaveType;
+  final IconData? leaveTypeIcon;
+  final Color? leaveTypeColor;
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final double? days;
   final String? reason;
+  final StatusType? status;
   final VoidCallback? onApprove;
   final VoidCallback? onReject;
   final VoidCallback? onTap;
@@ -379,17 +386,35 @@ class KFApprovalCard extends StatelessWidget {
   const KFApprovalCard({
     super.key,
     required this.employeeName,
+    this.employeeId,
     this.employeeAvatar,
-    required this.requestType,
-    required this.dateRange,
+    required this.leaveType,
+    this.leaveTypeIcon,
+    this.leaveTypeColor,
+    this.startDate,
+    this.endDate,
+    this.days,
     this.reason,
+    this.status,
     this.onApprove,
     this.onReject,
     this.onTap,
   });
 
+  String _formatDateRange() {
+    if (startDate == null || endDate == null) return '';
+    final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    if (startDate == endDate) {
+      return '${startDate!.day} ${months[startDate!.month - 1]} ${startDate!.year}';
+    }
+    return '${startDate!.day} ${months[startDate!.month - 1]} - ${endDate!.day} ${months[endDate!.month - 1]} ${endDate!.year}';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final color = leaveTypeColor ?? KFColors.primary600;
+    final icon = leaveTypeIcon ?? Icons.event;
+
     return KFCard(
       onTap: onTap,
       child: Column(
@@ -424,36 +449,79 @@ class KFApprovalCard extends StatelessWidget {
                         fontWeight: KFTypography.semibold,
                       ),
                     ),
+                    if (employeeId != null)
+                      Text(
+                        employeeId!,
+                        style: const TextStyle(
+                          fontSize: KFTypography.fontSizeSm,
+                          color: KFColors.gray500,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              if (status != null)
+                _buildStatusBadge(status!),
+            ],
+          ),
+          const SizedBox(height: KFSpacing.space3),
+          // Leave type with icon
+          Row(
+            children: [
+              Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.1),
+                  borderRadius: KFRadius.radiusSm,
+                ),
+                child: Icon(icon, color: color, size: 18),
+              ),
+              const SizedBox(width: KFSpacing.space2),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
-                      requestType,
+                      leaveType,
                       style: const TextStyle(
                         fontSize: KFTypography.fontSizeSm,
-                        color: KFColors.gray600,
+                        fontWeight: KFTypography.medium,
                       ),
                     ),
+                    if (days != null)
+                      Text(
+                        '${days!.toStringAsFixed(days! % 1 == 0 ? 0 : 1)} ${days == 1 ? 'day' : 'days'}',
+                        style: const TextStyle(
+                          fontSize: KFTypography.fontSizeXs,
+                          color: KFColors.gray500,
+                        ),
+                      ),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: KFSpacing.space3),
-          Row(
-            children: [
-              const Icon(
-                Icons.calendar_today,
-                size: KFIconSizes.sm,
-                color: KFColors.gray500,
-              ),
-              const SizedBox(width: KFSpacing.space1),
-              Text(
-                dateRange,
-                style: const TextStyle(
-                  fontSize: KFTypography.fontSizeSm,
-                  color: KFColors.gray600,
+          if (startDate != null && endDate != null) ...[
+            const SizedBox(height: KFSpacing.space2),
+            Row(
+              children: [
+                const Icon(
+                  Icons.calendar_today,
+                  size: KFIconSizes.sm,
+                  color: KFColors.gray500,
                 ),
-              ),
-            ],
-          ),
+                const SizedBox(width: KFSpacing.space1),
+                Text(
+                  _formatDateRange(),
+                  style: const TextStyle(
+                    fontSize: KFTypography.fontSizeSm,
+                    color: KFColors.gray600,
+                  ),
+                ),
+              ],
+            ),
+          ],
           if (reason != null) ...[
             const SizedBox(height: KFSpacing.space2),
             Text(
@@ -501,6 +569,50 @@ class KFApprovalCard extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildStatusBadge(StatusType status) {
+    Color bgColor;
+    Color textColor;
+    String label;
+
+    switch (status) {
+      case StatusType.pending:
+        bgColor = KFColors.warning100;
+        textColor = KFColors.warning700;
+        label = 'Pending';
+        break;
+      case StatusType.approved:
+        bgColor = KFColors.success100;
+        textColor = KFColors.success700;
+        label = 'Approved';
+        break;
+      case StatusType.rejected:
+        bgColor = KFColors.error100;
+        textColor = KFColors.error700;
+        label = 'Rejected';
+        break;
+      default:
+        bgColor = KFColors.gray100;
+        textColor = KFColors.gray600;
+        label = 'Unknown';
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: KFRadius.radiusFull,
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: KFTypography.fontSizeXs,
+          fontWeight: KFTypography.medium,
+          color: textColor,
+        ),
+      ),
+    );
+  }
 }
 
 /// Notification card
@@ -509,7 +621,8 @@ class KFNotificationCard extends StatelessWidget {
   final Color iconColor;
   final String title;
   final String message;
-  final String time;
+  final String? time;
+  final DateTime? timestamp;
   final bool isRead;
   final VoidCallback? onTap;
 
@@ -519,13 +632,34 @@ class KFNotificationCard extends StatelessWidget {
     this.iconColor = KFColors.primary600,
     required this.title,
     required this.message,
-    required this.time,
+    this.time,
+    this.timestamp,
     this.isRead = false,
     this.onTap,
   });
 
+  String _formatTimestamp(DateTime ts) {
+    final now = DateTime.now();
+    final diff = now.difference(ts);
+
+    if (diff.inMinutes < 1) {
+      return 'Just now';
+    } else if (diff.inMinutes < 60) {
+      return '${diff.inMinutes}m ago';
+    } else if (diff.inHours < 24) {
+      return '${diff.inHours}h ago';
+    } else if (diff.inDays < 7) {
+      return '${diff.inDays}d ago';
+    } else {
+      final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      return '${ts.day} ${months[ts.month - 1]}';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final displayTime = time ?? (timestamp != null ? _formatTimestamp(timestamp!) : '');
+
     return KFCard(
       onTap: onTap,
       backgroundColor: isRead ? null : KFColors.primary50,
@@ -566,7 +700,7 @@ class KFNotificationCard extends StatelessWidget {
                 ),
                 const SizedBox(height: KFSpacing.space2),
                 Text(
-                  time,
+                  displayTime,
                   style: const TextStyle(
                     fontSize: KFTypography.fontSizeXs,
                     color: KFColors.gray400,
